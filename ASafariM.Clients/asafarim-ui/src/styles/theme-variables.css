@@ -64,6 +64,9 @@
   --button-secondary-text: var(--text-primary);
   --button-secondary-border: var(--border-secondary);
 
+  --button-bg: linear-gradient(to right, var(--info), var(--info-dark));
+  --button-hover-bg: linear-gradient(to right, var(--info-light), var(--info));
+
   /* Navbar */
   --navbar-bg: var(--bg-navbar);
   --navbar-border: var(--border-primary);
@@ -183,8 +186,15 @@
   --code-editor-list-item-hover-text: #111827;
   --code-editor-list-item-hover-border: #d1d5db;
   --code-editor-list-item-active-bg: #f8f9fa;
-  --code-editor-list-item-active-text: #111827;
-  --code-editor-list-item-active-border: #d1d5db;
+  --code-editor-header-bg: #f8f9fa;
+  --code-editor-header-text: #111827;
+  --code-editor-header-border: #d1d5db;
+  --code-editor-header-hover-bg: #f8f9fa;
+  --code-editor-header-hover-text: #111827;
+  --code-editor-header-hover-border: #d1d5db;
+  --code-editor-header-active-bg: #f8f9fa;
+  --code-editor-header-active-text: #111827;
+  --code-editor-header-active-border: #d1d5db;
 
   /* Primary palette inspired by Teams */
   --ts-pallette-primary:
@@ -589,6 +599,9 @@
   --button-secondary-active: var(--bg-primary);
   --button-secondary-text: var(--text-primary);
   --button-secondary-border: var(--border-secondary);
+
+  --button-bg: linear-gradient(to right, var(--success), var(--success-dark));
+  --button-hover-bg: linear-gradient(to right, var(--success-light), var(--success));
 
   /* Navbar */
   --navbar-bg: var(--bg-navbar);

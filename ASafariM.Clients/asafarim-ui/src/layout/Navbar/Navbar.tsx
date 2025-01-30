@@ -9,6 +9,7 @@ import { SizeProp } from '@fortawesome/fontawesome-svg-core';
 import ResponsiveDropdownMenu from './components/ResponsiveDropdownMenu';
 import ChangeLogsDropdown from './ChangeLogsDropdown';
 import useAuth from '@/hooks/useAuth';
+import ASMButton from './components/ASMButton';
 
 const Navbar: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
   const { authenticatedUser, authenticated, token } = useAuth();
@@ -22,7 +23,7 @@ const Navbar: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
     themeContext,
     size: '1x' as SizeProp,
     title: 'Toggle Theme',
-    className: 'text-[var(--text-primary)] transition-all duration-200 ease-in-out ml-2', 
+    className: 'text-[var(--text-primary)] transition-all duration-200 ease-in-out ml-2',
     mobileView: isMenuOpen,
     viewWidth,
   }), [isMenuOpen, themeContext, viewWidth]);
@@ -42,7 +43,7 @@ const Navbar: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
     <nav className="navbar">
       <div className="flex items-center justify-between w-full lg:w-auto">
         <Brand
-          logoPath={import.meta.env.VITE_PUBLIC_URL + '/logoT.svg'}
+          logoPath={'/logoT.svg'}
           to="/"
           className="brand-asafarim"
           brandName="ASafariM"
@@ -80,6 +81,8 @@ const Navbar: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
               />
             ))}
         </div>
+
+        {viewWidth > 400 && (<ASMButton />)}
         <div className="flex flex-col lg:flex-row items-start lg:items-center space-y-2 lg:space-y-0 lg:space-x-4 py-2 lg:py-0">
           {(authenticated && token && authenticatedUser) ? (
             <UserDropdown
