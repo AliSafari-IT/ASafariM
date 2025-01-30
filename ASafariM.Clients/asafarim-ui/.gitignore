@@ -22,3 +22,21 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# .env files
+.env*
+.env.local*
+
+# Build artifacts
+build
+dist
+-ssr
+dist-ssr
+
+# Output map files
+*.js.map
+*.css.map
+*.ts.map
+*.tsx.map
+*.json.map
+*.wasm.map
