@@ -7,7 +7,7 @@ export interface IPost {
     title?: string;
     content: string;
     summary?: string;
-    publishedDate?: string;
+    publishedAt?: string;
     author: string;
     slug?: string;
     excerpt?: string;

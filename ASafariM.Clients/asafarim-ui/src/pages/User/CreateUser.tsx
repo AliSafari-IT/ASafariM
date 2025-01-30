@@ -62,7 +62,7 @@ const CreateUser: React.FC = () => {
       label: 'User Name',
       type: 'text',
       required: true,
-      onChange: (_name: string, value: string) => checkAvailability('userName', value),
+      onChange: (e: React.ChangeEvent<HTMLInputElement>) => checkAvailability('userName', e.target.value),
       error: availability.userName === false ? 'Username is already taken' : undefined,
       success: availability.userName === true ? 'Username is available' : undefined,
       validate: validateUserName
@@ -72,7 +72,7 @@ const CreateUser: React.FC = () => {
       label: 'Email',
       type: 'email',
       required: true,
-      onChange: (_name: string, value: string) => checkAvailability('email', value),
+      onChange: (e: React.ChangeEvent<HTMLInputElement>) => checkAvailability('email', e.target.value),
       error: availability.email === false ? 'Email is already registered' : undefined,
       success: availability.email === true ? 'Email is available' : undefined,
       validate: validateEmail

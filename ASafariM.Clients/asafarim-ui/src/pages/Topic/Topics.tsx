@@ -15,7 +15,9 @@ const Topics = ({ topics }: TopicsProps) => {
     return topics?.map(topic => ({
       ...topic,
       relatedPosts: topic.relatedPosts
-        ? ([...topic.relatedPosts] as IPost[]).sort((a, b) => (a.difficultyLevel ?? '').localeCompare(b.difficultyLevel ?? ''))
+        ? ([...topic.relatedPosts] as IPost[]).sort((a, b) => 
+            (a.difficultyLevel !== undefined ? a.difficultyLevel.toString() : '')
+              .localeCompare(b.difficultyLevel !== undefined ? b.difficultyLevel.toString() : ''))
         : [],
     }));
   }, [topics]);

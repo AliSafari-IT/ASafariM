@@ -3,14 +3,17 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { IPost } from "../../interfaces/post-types";
 import Wrapper from "../../layout/Wrapper/Wrapper";
+import dashboardServices from "@/api/entityServices";
+import { ITag } from "@fluentui/react";
 
 const PostDetail = () => {
     const { slug } = useParams<{ slug: string }>();
     const [post, setPost] = useState<IPost | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
-    const API_URL = (import.meta as any).env.VITE_API_URL;
-    console.log(`API URL is: ${API_URL}`, `import.meta.env.VITE_API_URL is: ${(import.meta as any).env.VITE_API_URL}`);
+    const [tagNames, setTagNames] = useState<{name: string, id: string}[]>([]);
+    const API_URL = import.meta.env.VITE_API_URL;
+    console.log(`API URL is: ${API_URL}`, `import.meta.env.VITE_API_URL is: ${import.meta.env.VITE_API_URL}`);
 
     useEffect(() => {
         axios
@@ -26,6 +29,23 @@ const PostDetail = () => {
             });
     }, [slug, API_URL]);
 
+    useEffect(() => {
+        const getTag = async (id: string) => {
+            const tag = await dashboardServices.fetchEntityById("tags", id) as ITag;
+            return {name: tag.name, id: String(tag.key)};
+        };
+        const getTagNames = async () => {
+            if (post?.tags) {
+                const tagPromises = post.tags.map(tag => getTag(tag));
+                const tagNames = await Promise.all(tagPromises);
+                setTagNames(tagNames);
+            } else {
+                setTagNames([]);
+            }
+        };
+        getTagNames();
+    }, [post]);
+
     if (loading) {
         return <p>Loading...</p>;
     }
@@ -34,15 +54,16 @@ const PostDetail = () => {
         return <p>{error || "Post not found"}</p>;
     }
 
-    const { title, content, author, publishedDate, tags } = post;
-    const formattedDate = new Date(publishedDate).toLocaleDateString();
-    const formattedTime = new Date(publishedDate).toLocaleTimeString();
-    const formattedDateTime = `${formattedDate} ${formattedTime}`;
+    const { title, content, author, publishedAt } = post;
+    const formattedDate = publishedAt ? new Date(publishedAt).toLocaleDateString() : 'Date not available';
+    const formattedTime = publishedAt ? new Date(publishedAt).toLocaleTimeString() : '';
+    const formattedDateTime = formattedTime ? `${formattedDate} ${formattedTime}` : formattedDate;
     const formattedAuthor = author ? `Author: ${author}` : "";
     const formattedPostHeader = `${formattedDateTime} | ${formattedAuthor} `;
     const formattedContentWithBreaks = content.replace(/\n/g, "\n\n");
     const formattedPostHeaderWithBreaks = formattedPostHeader.replace(/\n/g, "\n\n");
 
+    // Render the post header
     const header = (
         <div className="max-w-3xl mx-auto p-4">
             <h1 className="text-3xl font-bold mb-4">{title}</h1>
@@ -56,8 +77,8 @@ const PostDetail = () => {
                 <div dangerouslySetInnerHTML={{ __html: formattedContentWithBreaks }} />
                 <div>
                     <div className="tags space-x-4 mt-4">
-                        Tags: {tags?.map(tag => (
-                            <a key={tag.id} href={`/tags/${tag.name}`}>{tag?.title ?? tag.name}</a>
+                        Tags: {tagNames?.map(tag => (
+                            <a key={tag.id} href={`/tags/${tag.id}`}>{tag.name}</a>
                         ))}
                     </div>
                 </div>

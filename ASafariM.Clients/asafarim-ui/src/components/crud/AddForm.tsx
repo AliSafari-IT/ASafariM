@@ -61,7 +61,7 @@ const AddForm: React.FC<AddFormProps> = ({ entityName, fields, submitHandler, on
         // Also call any custom onChange logic
         if (field?.onChange) {
             // note: original code was (name, value) => ...
-            field.onChange(name, value);
+            field.onChange(e);
         }
     };
 
