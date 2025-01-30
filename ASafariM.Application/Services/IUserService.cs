@@ -1,0 +1,28 @@
+using ASafariM.Application.CommandModels;
+using ASafariM.Application.DTOs;
+using ASafariM.Domain.Entities;
+
+namespace ASafariM.Application.Services
+{
+    public interface IUserService
+    {
+        Task<bool> RegisterUserAsync(RegisterUserCommand command);
+        Task<bool> LoginUserAsync(LoginUserCommand command);
+        Task<UserDto?> GetUserByIdAsync(Guid userId);
+        Task<IEnumerable<UserDto>> GetAllUsersAsync();
+        Task<User> CreateUserAsync(CreateUserCommand command);
+        Task<UserDto?> UpdateUserAsync(UpdateUserCommand command);
+        Task<bool> DeleteUserAsync(Guid id, string password);
+        Task<bool> ChangePasswordAsync(ChangePasswordCommand command);
+        Task<bool> ForgotPasswordAsync(ForgotPasswordCommand command);
+        Task<bool> ResetPasswordAsync(ResetPasswordCommand command);
+        Task UpdateProfileAsync(UpdateProfileCommand command);
+        Task<bool> DeleteUserByAdminAsync(Guid id, bool isAdmin);
+        Task<UserDto?> UpdateUserByAdminAsync(UpdateUserByAdminCommand command);
+        Task<IsTakenDto?> IsUsernameNotTakenAsync(string username);
+        Task<IsTakenDto?> IsEmailNotTakenAsync(string email);
+        Task<UserDto?> CreateUserByAdminAsync(CreateUserByAdminCommand command);
+        Task<IEnumerable<UserDto>> SearchUsersAsync(string? username, string? email);
+        Task<IEnumerable<UserRoleDto>> GetRolesByUserId(string userId);
+    }
+}
