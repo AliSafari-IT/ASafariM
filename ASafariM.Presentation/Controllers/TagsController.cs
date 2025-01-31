@@ -111,7 +111,6 @@ namespace ASafariM.Presentation.Controllers
             }
         }
 
-        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteTag(Guid id)
         {
@@ -119,6 +118,7 @@ namespace ASafariM.Presentation.Controllers
             if (tag == null)
                 return NotFound();
             await _tagRepository.DeleteAsync(id);
+            await _tagRepository.SaveChangesAsync();
             return NoContent();
         }
     }
