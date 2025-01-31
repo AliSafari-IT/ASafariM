@@ -77,7 +77,7 @@ const EditSitemapItemForm: React.FC = () => {
 
             try {
                 // Load all sitemap items for parent selection
-                const items = await dashboardServices.fetchEntities('sitemap') as ISitemapItem[];
+                const items = await dashboardServices.fetchEntities('sitemap') as unknown as ISitemapItem[];
                 setParentOptions(items
                     .filter(item => item.id !== id) // Exclude current item from parent options
                     .map(item => ({ key: item.id, text: item.pageName }))

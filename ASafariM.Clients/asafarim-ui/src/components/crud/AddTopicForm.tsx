@@ -1,4 +1,4 @@
-import { FC, useState, FormEvent, ChangeEvent } from "react";
+import { FC, useState, FormEvent } from "react";
 import { IField } from "@/interfaces/IField";
 import axios from "axios";
 import { ITopic } from "@/interfaces/ITopic";
@@ -41,28 +41,24 @@ export const AddTopicForm: FC = () => {
             label: 'Name',
             type: 'text',
             value: topic.name,
-            onChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => setTopic({ ...topic, name: newValue ?? e.target.value }),
         },
         {
             name: 'title',
             label: 'Title',
             type: 'text',
             value: topic.title,
-            onChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => setTopic({ ...topic, title: newValue ?? e.target.value }),
         },
         {
             name: 'description',
             label: 'Description',
             type: 'text',
             value: topic.description,
-            onChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => setTopic({ ...topic, description: newValue ?? e.target.value }),
         },
         {
             name: 'difficulty',
             label: 'Difficulty',
             type: 'number',
             value: topic.difficultyLevel,
-            onChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => setTopic({ ...topic, difficultyLevel: newValue ?? e.target.value }),
         },
     ];
 
@@ -74,8 +70,14 @@ export const AddTopicForm: FC = () => {
             const response = await axios.post(topicUrl, topic);
             console.log(response.data);
         } catch (error) {
+            console.error('Error adding topic:', error);
             console.log(error);
         }
+    };
+
+    const handleChange = (event: FormEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const target = event.target as HTMLInputElement;
+        setTopic(prev => ({ ...prev, [target.name]: target.value }));
     };
 
     return (
@@ -85,15 +87,15 @@ export const AddTopicForm: FC = () => {
                     {fields?.map((field) => (
                         <TextField
                             key={field.name}
-                            label={field.label}
+                            label={field.label} 
                             name={field.name}
+                            onChange={handleChange}
                             className={classes.formField}
                             value={field.value}
-                            onChange={(_: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => field.onChange(newValue ?? e.target.value)}
                             required={false}
                             placeholder={field.placeholder}
-                            type={field.type}
-                        />
+                                type={field.type}
+                            />
                     ))}
                     <button type="submit" style={{ float: 'right', marginTop: '10px' }}>Add Topic</button>
                 </form>
