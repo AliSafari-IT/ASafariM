@@ -8,7 +8,7 @@ const api = axios.create({
 
 // Add request interceptor to include auth token
 api.interceptors.request.use((config) => {
-    const {auth} = JSON.parse(localStorage.getItem('auth') || '{}');
+    const { auth } = JSON.parse(localStorage.getItem('auth') || '{}');
     if (auth?.token) {
         config.headers.Authorization = `Bearer ${auth.token}`;
     }
@@ -44,10 +44,10 @@ const fetchEntities = async (entityTableName: string) => {
         // Convert singular to plural for API endpoints
         const endpoint = entityTableName.endsWith('s') ? entityTableName : `${entityTableName}s`;
         console.log(`Fetching entities from endpoint: /${endpoint}`);
-        
+
         const response = await api.get(`/${endpoint}`);
         console.log(`Response from ${endpoint}:`, response.data);
-        
+
         return {
             success: true,
             data: response.data
@@ -119,38 +119,55 @@ const updateEntity = async (entityTableName: string, id: string, data: Record<st
     try {
         const endpoint = entityTableName.endsWith('s') ? entityTableName : `${entityTableName}s`;
         console.log(`Updating entity in ${endpoint}:`, { id, data });
-        
+
         const url = `/${endpoint}/${id}`;
         console.debug(`Constructed URL for updating entity: ${url}`);
-    
-        const sanitizedData= { ...data };
+
+        const sanitizedData = { ...data };
         delete sanitizedData.id;
-                
+
         console.debug(`Sanitized data for PUT request:`, sanitizedData);
 
         // Send the PUT request to update the entity
         const response = await api.put(url, sanitizedData);
         console.info(`Successfully updated entity in ${endpoint}:`, response.data);
-        
+
         return {
             success: true,
             data: response.data
         };
     } catch (error: unknown) {
         if (error instanceof AxiosError) {
-            console.error(`Error updating entity in ${entityTableName}:`, error.response?.data);
+            if (error.response?.status === 404) {
+                console.error(`Entity not found: ${entityTableName}`);
+                throw new Error(`Entity not found: ${entityTableName}`);
+            } else if (error.response?.status === 400) {
+                console.error(`Invalid data for update:`, error.response.data);
+                throw new Error(error.response.data || `Invalid data for update: ${entityTableName}`);
+            } else {
+                console.error(`Error updating entity in ${entityTableName}:`, error.response?.data);
+                throw error;
+            }
+        } else {
+            console.error(`Error updating entity in ${entityTableName}:`, error);
             throw error;
         }
-        console.error('An error occurred while updating the entity.');
-        throw new Error('An error occurred while updating the entity.');
     }
 }
 
 const deleteEntity = async (entityTableName: string, id: string) => {
-    return api.delete(`/${entityTableName}/${id}`)
+    const url = `/${entityTableName}/${id}`;
+    console.debug(`Deleting entity from ${entityTableName}:`, id);
+    console.debug(`Constructed URL for deleting entity: ${url}`);
+    console.debug(`Sending DELETE request to delete entity: ${url}`);
+    return api.delete(url)
+        .then(response => {
+            console.info(`Successfully deleted entity from ${entityTableName}:`, response.data);
+            return response.data;
+        })
         .catch(error => {
             console.error('Error deleting entity:', error);
-            throw new Error('Failed to delete entity: ' + entityTableName);
+            throw error;
         });
 }
 

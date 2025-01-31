@@ -20,5 +20,4 @@ export interface IField {
     max?: number; // Maximum value for 'number' inputs
     // Add a validation function (client-side)
     validate?: (value: string | number | boolean | undefined | File | FileList) => string | undefined;
-
 }

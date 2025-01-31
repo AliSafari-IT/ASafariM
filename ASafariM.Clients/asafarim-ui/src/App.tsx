@@ -36,16 +36,17 @@ import AddProject from "./pages/Project/AddProject";
 import ViewProject from "./pages/Project/ViewProject";
 import AccessDenied from "./pages/AccessDenied";
 import CreateMarkdownFile from "./components/MarkdownPage/CreateMarkdownFile";
-import AddTagForm from "./components/crud/AddTagForm";
 import AddCategoryForm from "./components/crud/AddCategoryForm";
 import AddTopicForm from "./components/crud/AddTopicForm";
 import AddPostForm from "./components/crud/AddPostForm";
-import EditTagForm from "./components/crud/EditTagForm";
 import EditCategoryForm from "./components/crud/EditCategoryForm";
 import EditTopicForm from "./components/crud/EditTopicForm";
 import EditPostForm from "./components/crud/EditPostForm";
 import EditSitemapItemForm from "./components/crud/EditSitemapItemForm";
 import AddSitemapItemForm from "./components/crud/AddSitemapItemForm";
+import DeleteForm from "./components/crud/DeleteForm";
+import AddTagForm from "./components/crud/AddTagForm";
+import EditTagForm from "./components/crud/EditTagForm";
 
 // const userUrl = API_URL + '/users';
 
@@ -275,15 +276,19 @@ function App() {
           {/** Add route for crud operations for dynamic models to cover all use cases regarding: Tags, Categories, Topics, Projects, Posts, SitemapItems */}
           <Route path="/tags/add" element={<AddTagForm />} />
           <Route path="/tags/edit/:id" element={<EditTagForm />} />
+          <Route path="/tags/delete/:id" element={<DeleteForm entity="tags"  />} />
           <Route path="/categories/add" element={<AddCategoryForm />} />
           <Route path="/categories/edit/:id" element={<EditCategoryForm />} />
+          <Route path="/categories/delete/:id" element={<DeleteForm entity="categories"  />} />
           <Route path="/topics/add" element={<AddTopicForm />} />
           <Route path="/topics/edit/:id" element={<EditTopicForm />} />
+          <Route path="/topics/delete/:id" element={<DeleteForm entity="topics"  />} />
           <Route path="/posts/add" element={<AddPostForm />} />
           <Route path="/posts/edit/:id" element={<EditPostForm />} />
+          <Route path="/posts/delete/:id" element={<DeleteForm entity="posts"  />} />
           <Route path="/sitemap-items/add" element={<AddSitemapItemForm />} />
           <Route path="/sitemap-items/edit/:id" element={<EditSitemapItemForm />} />
-
+          <Route path="/sitemap-items/delete/:id" element={<DeleteForm entity="sitemapitems"  />} />
           <Route path="/health-ui" element={<Navigate to="/health-ui" />} />
           <Route path="/access-denied" element={<AccessDenied />} />
           <Route path="*" element={<NotFound />} />

@@ -80,12 +80,10 @@ const EditTagForm: React.FC = () => {
             });
             navigate('/dashboard');
         } catch (error) {
-            console.error('Error updating tag:', error);
+            setError((error as Error).toString());
             if (isAxiosError(error)) {
                 setError(error.response?.data.message || 'Failed to update the tag. Please try again.');
-            } else {
-                setError('An unexpected error occurred. Please try again later.');
-            }
+            } 
         }
     };
 
