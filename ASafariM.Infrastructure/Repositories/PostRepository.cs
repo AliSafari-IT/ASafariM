@@ -18,52 +18,36 @@ namespace ASafariM.Infrastructure.Repositories
             _context = context;
         }
 
+        // Get all Posts
         public async Task<IEnumerable<Post>> GetAllAsync()
         {
-            return await _context
-                .Posts.Include(p => p.Topic)
-                .Include(p => p.PostTags)
-                .ThenInclude(pt => pt.Tag)
-                .Where(p => !p.IsDeleted)
-                .ToListAsync();
+            return await _context.Posts.Where(p => !p.IsDeleted).ToListAsync();
         }
 
         public async Task<IEnumerable<Post>> GetPublishedAsync()
         {
             return await _context
-                .Posts.Include(p => p.Topic)
-                .Include(p => p.PostTags)
-                .ThenInclude(pt => pt.Tag)
-                .Where(p => p.IsPublished && !p.IsDeleted)
+                .Posts.Where(p => p.IsPublished && !p.IsDeleted)
                 .OrderByDescending(p => p.PublishedDate)
                 .ToListAsync();
         }
 
         public async Task<Post> GetByIdAsync(Guid id)
         {
-            return await _context
-                .Posts.Include(p => p.Topic)
-                .Include(p => p.PostTags)
-                .ThenInclude(pt => pt.Tag)
-                .FirstOrDefaultAsync(p => p.Id == id && !p.IsDeleted);
+            return await _context.Posts.FirstOrDefaultAsync(p => p.Id == id && !p.IsDeleted);
         }
 
         public async Task<Post> GetBySlugAsync(string slug)
         {
             return await _context
-                .Posts.Include(p => p.Topic)
-                .Include(p => p.PostTags)
-                .ThenInclude(pt => pt.Tag)
+                .Posts.Where(p => p.Slug == slug && !p.IsDeleted)
                 .FirstOrDefaultAsync(p => p.Slug == slug && !p.IsDeleted);
         }
 
         public async Task<IEnumerable<Post>> GetByTopicIdAsync(Guid topicId)
         {
             return await _context
-                .Posts.Include(p => p.Topic)
-                .Include(p => p.PostTags)
-                .ThenInclude(pt => pt.Tag)
-                .Where(p => p.TopicId == topicId && !p.IsDeleted)
+                .Posts.Where(p => !p.IsDeleted)
                 .OrderByDescending(p => p.PublishedDate)
                 .ToListAsync();
         }
@@ -71,10 +55,7 @@ namespace ASafariM.Infrastructure.Repositories
         public async Task<IEnumerable<Post>> GetByTagIdAsync(Guid tagId)
         {
             return await _context
-                .Posts.Include(p => p.Topic)
-                .Include(p => p.PostTags)
-                .ThenInclude(pt => pt.Tag)
-                .Where(p => p.PostTags.Any(pt => pt.TagId == tagId) && !p.IsDeleted)
+                .Posts.Where(p => !p.IsDeleted)
                 .OrderByDescending(p => p.PublishedDate)
                 .ToListAsync();
         }

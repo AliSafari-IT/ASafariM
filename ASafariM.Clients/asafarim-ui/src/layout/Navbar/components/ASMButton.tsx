@@ -9,12 +9,12 @@ const ASMButton: React.FC = () => {
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="24" height="24">
                 <defs>
                     <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stop-color="#41D1FF" />
-                        <stop offset="100%" stop-color="#BD34FE" />
+                        <stop offset="0%" stopColor="#41D1FF" />
+                        <stop offset="100%" stopColor="#BD34FE" />
                     </linearGradient>
                 </defs>
                 <rect width="256" height="256" rx="20" fill="url(#gradient1)" />
-                <text x="50%" y="55%" font-size="90" font-family="Arial, sans-serif" font-weight="bold" fill="white" text-anchor="middle" dominant-baseline="middle">
+                <text x="50%" y="55%" fontSize="90" fontFamily="Arial, sans-serif" fontWeight="bold" fill="white" textAnchor="middle" dominantBaseline="middle">
                     CV
                 </text>
             </svg>

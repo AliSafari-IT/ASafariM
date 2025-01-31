@@ -7,7 +7,7 @@ namespace ASafariM.Application.DTOs
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public string Description { get; set; }
+        public string? Description { get; set; }
         public string Slug { get; set; }
         public Guid? ParentTopicId { get; set; }
         public string ParentTopicName { get; set; }
@@ -15,6 +15,6 @@ namespace ASafariM.Application.DTOs
         public string CreatedBy { get; set; }
         public bool IsActive { get; set; }
         public ICollection<TopicDto> ChildTopics { get; set; }
-        public int PostCount { get; set; }
+        public int? PostCount { get; set; }
     }
 }

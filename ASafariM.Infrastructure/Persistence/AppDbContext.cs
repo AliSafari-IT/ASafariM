@@ -52,9 +52,8 @@ public class AppDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        base.OnModelCreating(modelBuilder);
+        modelBuilder.Entity<PostTag>().HasKey(pt => new { pt.PostId, pt.TagId });
 
-        // Configure SitemapItem entity
         modelBuilder.Entity<SitemapItem>(entity =>
         {
             entity.HasKey(s => s.Id);
@@ -68,16 +67,6 @@ public class AppDbContext : DbContext
 
             // Configure many-to-many relationship with Topics
             entity.HasMany(s => s.Topics).WithMany();
-        });
-
-        // Configure PostTag entity
-        modelBuilder.Entity<PostTag>(entity =>
-        {
-            entity.HasKey(pt => new { pt.PostId, pt.TagId });
-
-            entity.HasOne(pt => pt.Post).WithMany(p => p.PostTags).HasForeignKey(pt => pt.PostId);
-
-            entity.HasOne(pt => pt.Tag).WithMany(t => t.PostTags).HasForeignKey(pt => pt.TagId);
         });
 
         // Configure User entity
@@ -715,5 +704,20 @@ public class AppDbContext : DbContext
                     PhoneCode = "+352",
                 }
             );
+
+        // Seed Tags
+        modelBuilder
+            .Entity<Tag>()
+            .HasData(
+                new Tag
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "Test Tag name",
+                    Slug = "test-tag-slug",
+                    Description = "Test Tag description",
+                }
+            );
+
+        base.OnModelCreating(modelBuilder);
     }
 }

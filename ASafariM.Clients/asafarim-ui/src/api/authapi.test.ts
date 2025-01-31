@@ -42,3 +42,4 @@ describe('Auth API', () => {
     expect(mockedAxios.post).toHaveBeenCalledWith('/requestAccountReactivation', { email });
   });
 });
+

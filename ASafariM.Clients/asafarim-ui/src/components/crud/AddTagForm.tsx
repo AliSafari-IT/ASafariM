@@ -23,9 +23,9 @@ const AddTagForm: React.FC = () => {
     const classes = useStyles();
     const navigate = useNavigate();
 
-    const [tagName, setTagName] = useState<string>(''); 
-    const [tagSlug, setTagSlug] = useState<string>(''); 
-    const [tagDescription, setTagDescription] = useState<string>(''); 
+    const [tagName, setTagName] = useState<string>('');
+    const [tagSlug, setTagSlug] = useState<string>('');
+    const [tagDescription, setTagDescription] = useState<string>('');
     const [error, setError] = useState<string>('');
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -33,8 +33,10 @@ const AddTagForm: React.FC = () => {
         setError(''); // Clear any previous errors
 
         try {
-            await dashboardServices.addEntity('tags', { name: tagName, slug: tagSlug, description: tagDescription });
-            alert('Tag added successfully!');
+            // Add the tag to the database
+            const newTag = await dashboardServices.addEntity('tags', { name: tagName, slug: tagSlug, description: tagDescription });
+            console.log('New tag added:', newTag); // Log the new tag for debugging
+            setError(''); // Clear the error message after successful addition
             navigate('/dashboard');
         } catch (error) {
             console.error('Error adding tag:', error);

@@ -25,82 +25,90 @@ namespace ASafariM.Presentation.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TagDto>>> GetTags()
+        public async Task<ActionResult<IEnumerable<Tag>>> GetTags()
         {
             var tags = await _tagRepository.GetAllAsync();
-            return Ok(_mapper.Map<IEnumerable<TagDto>>(tags));
+            return Ok(_mapper.Map<IEnumerable<Tag>>(tags));
         }
 
         // Create a new tag
         [HttpPost]
         public async Task<IActionResult> CreateTag(CreateTagCommand command)
         {
-            var tag = new Tag
+            if (string.IsNullOrEmpty(command.Name))
+                return BadRequest("Name is required");
+
+            var tag = new Tag()
             {
                 Name = command.Name,
                 Description = command.Description + " (Created by " + User?.Identity?.Name + ")",
-                Slug = command.Slug,
-                CreatedBy = User?.Identity?.Name ?? "System",
-                UpdatedBy = User?.Identity?.Name ?? "System",
-                IsActive = true,
-                CreatedAt = DateTime.UtcNow,
-                UpdatedAt = DateTime.UtcNow,
+                Slug = command.Slug + "-" + Guid.NewGuid().ToString().Substring(0, 8),
             };
 
             await _tagRepository.AddAsync(tag);
-            return Ok(tag);
+            await _tagRepository.SaveChangesAsync();
+            return CreatedAtAction(nameof(GetTag), new { id = tag.Id }, tag);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<TagDto>> GetTag(Guid id)
+        public async Task<ActionResult<Tag>> GetTag(Guid id)
         {
             var tag = await _tagRepository.GetByIdAsync(id);
             if (tag == null)
                 return NotFound();
 
-            return Ok(_mapper.Map<TagDto>(tag));
+            return Ok(_mapper.Map<Tag>(tag));
         }
 
         [HttpGet("slug/{slug}")]
-        public async Task<ActionResult<TagDto>> GetTagBySlug(string slug)
+        public async Task<ActionResult<Tag>> GetTagBySlug(string slug)
         {
             var tag = await _tagRepository.GetBySlugAsync(slug);
             if (tag == null)
                 return NotFound();
 
-            return Ok(_mapper.Map<TagDto>(tag));
+            return Ok(_mapper.Map<Tag>(tag));
         }
 
         [HttpGet("post/{postId}")]
-        public async Task<ActionResult<IEnumerable<TagDto>>> GetTagsByPost(Guid postId)
+        public async Task<ActionResult<IEnumerable<Tag>>> GetTagsByPost(Guid postId)
         {
             var tags = await _tagRepository.GetTagsByPostIdAsync(postId);
-            return Ok(_mapper.Map<IEnumerable<TagDto>>(tags));
+            return Ok(_mapper.Map<IEnumerable<Tag>>(tags));
         }
 
-        [Authorize(Roles = "Admin,Editor")]
         [HttpPut("{id}")]
-        public async Task<ActionResult<TagDto>> UpdateTag(Guid id, UpdateTagCommand command)
+        public async Task<ActionResult<Tag>> UpdateTag(Guid id, UpdateTagCommand command)
         {
-            if (id != command.Id)
-                return BadRequest();
+            try
+            {
+                var existingTag = await _tagRepository.GetByIdAsync(id);
+                if (existingTag == null)
+                    return NotFound($"Tag with ID {id} not found");
 
-            var existingTag = await _tagRepository.GetByIdAsync(id);
-            if (existingTag == null)
-                return NotFound();
+                // Check if the slug is being changed and if it already exists
+                if (
+                    command.Slug != existingTag.Slug
+                    && await _tagRepository.SlugExistsAsync(command.Slug)
+                )
+                    return BadRequest("Slug already exists");
 
-            if (
-                command.Slug != existingTag.Slug
-                && await _tagRepository.SlugExistsAsync(command.Slug)
-            )
-                return BadRequest("Slug already exists");
+                // Update the tag properties
+                existingTag.Name = command.Name;
+                existingTag.Description =
+                    command.Description + " (Updated by " + User?.Identity?.Name + ")";
+                existingTag.Slug = command.Slug;
 
-            _mapper.Map(command, existingTag);
-            existingTag.UpdatedBy = User.Identity.Name;
-            existingTag.UpdatedAt = DateTime.UtcNow;
+                // Save the changes
+                await _tagRepository.UpdateAsync(existingTag);
+                await _tagRepository.SaveChangesAsync();
 
-            await _tagRepository.UpdateAsync(existingTag);
-            return Ok(_mapper.Map<TagDto>(existingTag));
+                return Ok(existingTag);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
         }
 
         [Authorize(Roles = "Admin")]
@@ -110,8 +118,6 @@ namespace ASafariM.Presentation.Controllers
             var tag = await _tagRepository.GetByIdAsync(id);
             if (tag == null)
                 return NotFound();
-
-            tag.DeletedBy = User.Identity.Name;
             await _tagRepository.DeleteAsync(id);
             return NoContent();
         }

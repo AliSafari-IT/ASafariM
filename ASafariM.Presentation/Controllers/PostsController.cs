@@ -167,26 +167,6 @@ namespace ASafariM.Presentation.Controllers
                 post.Author = CurrentUserId;
             }
 
-            // Add tags
-            if (command.TagIds != null)
-            {
-                post.PostTags = new List<PostTag>();
-                foreach (var tagId in command.TagIds)
-                {
-                    if (await _tagRepository.ExistsAsync(tagId))
-                    {
-                        post.PostTags.Add(
-                            new PostTag
-                            {
-                                TagId = tagId,
-                                CreatedAt = DateTime.UtcNow,
-                                CreatedBy = CurrentUserId,
-                            }
-                        );
-                    }
-                }
-            }
-
             await _postRepository.AddAsync(post);
             return CreatedAtAction(
                 nameof(GetPost),
@@ -226,26 +206,6 @@ namespace ASafariM.Presentation.Controllers
             {
                 existingPost.PublishedDate = DateTime.UtcNow;
                 existingPost.Author = CurrentUserId;
-            }
-
-            // Update tags
-            if (command.TagIds != null)
-            {
-                existingPost.PostTags.Clear();
-                foreach (var tagId in command.TagIds)
-                {
-                    if (await _tagRepository.ExistsAsync(tagId))
-                    {
-                        existingPost.PostTags.Add(
-                            new PostTag
-                            {
-                                TagId = tagId,
-                                CreatedAt = DateTime.UtcNow,
-                                CreatedBy = CurrentUserId,
-                            }
-                        );
-                    }
-                }
             }
 
             await _postRepository.UpdateAsync(existingPost);

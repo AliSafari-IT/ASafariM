@@ -66,12 +66,13 @@ namespace ASafariM.Presentation.Controllers
                 return BadRequest("Slug already exists");
 
             var topic = _mapper.Map<Topic>(command);
-            topic.CreatedBy = User.Identity.Name;
-            topic.UpdatedBy = User.Identity.Name;
+            topic.CreatedBy = !string.IsNullOrEmpty(User.Identity?.Name)
+                ? Guid.Parse(User.Identity.Name)
+                : null;
             topic.CreatedAt = DateTime.UtcNow;
             topic.UpdatedAt = DateTime.UtcNow;
-            topic.IsActive = true;
-
+            topic.IsDeleted = false;
+            topic.DeletedAt = null;
             await _topicRepository.AddAsync(topic);
             return CreatedAtAction(
                 nameof(GetTopic),
@@ -98,7 +99,9 @@ namespace ASafariM.Presentation.Controllers
                 return BadRequest("Slug already exists");
 
             _mapper.Map(command, existingTopic);
-            existingTopic.UpdatedBy = User.Identity.Name;
+            existingTopic.UpdatedBy = !string.IsNullOrEmpty(User.Identity?.Name)
+                ? Guid.Parse(User.Identity.Name)
+                : null;
             existingTopic.UpdatedAt = DateTime.UtcNow;
 
             await _topicRepository.UpdateAsync(existingTopic);
@@ -113,7 +116,9 @@ namespace ASafariM.Presentation.Controllers
             if (topic == null)
                 return NotFound();
 
-            topic.DeletedBy = User.Identity.Name;
+            topic.DeletedBy = !string.IsNullOrEmpty(User.Identity?.Name)
+                ? Guid.Parse(User.Identity.Name)
+                : null;
             await _topicRepository.DeleteAsync(id);
             return NoContent();
         }

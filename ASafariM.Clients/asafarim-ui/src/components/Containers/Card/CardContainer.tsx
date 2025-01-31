@@ -50,10 +50,12 @@ const CardContainer: React.FC = () => {
   const [inputPage, setInputPage] = useState<string>('');
   const cardsPerPage = 3;
   const navigate = useNavigate();
+
   useEffect(() => {
     const loadTopics = async () => {
       try {
-        const fetchedTopics = await dashboardServices.fetchEntities( 'topic');
+        const fetchedTopics = await dashboardServices.fetchEntities('topics');
+        console.log('Fetched topics:', fetchedTopics.data);
         setTopics(fetchedTopics.data);
       } catch (error) {
         console.error('Error fetching topics:', error);
@@ -62,8 +64,13 @@ const CardContainer: React.FC = () => {
 
     const loadTags = async () => {
       try {
-        const fetchedTags = await dashboardServices.fetchEntities('tag');
-        setTags(fetchedTags.data);
+        const fetchedTags = await dashboardServices.fetchEntities('tags');
+        console.log('Fetched tags:', fetchedTags.data);
+        if (Array.isArray(fetchedTags.data)) {
+          setTags(fetchedTags.data);
+        } else {
+          console.error('Tags data is not an array:', fetchedTags.data);
+        }
       } catch (error) {
         console.error('Error fetching tags:', error);
       }
@@ -73,11 +80,11 @@ const CardContainer: React.FC = () => {
     loadTopics();
   }, []);
 
-  const totalTopicCards = topics?.length;
-  const totalTopicPages = totalTopicCards? Math.ceil(totalTopicCards / cardsPerPage): 0;
+  const totalTopicCards = topics?.length || 0;
+  const totalTopicPages = Math.max(1, Math.ceil(totalTopicCards / cardsPerPage));
 
-  const totalTagCards = tags?.length;
-  const totalTagPages = totalTagCards? Math.ceil(totalTagCards / cardsPerPage): 0;
+  const totalTagCards = tags?.length || 0;
+  const totalTagPages = Math.max(1, Math.ceil(totalTagCards / cardsPerPage));
 
   // Determine the topics to display on the current page
   const startTopicIndex = (currentTopicsPage - 1) * cardsPerPage;
@@ -114,7 +121,7 @@ const CardContainer: React.FC = () => {
   const goToPage = (cardType = 'topic') => {
     const pageNumber = parseInt(inputPage, 10);
     let totalPages;
-  
+
     switch (cardType) {
       case 'topic':
         totalPages = totalTopicPages;
@@ -126,7 +133,7 @@ const CardContainer: React.FC = () => {
         totalPages = totalTopicPages;
         break;
     }
-  
+
     if (!isNaN(pageNumber) && pageNumber >= 1 && pageNumber <= totalPages) {
       switch (cardType) {
         case 'topic':
@@ -142,14 +149,53 @@ const CardContainer: React.FC = () => {
       alert(`Please enter a valid page number between 1 and ${totalPages}.`);
     }
   };
-  
+
+  const renderTags = () => {
+    console.log('Rendering tags:', { tags, currentTags, totalTagCards, currentTagsPage });
+    
+    if (!tags || tags.length === 0) {
+      return (
+        <>
+          <h1><span>Tags </span> <Button icon={<IconAdd fontSize={16} />} onClick={() => navigate('/tags/add')} title='Add New Tag' /></h1>
+          <div className={classes.cardsWrapper}>
+            <Loading size={50} color="skyblue" />
+          </div>
+        </>
+      );
+    }
+
+    return (
+      <>
+        <h1><span>Tags </span> <Button icon={<IconAdd fontSize={16} />} onClick={() => navigate('/tags/add')} title='Add New Tag' /></h1>
+        <div className={classes.cardsWrapper}>
+          {currentTags && currentTags.length > 0 ? (
+            currentTags.map((tag) => (
+              <DashCard
+                key={tag.id}
+                modelName='tag'
+                modelId={tag.id}
+                name={tag.name}
+                title={tag.name}
+                content={tag.slug}
+                description={tag.description}
+                imgPath="logoT.svg"
+                imgAlt={tag.name}
+              />
+            ))
+          ) : (
+            <Text>No tags to display</Text>
+          )}
+        </div>
+      </>
+    );
+  };
 
   return (
     <FluentProvider theme={theme}>
       <div className={classes.container}>
-      <h1><span>Topics </span> <Button icon={<IconAdd fontSize={16} />} onClick={() => navigate('/topics/add')} title='Add New Topic' /></h1>
+        <h1><span>Topics </span> <Button icon={<IconAdd fontSize={16} />} onClick={() => navigate('/topics/add')} title='Add New Topic' /></h1>
         <div className={classes.cardsWrapper}>
-          {currentTopics? currentTopics.map((topic, index) => (
+          {currentTopics ? currentTopics.map((topic, index) => (
             <DashCard
               key={index}
               modelName='topic'
@@ -160,18 +206,18 @@ const CardContainer: React.FC = () => {
               description={topic.description}
               imgPath="react1.svg"
               imgAlt={topic.name}
-              
+
             />
-          )):
-          <Loading size={50} color="skyblue" />}
+          )) :
+            <Loading size={50} color="skyblue" />}
         </div>
         {totalTopicPages > 1 && (
           <div className={classes.pagination}>
-            <ArrowLeft24Regular onClick={() => goToPreviousPage('topic')} style={{ cursor: 'pointer' }} title='Previous Page'/>
-            <Text align='center' weight='regular' size={400} style={{ margin: '5px' , color: 'darkgrey' }}>
-               {currentTopicsPage}
+            <ArrowLeft24Regular onClick={() => goToPreviousPage('topic')} style={{ cursor: 'pointer' }} title='Previous Page' />
+            <Text align='center' weight='regular' size={400} style={{ margin: '5px', color: 'darkgrey' }}>
+              {currentTopicsPage}
             </Text>
-            <ArrowRight24Regular onClick={() => goToNextPage('topic')} style={{ cursor: 'pointer' }}  title='Next Page'/>
+            <ArrowRight24Regular onClick={() => goToNextPage('topic')} style={{ cursor: 'pointer' }} title='Next Page' />
             <TextField
               value={inputPage}
               onChange={(e) => setInputPage((e.target as HTMLInputElement).value)}
@@ -192,36 +238,19 @@ const CardContainer: React.FC = () => {
         )}
       </div>
       <div className={classes.container}>
-        <h1><span>Tags </span> <Button icon={<IconAdd fontSize={16} />} onClick={() => navigate('/tags/add')} title='Add New Tag' /></h1>
-        <div className={classes.cardsWrapper}>
-          {currentTags? currentTags.map((tag, index) => (
-            <DashCard
-              key={index}
-              modelName='tag'
-              modelId={tag.id}
-              name={tag.name}
-              title={tag.name}
-              content={tag.title}
-              description={tag.title}
-              imgPath="react.svg"
-              imgAlt={tag.name}
-              
-            />
-          )):
-          <Loading size={50} color="skyblue" />}
-        </div>
-        {totalTagPages > 1 && (
+        {renderTags()}
+        {totalTagPages > 0 && (
           <div className={classes.pagination}>
-            <ArrowLeft24Regular onClick={() => goToPreviousPage('tag')} style={{ cursor: 'pointer' }} title='Previous Page'/>
-            <Text align='center' weight='regular' size={400} style={{ margin: '5px' , color: 'darkgrey' }}>
-               {currentTagsPage}
+            <ArrowLeft24Regular onClick={() => goToPreviousPage('tag')} style={{ cursor: 'pointer' }} title='Previous Page' />
+            <Text align='center' weight='regular' size={400} style={{ margin: '5px', color: 'darkgrey' }}>
+              {currentTagsPage}
             </Text>
-            <ArrowRight24Regular onClick={() => goToNextPage('tag')} style={{ cursor: 'pointer' }} title='Next Page'/>
+            <ArrowRight24Regular onClick={() => goToNextPage('tag')} style={{ cursor: 'pointer' }} title='Next Page' />
             <TextField
               value={inputPage}
               onChange={(e) => setInputPage((e.target as HTMLInputElement).value)}
               styles={{
-                root: { width: '35px', margin: '10px', color: 'skyblue'},
+                root: { width: '35px', margin: '10px', color: 'skyblue' },
                 field: { textAlign: 'center', fontWeight: 'bold', verticalAlign: 'middle', color: 'blue' },
               }}
               onKeyUp={(e) => {

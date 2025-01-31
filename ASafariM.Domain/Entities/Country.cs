@@ -1,4 +1,6 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 
 namespace ASafariM.Domain.Entities
 {
@@ -19,19 +21,24 @@ namespace ASafariM.Domain.Entities
         [StringLength(100)]
         public string Name { get; set; } = "Belgium";
 
-        [Required]
         [StringLength(100)]
-        public string NativeName { get; set; } = "België";
+        public string? Capital { get; set; } = "Brussels";
+
+        [StringLength(100)]
+        public string? NativeName { get; set; } = "België";
 
         [Required]
         [StringLength(5)]
-        [RegularExpression(@"^\+\d{1,3}$", ErrorMessage = "Phone code must start with '+' followed by 1-3 digits")]
+        [RegularExpression(
+            @"^\+\d{1,3}$",
+            ErrorMessage = "Phone code must start with '+' followed by 1-3 digits"
+        )]
         public string PhoneCode { get; set; } = "+32";
 
         public bool IsActive { get; set; } = true;
 
         // Navigation properties
-        public ICollection<GeographicalPreference> GeographicalPreferences { get; set; } = new List<GeographicalPreference>();
+        public ICollection<GeographicalPreference>? GeographicalPreferences { get; set; }
 
         // Audit fields
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;

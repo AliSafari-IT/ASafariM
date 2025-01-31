@@ -70,6 +70,8 @@ namespace ASafariM.Infrastructure.Repositories
 
         public async Task<bool> DeleteAsync(Guid id)
         {
+            if (await ExistsAsync(id) == false)
+                return false;
             var topic = await _context.Topics.FindAsync(id);
             if (topic == null)
                 return false;

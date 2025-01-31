@@ -4,6 +4,7 @@ using ASafariM.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ASafariM.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250131152219_TagSimplified")]
+    partial class TagSimplified
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -225,9 +228,9 @@ namespace ASafariM.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("97b10a3b-322b-4973-b457-99ffce22f937"),
+                            Id = new Guid("b89b965b-b841-4dd0-a7a6-15b7cbb1461c"),
                             Capital = "Brussels",
-                            CreatedAt = new DateTime(2025, 1, 31, 15, 27, 38, 967, DateTimeKind.Utc).AddTicks(5610),
+                            CreatedAt = new DateTime(2025, 1, 31, 15, 22, 16, 593, DateTimeKind.Utc).AddTicks(5696),
                             IsActive = true,
                             IsoCode = "BE",
                             IsoCode3 = "BEL",
@@ -237,9 +240,9 @@ namespace ASafariM.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("83aa6e6a-9446-4e62-9e0e-497b6e9242e4"),
+                            Id = new Guid("871f1bbe-05a0-415a-9ce5-f4f401dc0232"),
                             Capital = "Brussels",
-                            CreatedAt = new DateTime(2025, 1, 31, 15, 27, 38, 967, DateTimeKind.Utc).AddTicks(5625),
+                            CreatedAt = new DateTime(2025, 1, 31, 15, 22, 16, 593, DateTimeKind.Utc).AddTicks(5701),
                             IsActive = true,
                             IsoCode = "FR",
                             IsoCode3 = "FRA",
@@ -249,9 +252,9 @@ namespace ASafariM.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("2c045b97-f553-4357-a32c-43c0645edb5a"),
+                            Id = new Guid("cdacedf7-f976-413b-bc9c-6174cd6acb13"),
                             Capital = "Brussels",
-                            CreatedAt = new DateTime(2025, 1, 31, 15, 27, 38, 967, DateTimeKind.Utc).AddTicks(5628),
+                            CreatedAt = new DateTime(2025, 1, 31, 15, 22, 16, 593, DateTimeKind.Utc).AddTicks(5706),
                             IsActive = true,
                             IsoCode = "DE",
                             IsoCode3 = "DEU",
@@ -261,9 +264,9 @@ namespace ASafariM.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("742340ca-3524-4d81-98e2-af1305709a24"),
+                            Id = new Guid("18c0299c-d743-48af-936b-256dd3c150c3"),
                             Capital = "Brussels",
-                            CreatedAt = new DateTime(2025, 1, 31, 15, 27, 38, 967, DateTimeKind.Utc).AddTicks(5631),
+                            CreatedAt = new DateTime(2025, 1, 31, 15, 22, 16, 593, DateTimeKind.Utc).AddTicks(5708),
                             IsActive = true,
                             IsoCode = "NL",
                             IsoCode3 = "NLD",
@@ -273,9 +276,9 @@ namespace ASafariM.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("369c7ee0-c6bd-4dca-b757-17a34c7dd8a3"),
+                            Id = new Guid("17c5bebd-4ba9-48ea-be06-9e183a5ea4e8"),
                             Capital = "Brussels",
-                            CreatedAt = new DateTime(2025, 1, 31, 15, 27, 38, 967, DateTimeKind.Utc).AddTicks(5642),
+                            CreatedAt = new DateTime(2025, 1, 31, 15, 22, 16, 593, DateTimeKind.Utc).AddTicks(5714),
                             IsActive = true,
                             IsoCode = "GB",
                             IsoCode3 = "GBR",
@@ -285,9 +288,9 @@ namespace ASafariM.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("efbed95e-b296-4f2c-abe1-8ab179d311d1"),
+                            Id = new Guid("bf039124-1b85-40e2-9c92-ac6818eae77d"),
                             Capital = "Brussels",
-                            CreatedAt = new DateTime(2025, 1, 31, 15, 27, 38, 967, DateTimeKind.Utc).AddTicks(5645),
+                            CreatedAt = new DateTime(2025, 1, 31, 15, 22, 16, 593, DateTimeKind.Utc).AddTicks(5716),
                             IsActive = true,
                             IsoCode = "IT",
                             IsoCode3 = "ITA",
@@ -297,9 +300,9 @@ namespace ASafariM.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("71cfe817-03fa-423e-9e78-e0ffc2dc34b4"),
+                            Id = new Guid("dc32ac10-2f47-4159-adcf-208cba610642"),
                             Capital = "Brussels",
-                            CreatedAt = new DateTime(2025, 1, 31, 15, 27, 38, 967, DateTimeKind.Utc).AddTicks(5648),
+                            CreatedAt = new DateTime(2025, 1, 31, 15, 22, 16, 593, DateTimeKind.Utc).AddTicks(5718),
                             IsActive = true,
                             IsoCode = "ES",
                             IsoCode3 = "ESP",
@@ -309,9 +312,9 @@ namespace ASafariM.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("40ede959-230c-4150-8fc5-99e435b63a8b"),
+                            Id = new Guid("69045b5e-b7ba-4195-988c-da6a69771a72"),
                             Capital = "Brussels",
-                            CreatedAt = new DateTime(2025, 1, 31, 15, 27, 38, 967, DateTimeKind.Utc).AddTicks(5651),
+                            CreatedAt = new DateTime(2025, 1, 31, 15, 22, 16, 593, DateTimeKind.Utc).AddTicks(5720),
                             IsActive = true,
                             IsoCode = "CH",
                             IsoCode3 = "CHE",
@@ -321,9 +324,9 @@ namespace ASafariM.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("982f5da4-8d7f-4305-9f2f-9fc134cb4b47"),
+                            Id = new Guid("636874da-9ef0-43c2-ade5-882c58a5b610"),
                             Capital = "Brussels",
-                            CreatedAt = new DateTime(2025, 1, 31, 15, 27, 38, 967, DateTimeKind.Utc).AddTicks(5653),
+                            CreatedAt = new DateTime(2025, 1, 31, 15, 22, 16, 593, DateTimeKind.Utc).AddTicks(5722),
                             IsActive = true,
                             IsoCode = "AT",
                             IsoCode3 = "AUT",
@@ -333,9 +336,9 @@ namespace ASafariM.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("71d76a19-658d-40db-8b80-ea7d71531c15"),
+                            Id = new Guid("f0a91fbc-f95a-4ac7-91e9-df9ec33cc41c"),
                             Capital = "Brussels",
-                            CreatedAt = new DateTime(2025, 1, 31, 15, 27, 38, 967, DateTimeKind.Utc).AddTicks(5660),
+                            CreatedAt = new DateTime(2025, 1, 31, 15, 22, 16, 593, DateTimeKind.Utc).AddTicks(5728),
                             IsActive = true,
                             IsoCode = "LU",
                             IsoCode3 = "LUX",
@@ -388,9 +391,9 @@ namespace ASafariM.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("78adc1a4-bf6c-4b6b-ad99-6664f9f42e62"),
+                            Id = new Guid("efef39f1-6976-4158-9457-e25e74278108"),
                             Code = "EUR",
-                            CreatedAt = new DateTime(2025, 1, 31, 15, 27, 38, 967, DateTimeKind.Utc).AddTicks(5502),
+                            CreatedAt = new DateTime(2025, 1, 31, 15, 22, 16, 593, DateTimeKind.Utc).AddTicks(5582),
                             DecimalPlaces = 2,
                             IsActive = true,
                             Name = "Euro",
@@ -398,9 +401,9 @@ namespace ASafariM.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("46f2144b-1597-4547-8343-2d61252a5175"),
+                            Id = new Guid("dade6f17-23df-4717-bd83-c18e25f141a3"),
                             Code = "USD",
-                            CreatedAt = new DateTime(2025, 1, 31, 15, 27, 38, 967, DateTimeKind.Utc).AddTicks(5506),
+                            CreatedAt = new DateTime(2025, 1, 31, 15, 22, 16, 593, DateTimeKind.Utc).AddTicks(5586),
                             DecimalPlaces = 2,
                             IsActive = true,
                             Name = "US Dollar",
@@ -408,9 +411,9 @@ namespace ASafariM.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("2792f4f5-a0f6-4899-ab37-19c74e4d2ad3"),
+                            Id = new Guid("15c89762-7d4b-444c-8639-07e31c560cf4"),
                             Code = "GBP",
-                            CreatedAt = new DateTime(2025, 1, 31, 15, 27, 38, 967, DateTimeKind.Utc).AddTicks(5509),
+                            CreatedAt = new DateTime(2025, 1, 31, 15, 22, 16, 593, DateTimeKind.Utc).AddTicks(5588),
                             DecimalPlaces = 2,
                             IsActive = true,
                             Name = "British Pound",
@@ -418,9 +421,9 @@ namespace ASafariM.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("d8c190ec-9cc0-47d9-8510-53514ea93d03"),
+                            Id = new Guid("f5b9cab3-e6ab-4bb0-8338-51fad8270c14"),
                             Code = "CHF",
-                            CreatedAt = new DateTime(2025, 1, 31, 15, 27, 38, 967, DateTimeKind.Utc).AddTicks(5511),
+                            CreatedAt = new DateTime(2025, 1, 31, 15, 22, 16, 593, DateTimeKind.Utc).AddTicks(5593),
                             DecimalPlaces = 2,
                             IsActive = true,
                             Name = "Swiss Franc",
@@ -471,8 +474,8 @@ namespace ASafariM.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("d034e14f-d0f5-40ed-9ebd-ca2beca14adb"),
-                            CreatedAt = new DateTime(2025, 1, 31, 15, 27, 38, 967, DateTimeKind.Utc).AddTicks(5434),
+                            Id = new Guid("84dbc2ab-d979-4d93-a82b-a34ed2986455"),
+                            CreatedAt = new DateTime(2025, 1, 31, 15, 22, 16, 593, DateTimeKind.Utc).AddTicks(5532),
                             DisplayName = "Belgian/European Date Format",
                             Example = "31/12/2024",
                             Format = "dd/MM/yyyy",
@@ -481,8 +484,8 @@ namespace ASafariM.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("958859f8-8c50-4cdb-ad36-a9f323388fbb"),
-                            CreatedAt = new DateTime(2025, 1, 31, 15, 27, 38, 967, DateTimeKind.Utc).AddTicks(5443),
+                            Id = new Guid("0edafad8-8ca3-49ba-801e-38d5c670f29f"),
+                            CreatedAt = new DateTime(2025, 1, 31, 15, 22, 16, 593, DateTimeKind.Utc).AddTicks(5536),
                             DisplayName = "Belgian Date Format (Dot)",
                             Example = "31.12.2024",
                             Format = "dd.MM.yyyy",
@@ -491,8 +494,8 @@ namespace ASafariM.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("0dcaa339-706b-4a1d-8a23-71ef6bdf4eec"),
-                            CreatedAt = new DateTime(2025, 1, 31, 15, 27, 38, 967, DateTimeKind.Utc).AddTicks(5446),
+                            Id = new Guid("63b1e3c6-a3aa-4c75-bcd8-5b43ec440cdd"),
+                            CreatedAt = new DateTime(2025, 1, 31, 15, 22, 16, 593, DateTimeKind.Utc).AddTicks(5538),
                             DisplayName = "US Date Format",
                             Example = "12/31/2024",
                             Format = "MM/dd/yyyy",
@@ -501,8 +504,8 @@ namespace ASafariM.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("6c39a3bb-5e5d-48f0-958d-f75948307799"),
-                            CreatedAt = new DateTime(2025, 1, 31, 15, 27, 38, 967, DateTimeKind.Utc).AddTicks(5448),
+                            Id = new Guid("f89eee52-7cce-4fbe-916e-d87c871b46d3"),
+                            CreatedAt = new DateTime(2025, 1, 31, 15, 22, 16, 593, DateTimeKind.Utc).AddTicks(5541),
                             DisplayName = "ISO Date Format",
                             Example = "2024-12-31",
                             Format = "yyyy-MM-dd",
@@ -570,8 +573,8 @@ namespace ASafariM.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("a2a75136-ec5f-407b-84f7-7d5de1d35688"),
-                            CreatedAt = new DateTime(2025, 1, 31, 15, 27, 38, 967, DateTimeKind.Utc).AddTicks(5285),
+                            Id = new Guid("d6f30d3a-e33f-4ce0-aa5f-caf5a16decc1"),
+                            CreatedAt = new DateTime(2025, 1, 31, 15, 22, 16, 593, DateTimeKind.Utc).AddTicks(5445),
                             Description = "Simple text document format",
                             Extension = ".txt",
                             IsActive = true,
@@ -584,8 +587,8 @@ namespace ASafariM.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("fe54e10a-35ca-4040-8c30-42102ce6e029"),
-                            CreatedAt = new DateTime(2025, 1, 31, 15, 27, 38, 967, DateTimeKind.Utc).AddTicks(5294),
+                            Id = new Guid("364ac633-a685-4827-b000-b5f53eb963b7"),
+                            CreatedAt = new DateTime(2025, 1, 31, 15, 22, 16, 593, DateTimeKind.Utc).AddTicks(5451),
                             Description = "TypeScript source code file",
                             Extension = ".ts",
                             IsActive = true,
@@ -598,8 +601,8 @@ namespace ASafariM.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("95f11c15-f0ef-40ad-9992-9f3b0638f282"),
-                            CreatedAt = new DateTime(2025, 1, 31, 15, 27, 38, 967, DateTimeKind.Utc).AddTicks(5298),
+                            Id = new Guid("c92031c7-ca64-4fbe-aa4b-4dce49376549"),
+                            CreatedAt = new DateTime(2025, 1, 31, 15, 22, 16, 593, DateTimeKind.Utc).AddTicks(5454),
                             Description = "TypeScript React component file",
                             Extension = ".tsx",
                             IsActive = true,
@@ -612,8 +615,8 @@ namespace ASafariM.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("3735fe4e-e789-42a9-9fd7-72a4593a64aa"),
-                            CreatedAt = new DateTime(2025, 1, 31, 15, 27, 38, 967, DateTimeKind.Utc).AddTicks(5301),
+                            Id = new Guid("c6437072-6724-48e3-911f-3b316a3a1d6d"),
+                            CreatedAt = new DateTime(2025, 1, 31, 15, 22, 16, 593, DateTimeKind.Utc).AddTicks(5456),
                             Description = "JavaScript source code file",
                             Extension = ".js",
                             IsActive = true,
@@ -626,8 +629,8 @@ namespace ASafariM.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("36d61fa4-34bf-46f7-98d5-bf22f0e55f92"),
-                            CreatedAt = new DateTime(2025, 1, 31, 15, 27, 38, 967, DateTimeKind.Utc).AddTicks(5304),
+                            Id = new Guid("fc2f5490-dfdd-4125-9c86-2a7cfe5bb732"),
+                            CreatedAt = new DateTime(2025, 1, 31, 15, 22, 16, 593, DateTimeKind.Utc).AddTicks(5458),
                             Description = "JavaScript Object Notation data file",
                             Extension = ".json",
                             IsActive = true,
@@ -640,8 +643,8 @@ namespace ASafariM.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("0dd5d9f2-8742-413f-a798-403ae6e97729"),
-                            CreatedAt = new DateTime(2025, 1, 31, 15, 27, 38, 967, DateTimeKind.Utc).AddTicks(5307),
+                            Id = new Guid("da0d600f-799e-42ee-8919-bfb441b12f2c"),
+                            CreatedAt = new DateTime(2025, 1, 31, 15, 22, 16, 593, DateTimeKind.Utc).AddTicks(5460),
                             Description = "Markdown text format",
                             Extension = ".md",
                             IsActive = true,
@@ -976,8 +979,8 @@ namespace ASafariM.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("705b6cfe-4285-459e-8caf-f9ea293bb663"),
-                            CreatedAt = new DateTime(2025, 1, 31, 15, 27, 38, 967, DateTimeKind.Utc).AddTicks(5369),
+                            Id = new Guid("9696956c-2df5-4db6-b89d-c9a51d86aa61"),
+                            CreatedAt = new DateTime(2025, 1, 31, 15, 22, 16, 593, DateTimeKind.Utc).AddTicks(5501),
                             EnableInfiniteScroll = false,
                             IsActive = true,
                             IsDefault = false,
@@ -1444,37 +1447,37 @@ namespace ASafariM.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("5aaa66f5-ea3a-4e39-8879-15877d4b1e0f"),
+                            Id = new Guid("abe5df4f-3edd-4e6f-b8f6-b4b270a3b779"),
                             Description = "Admin role has full administrative privileges, except for application management.",
                             Name = "Admin"
                         },
                         new
                         {
-                            Id = new Guid("67722467-ba26-4968-9225-bb24bec936ca"),
+                            Id = new Guid("063aaff6-e8a8-4df5-a353-4a27ce6d7428"),
                             Description = "Manages user interactions and content moderation. They can create and manage their own tasks, projects, and content, and can edit other public articles than their own.",
                             Name = "Moderator"
                         },
                         new
                         {
-                            Id = new Guid("bcea53d6-3ef8-4c81-beb4-8a7bdb30758e"),
+                            Id = new Guid("fd3f1680-70b9-4ef6-baaa-163083de192d"),
                             Description = "User role with limited privileges. A user can create and manage their own tasks, projects, and content, and cannot edit other public articles than their own.",
                             Name = "User"
                         },
                         new
                         {
-                            Id = new Guid("fe5f17b2-19c3-4fe5-934b-1f73d8d7ce88"),
+                            Id = new Guid("6dfa4233-447d-483d-b193-76c0311b1a3e"),
                             Description = "Guest role is the least privileged role. They can only view public articles.",
                             Name = "Guest"
                         },
                         new
                         {
-                            Id = new Guid("9e715b2a-f845-4502-a348-d12a3ef1d5d4"),
+                            Id = new Guid("68a2522e-da57-47ac-b39f-bf0a4331f073"),
                             Description = "Focuses on content creation and management without full administrative privileges. They can create and manage their own articles, but cannot edit other public articles than their own.",
                             Name = "Editor"
                         },
                         new
                         {
-                            Id = new Guid("640ba588-1902-4e34-b912-b1da97ac82d8"),
+                            Id = new Guid("b9dfecda-7809-4e31-a275-1aaad76ef0eb"),
                             Description = "Has full control over the application and can manage all aspects.",
                             Name = "SuperAdmin"
                         });
@@ -1626,15 +1629,6 @@ namespace ASafariM.Infrastructure.Migrations
                     b.HasIndex("PostId");
 
                     b.ToTable("Tags");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("f0536545-04b7-4e3c-9190-5176e0222085"),
-                            Description = "Test Tag description",
-                            Name = "Test Tag name",
-                            Slug = "test-tag-slug"
-                        });
                 });
 
             modelBuilder.Entity("ASafariM.Domain.Entities.ThemePreference", b =>
@@ -1711,8 +1705,8 @@ namespace ASafariM.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("6c3f1fb6-7daf-40a7-816c-263ad23e3024"),
-                            CreatedAt = new DateTime(2025, 1, 31, 15, 27, 38, 967, DateTimeKind.Utc).AddTicks(5554),
+                            Id = new Guid("80e5531a-449d-4b71-a86a-cfeb18b51b3d"),
+                            CreatedAt = new DateTime(2025, 1, 31, 15, 22, 16, 593, DateTimeKind.Utc).AddTicks(5643),
                             DstOffset = "+02:00",
                             IsActive = true,
                             Name = "CET",
@@ -1722,8 +1716,8 @@ namespace ASafariM.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("85cdad0a-e3ed-4436-a832-7dc2a818832c"),
-                            CreatedAt = new DateTime(2025, 1, 31, 15, 27, 38, 967, DateTimeKind.Utc).AddTicks(5561),
+                            Id = new Guid("dd777968-7e03-4626-8f70-39708e0e7fa0"),
+                            CreatedAt = new DateTime(2025, 1, 31, 15, 22, 16, 593, DateTimeKind.Utc).AddTicks(5656),
                             DstOffset = "+02:00",
                             IsActive = true,
                             Name = "CEST",
@@ -1733,8 +1727,8 @@ namespace ASafariM.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("aa66e3e3-0881-447a-b81e-620b3050e429"),
-                            CreatedAt = new DateTime(2025, 1, 31, 15, 27, 38, 967, DateTimeKind.Utc).AddTicks(5565),
+                            Id = new Guid("9d36d73d-584f-4661-b0b8-6dcc303deea0"),
+                            CreatedAt = new DateTime(2025, 1, 31, 15, 22, 16, 593, DateTimeKind.Utc).AddTicks(5659),
                             DstOffset = "+02:00",
                             IsActive = true,
                             Name = "UTC",
@@ -1744,8 +1738,8 @@ namespace ASafariM.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("7ab0eb9c-c8d4-42d7-bc0b-b4a942d2f9c0"),
-                            CreatedAt = new DateTime(2025, 1, 31, 15, 27, 38, 967, DateTimeKind.Utc).AddTicks(5567),
+                            Id = new Guid("060efec7-587d-4288-b1b8-13515bd10cc9"),
+                            CreatedAt = new DateTime(2025, 1, 31, 15, 22, 16, 593, DateTimeKind.Utc).AddTicks(5661),
                             DstOffset = "+01:00",
                             IsActive = true,
                             Name = "WET",
@@ -1755,8 +1749,8 @@ namespace ASafariM.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("40834324-6126-46df-b116-8ecda51a2754"),
-                            CreatedAt = new DateTime(2025, 1, 31, 15, 27, 38, 967, DateTimeKind.Utc).AddTicks(5570),
+                            Id = new Guid("3eff4581-d443-4b64-85be-63bd45a4b117"),
+                            CreatedAt = new DateTime(2025, 1, 31, 15, 22, 16, 593, DateTimeKind.Utc).AddTicks(5663),
                             DstOffset = "+03:00",
                             IsActive = true,
                             Name = "EET",

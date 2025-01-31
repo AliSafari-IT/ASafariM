@@ -40,6 +40,11 @@ import AddTagForm from "./components/crud/AddTagForm";
 import AddCategoryForm from "./components/crud/AddCategoryForm";
 import AddTopicForm from "./components/crud/AddTopicForm";
 import AddPostForm from "./components/crud/AddPostForm";
+import EditTagForm from "./components/crud/EditTagForm";
+import EditCategoryForm from "./components/crud/EditCategoryForm";
+import EditTopicForm from "./components/crud/EditTopicForm";
+import EditPostForm from "./components/crud/EditPostForm";
+import EditSitemapItemForm from "./components/crud/EditSitemapItemForm";
 import AddSitemapItemForm from "./components/crud/AddSitemapItemForm";
 
 // const userUrl = API_URL + '/users';
@@ -269,11 +274,15 @@ function App() {
           />
           {/** Add route for crud operations for dynamic models to cover all use cases regarding: Tags, Categories, Topics, Projects, Posts, SitemapItems */}
           <Route path="/tags/add" element={<AddTagForm />} />
+          <Route path="/tags/edit/:id" element={<EditTagForm />} />
           <Route path="/categories/add" element={<AddCategoryForm />} />
+          <Route path="/categories/edit/:id" element={<EditCategoryForm />} />
           <Route path="/topics/add" element={<AddTopicForm />} />
+          <Route path="/topics/edit/:id" element={<EditTopicForm />} />
           <Route path="/posts/add" element={<AddPostForm />} />
+          <Route path="/posts/edit/:id" element={<EditPostForm />} />
           <Route path="/sitemap-items/add" element={<AddSitemapItemForm />} />
-
+          <Route path="/sitemap-items/edit/:id" element={<EditSitemapItemForm />} />
 
           <Route path="/health-ui" element={<Navigate to="/health-ui" />} />
           <Route path="/access-denied" element={<AccessDenied />} />

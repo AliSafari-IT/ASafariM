@@ -20,24 +20,17 @@ namespace ASafariM.Infrastructure.Repositories
 
         public async Task<IEnumerable<Tag>> GetAllAsync()
         {
-            return await _context
-                .Tags.Include(t => t.PostTags)
-                .Where(t => !t.IsDeleted)
-                .ToListAsync();
+            return await _context.Tags.ToListAsync();
         }
 
         public async Task<Tag> GetByIdAsync(Guid id)
         {
-            return await _context
-                .Tags.Include(t => t.PostTags)
-                .FirstOrDefaultAsync(t => t.Id == id && !t.IsDeleted);
+            return await _context.Tags.FirstOrDefaultAsync(t => t.Id == id);
         }
 
         public async Task<Tag> GetBySlugAsync(string slug)
         {
-            return await _context
-                .Tags.Include(t => t.PostTags)
-                .FirstOrDefaultAsync(t => t.Slug == slug && !t.IsDeleted);
+            return await _context.Tags.FirstOrDefaultAsync(t => t.Slug == slug);
         }
 
         public async Task<IEnumerable<Tag>> GetTagsByPostIdAsync(Guid postId)
@@ -45,7 +38,6 @@ namespace ASafariM.Infrastructure.Repositories
             return await _context
                 .PostTags.Where(pt => pt.PostId == postId)
                 .Select(pt => pt.Tag)
-                .Where(t => !t.IsDeleted)
                 .ToListAsync();
         }
 
@@ -68,21 +60,24 @@ namespace ASafariM.Infrastructure.Repositories
             var tag = await _context.Tags.FindAsync(id);
             if (tag == null)
                 return false;
-
-            tag.IsDeleted = true;
-            tag.DeletedAt = DateTime.UtcNow;
+            _context.Tags.Remove(tag);
             await _context.SaveChangesAsync();
             return true;
         }
 
         public async Task<bool> ExistsAsync(Guid id)
         {
-            return await _context.Tags.AnyAsync(t => t.Id == id && !t.IsDeleted);
+            return await _context.Tags.AnyAsync(t => t.Id == id);
         }
 
         public async Task<bool> SlugExistsAsync(string slug)
         {
-            return await _context.Tags.AnyAsync(t => t.Slug == slug && !t.IsDeleted);
+            return await _context.Tags.AnyAsync(t => t.Slug == slug);
+        }
+
+        public Task SaveChangesAsync()
+        {
+            return _context.SaveChangesAsync();
         }
     }
 }

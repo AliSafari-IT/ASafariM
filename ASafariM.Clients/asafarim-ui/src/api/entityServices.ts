@@ -1,18 +1,32 @@
 // E:\asm\apps\dashboard-client\src\api\dashboardServices.ts
-import axios from "axios";
-import API_URL from "./getApiUrls";
+import axios, { AxiosError } from "axios";
+import apiUrls from "./getApiUrls";
 
 const api = axios.create({
-    baseURL: API_URL
+    baseURL: apiUrls(window.location.hostname)
+});
+
+// Add request interceptor to include auth token
+api.interceptors.request.use((config) => {
+    const {auth} = JSON.parse(localStorage.getItem('auth') || '{}');
+    if (auth?.token) {
+        config.headers.Authorization = `Bearer ${auth.token}`;
+    }
+    return config;
+}, (error) => {
+    return Promise.reject(error);
 });
 
 api.defaults.headers.post['Content-Type'] = 'application/json';
 api.defaults.headers.put['Content-Type'] = 'application/json';
+api.defaults.headers.patch['Content-Type'] = 'application/json';
+api.defaults.headers.delete['Content-Type'] = 'application/json';
+api.defaults.headers.get['Content-Type'] = 'application/json';
 
 
 
 const tableExistsInDb = async (tableName: string): Promise<boolean> => {
-    console.info(`Checking table existence: ${tableName} in ${API_URL}`);
+    console.info(`Checking table existence: ${tableName} in ${apiUrls(window.location.hostname)}`);
     try {
         const response = await api.get(`${tableName}`);
         return response.status === 200;
@@ -23,19 +37,24 @@ const tableExistsInDb = async (tableName: string): Promise<boolean> => {
 // CRUD operations for entities from the API
 const fetchEntities = async (entityTableName: string) => {
     // Validate the entity table name
-    if (!tableExistsInDb(`${entityTableName}s`)) {
+    if (!tableExistsInDb(`${entityTableName}`)) {
         throw new Error(`Entity does not exist: ${entityTableName}`);
     }
-
-    const url = `${API_URL}/${entityTableName}s`;
-    console.log(`Fetching entities from: ${url}`); // Log the URL for debugging
-
     try {
-        const response = await api.get(url);
-        return response.data; // Return the data directly
+        // Convert singular to plural for API endpoints
+        const endpoint = entityTableName.endsWith('s') ? entityTableName : `${entityTableName}s`;
+        console.log(`Fetching entities from endpoint: /${endpoint}`);
+        
+        const response = await api.get(`/${endpoint}`);
+        console.log(`Response from ${endpoint}:`, response.data);
+        
+        return {
+            success: true,
+            data: response.data
+        };
     } catch (error) {
-        console.error('Error fetching entities:', error);
-        throw new Error(`Failed to fetch entities for ${entityTableName}s. (${error})`);
+        console.error(`Error fetching ${entityTableName}:`, error);
+        throw error;
     }
 };
 
@@ -56,7 +75,7 @@ const fetchEntityById = async (entityTableName: string, id: string): Promise<unk
         throw new Error('No ID provided');
     }
 
-    const url = `${API_URL}/${entityTableName}/${id}`;
+    const url = `/${entityTableName}/${id}`;
 
     console.log(`Fetching entity by ID from ${entityTableName}`, id);
     return api.get(url)
@@ -71,40 +90,64 @@ const fetchEntityById = async (entityTableName: string, id: string): Promise<unk
 }
 
 const addEntity = async (entityTableName: string, data: Record<string, unknown>) => {
-    console.log(`Adding entity to ${entityTableName}`, data);
-    const url = `${API_URL}/${entityTableName}`;
-    data = { ...data, id: undefined }; // Ensure the ID is not included in the data object
+    console.debug(`Initiating addEntity function for table: ${entityTableName} with data:`, data);
 
-    // Send a POST request to add a new entity
-    return api.post(url, data)
-        .then(response => {
-            console.log(`Added entity to ${entityTableName}`, response.data);
-            return response.data;
-        })
-        .catch(error => {
-            console.error(`Error adding entity to ${entityTableName}`, error);
-            // Throw a new error with a message indicating the failure
-            throw new Error('Failed to add entity: ' + entityTableName);
-        });
+    // Validate the entity table name
+    if (!await tableExistsInDb(entityTableName)) {
+        console.error(`Entity table does not exist: ${entityTableName}`);
+        throw new Error(`Entity does not exist: ${entityTableName}`);
+    }
+
+    const url = `/${entityTableName}`;
+    console.debug(`Constructed URL for adding entity: ${url}`);
+
+    const sanitizedData = { ...data, id: undefined };
+    console.debug(`Sanitized data for POST request:`, sanitizedData);
+
+    try {
+        const response = await api.post(url, sanitizedData);
+        console.info(`Successfully added entity to ${entityTableName}`, response.data);
+        return response.data;
+    } catch (error) {
+        console.error(`Error adding entity to ${entityTableName}`, error);
+        throw new Error(`Failed to add entity: ${entityTableName}`);
+    }
 }
 
-const updateEntity = async (entityTableName: string, id: string, data: unknown) => {
-    const url = `${API_URL}/${entityTableName}/${id}`;
-    console.log(`Updating entity in ${entityTableName}: ID: ${id}`, data); // Log the data being sent
 
-    return axios.put(url, data)  // Do not include the 'id' in the data object
-        .then(response => {
-            console.log(`Updated entity in ${entityTableName}`, response.data);
-            return response.data;
-        })
-        .catch(error => {
-            console.error(`Error updating entity in ${entityTableName}`, error);
-            throw new Error('Failed to update entity: ' + entityTableName);
-        });
+const updateEntity = async (entityTableName: string, id: string, data: Record<string, unknown>) => {
+    try {
+        const endpoint = entityTableName.endsWith('s') ? entityTableName : `${entityTableName}s`;
+        console.log(`Updating entity in ${endpoint}:`, { id, data });
+        
+        const url = `/${endpoint}/${id}`;
+        console.debug(`Constructed URL for updating entity: ${url}`);
+    
+        const sanitizedData= { ...data };
+        delete sanitizedData.id;
+                
+        console.debug(`Sanitized data for PUT request:`, sanitizedData);
+
+        // Send the PUT request to update the entity
+        const response = await api.put(url, sanitizedData);
+        console.info(`Successfully updated entity in ${endpoint}:`, response.data);
+        
+        return {
+            success: true,
+            data: response.data
+        };
+    } catch (error: unknown) {
+        if (error instanceof AxiosError) {
+            console.error(`Error updating entity in ${entityTableName}:`, error.response?.data);
+            throw error;
+        }
+        console.error('An error occurred while updating the entity.');
+        throw new Error('An error occurred while updating the entity.');
+    }
 }
 
 const deleteEntity = async (entityTableName: string, id: string) => {
-    return axios.delete(`${API_URL}/${entityTableName}/${id}`)
+    return api.delete(`/${entityTableName}/${id}`)
         .catch(error => {
             console.error('Error deleting entity:', error);
             throw new Error('Failed to delete entity: ' + entityTableName);
@@ -116,4 +159,3 @@ const dashboardServices = {
 }
 
 export default dashboardServices;
-

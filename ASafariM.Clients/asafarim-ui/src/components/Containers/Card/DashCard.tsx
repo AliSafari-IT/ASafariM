@@ -17,7 +17,7 @@ import { useNavigate } from "react-router-dom";
 
 const resolveAsset = (asset: string) => {
   const ASSET_URL =
-    "/dist/img/svgs/";
+    "";
 
   return `${ASSET_URL}${asset}`;
 };
@@ -37,7 +37,33 @@ const useStyles = makeStyles({
     }
 
   },
+  cardFooter: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: "10px",
+    borderTop: "1px solid #f0f0f0",
+  },
+  cardPreview: {
+    padding: "10px",
+    border: "1px solid #f0f0f0",
+    borderRadius: "4px",
+    overflow: "hidden",
+  },
+  cardFooterAction: {
+    display: "flex",
+    alignItems: "center",
+    gap: "5px",
+  },
+  cardFooterActionButton: {
+    padding: "5px",
+    border: "1px solid #f0f0f0",
+    borderRadius: "4px",
+    cursor: "pointer",
+    backgroundColor: "#f0f0f0",
+  },
 });
+
 interface DashCardProps {
   modelName?: string;
   modelId?: string;
@@ -59,6 +85,7 @@ export const DashCard: React.FC<DashCardProps> = ({ modelName = 'topics', modelI
           <img
             src={resolveAsset(imgPath)}
             alt={imgAlt}
+            style={{ width: 24, height: 24, objectFit: "cover" }}
           />
         }
         header={

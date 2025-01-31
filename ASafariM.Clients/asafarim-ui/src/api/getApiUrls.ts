@@ -9,4 +9,5 @@ const apiUrls = (host: string) => {
     }
 };
 console.debug(apiUrls(window.location.hostname));
-export default apiUrls(window.location.hostname);
+export { apiUrls };
+export default apiUrls;
