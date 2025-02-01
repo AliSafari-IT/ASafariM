@@ -69,6 +69,8 @@ public class AppDbContext : DbContext
             entity.HasMany(s => s.Topics).WithMany();
         });
 
+        modelBuilder.Entity<Topic>().HasIndex(t => t.Slug).IsUnique();
+        modelBuilder.Entity<Tag>().HasIndex(t => t.Slug).IsUnique();
         // Configure User entity
         modelBuilder.Entity<User>(entity =>
         {
@@ -389,6 +391,37 @@ public class AppDbContext : DbContext
             entity.Property(ph => ph.RiskDescription).HasMaxLength(500);
             entity.Property(ph => ph.MitigationPlan).HasMaxLength(1000);
         });
+
+        // Seed User
+        modelBuilder
+            .Entity<User>()
+            .HasData(
+                new User
+                {
+                    Id = Guid.NewGuid(),
+                    FirstName = "Ali",
+                    LastName = "Safari",
+                    Email = "ali@asafarim.com",
+                    PasswordHash =
+                        "m7ihFmnrEpIIJEgVEX+SM7YxcMXf0hbpciQjhE53ZplNJQw8CT/JufmeUV+AQk3G",
+                    LastLogin = DateTime.UtcNow,
+                    NormalizedUserName = "ali@asafarim.com",
+                    SecurityStamp = "ali@asafarim.com",
+                    ConcurrencyStamp = "ali@asafarim.com",
+                    IsActive = true,
+                    ProfilePicture = "https://example.com/profile.jpg",
+                    CreatedBy = Guid.NewGuid(),
+                    CreatedAt = DateTime.UtcNow,
+                    UpdatedBy = Guid.NewGuid(),
+                    UpdatedAt = DateTime.UtcNow,
+                    IsAdmin = true,
+                    IsDeleted = false,
+                    DeletedAt = null,
+                    DeletedBy = null,
+                    DateOfBirth = new DateTime(1975, 7, 15),
+                }
+            );
+
         modelBuilder
             .Entity<Role>()
             .HasData(
@@ -715,6 +748,64 @@ public class AppDbContext : DbContext
                     Name = "Test Tag name",
                     Slug = "test-tag-slug",
                     Description = "Test Tag description",
+                },
+                new Tag
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "Test Tag name 2",
+                    Slug = "test-tag-slug-2",
+                    Description = "Test Tag description 2",
+                },
+                new Tag
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "Test Tag name 3",
+                    Slug = "test-tag-slug-3",
+                    Description = "Test Tag description 3",
+                },
+                new Tag
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "Test Tag name 4",
+                    Slug = "test-tag-slug-4",
+                    Description = "Test Tag description 4",
+                }
+            );
+
+        // Seed Topic
+        modelBuilder
+            .Entity<Topic>()
+            .HasData(
+                new Topic
+                {
+                    Id = Guid.Parse("3fa85f64-5717-4562-b3fc-2c963f66afa6"),
+                    Name = "Test Topic name",
+                    Slug = "test-topic-slug",
+                    Description = "Test Topic description",
+                },
+                new Topic
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "Test Topic name 2",
+                    Slug = "test-topic-slug-2",
+                    Description = "Test Topic description 2",
+                    ParentTopicId = Guid.Parse("3fa85f64-5717-4562-b3fc-2c963f66afa6"),
+                },
+                new Topic
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "Test Topic name 3",
+                    Slug = "test-topic-slug-3",
+                    Description = "Test Topic description 3",
+                    ParentTopicId = null,
+                },
+                new Topic
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "Test Topic name 4",
+                    Slug = "test-topic-slug-4",
+                    Description = "Test Topic description 4",
+                    ParentTopicId = Guid.Parse("3fa85f64-5717-4562-b3fc-2c963f66afa6"),
                 }
             );
 

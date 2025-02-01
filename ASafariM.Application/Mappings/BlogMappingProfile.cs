@@ -12,10 +12,15 @@ namespace ASafariM.Application.Mappings
             // Topic mappings
             CreateMap<CreateTopicCommand, Topic>();
             CreateMap<UpdateTopicCommand, Topic>();
+            CreateMap<Topic, TopicDto>();
 
             // Tag mappings
             CreateMap<CreateTagCommand, Tag>();
             CreateMap<UpdateTagCommand, Tag>();
+            CreateMap<Tag, TagDto>()
+                .ForMember(dest => dest.Slug, opt => opt.MapFrom(src => src.Slug))
+                .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description));
+
 
             // Post mappings
             CreateMap<CreatePostCommand, Post>();
@@ -25,6 +30,15 @@ namespace ASafariM.Application.Mappings
             CreateMap<SitemapItem, SitemapItemDto>();
             CreateMap<CreateSitemapItemCommand, SitemapItem>();
             CreateMap<UpdateSitemapItemCommand, SitemapItem>();
+
+            // User mappings
+            CreateMap<CreateUserCommand, User>();
+
+            // Role mappings
+            CreateMap<Role, RoleDto>();
+
+            // UserPreference mappings
+            CreateMap<UserPreference, UserPreferenceDto>();
         }
     }
 }

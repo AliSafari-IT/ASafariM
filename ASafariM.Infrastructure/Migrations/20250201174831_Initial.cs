@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ASafariM.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -41,6 +41,8 @@ namespace ASafariM.Infrastructure.Migrations
                     IsoCode3 = table.Column<string>(type: "varchar(3)", maxLength: 3, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Name = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Capital = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     NativeName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
@@ -183,6 +185,70 @@ namespace ASafariM.Infrastructure.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "Posts",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    Title = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Content = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Summary = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Excerpt = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Slug = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    PublishedDate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    LastUpdated = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    Author = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    ViewCount = table.Column<int>(type: "int", nullable: false),
+                    CommentCount = table.Column<int>(type: "int", nullable: false),
+                    IsPublished = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    IsDraft = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    ImageUrl = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    VideoUrl = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    AudioUrl = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    CreatedBy = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    UpdatedBy = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    StatusMessage = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    StatusColor = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    StatusIcon = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    StatusTooltip = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    IsActive = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    DeletedBy = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    DeletedMessage = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    PostId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Posts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Posts_Posts_PostId",
+                        column: x => x.PostId,
+                        principalTable: "Posts",
+                        principalColumn: "Id");
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "PrivacyPreferences",
                 columns: table => new
                 {
@@ -217,6 +283,73 @@ namespace ASafariM.Infrastructure.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "SitemapItems",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    PageName = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Description = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Slug = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    AccessByRole = table.Column<int>(type: "int", nullable: false),
+                    ParentId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    Order = table.Column<int>(type: "int", nullable: false),
+                    Icon = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    IsActive = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    IsExternalLink = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    ExternalLink = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    IsHidden = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    IsDisabled = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    CreatedBy = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    UpdatedBy = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    DeletedBy = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    DeletedAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    Version = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    IsPublished = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    PublishedBy = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    PublishedDate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    UnpublishBy = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    UnpublishDate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    IsUnpublished = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    IsDraft = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    IsArchived = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    ArchivedBy = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    ArchivedDate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    ParentItemId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    SitemapItemId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SitemapItems", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SitemapItems_SitemapItems_ParentItemId",
+                        column: x => x.ParentItemId,
+                        principalTable: "SitemapItems",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_SitemapItems_SitemapItems_SitemapItemId",
+                        column: x => x.SitemapItemId,
+                        principalTable: "SitemapItems",
+                        principalColumn: "Id");
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "TimeZones",
                 columns: table => new
                 {
@@ -241,61 +374,26 @@ namespace ASafariM.Infrastructure.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Users",
+                name: "Topics",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    Email = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                    Name = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    NormalizedEmail = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                    Description = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    FirstName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
+                    Slug = table.Column<string>(type: "varchar(255)", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    LastName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    UserName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    NormalizedUserName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    PasswordHash = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    IsAdmin = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    UserId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    DeletedAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    ProfilePicture = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    CreatedBy = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    UpdatedBy = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    DeletedBy = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    IsActive = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    DateOfBirth = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    LastLogin = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    FailedLoginAttempts = table.Column<int>(type: "int", nullable: false),
-                    IsLockedOut = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    LockoutEnd = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    SecurityStamp = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    ConcurrencyStamp = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    PhoneNumber = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    PhoneNumberConfirmed = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    EmailConfirmed = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    Remark = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    PenName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Website = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Biography = table.Column<string>(type: "varchar(1000)", maxLength: 1000, nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4")
+                    ParentTopicId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.Id);
+                    table.PrimaryKey("PK_Topics", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Topics_Topics_ParentTopicId",
+                        column: x => x.ParentTopicId,
+                        principalTable: "Topics",
+                        principalColumn: "Id");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -357,6 +455,228 @@ namespace ASafariM.Infrastructure.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "Attachment",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    Url = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    FileName = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Description = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Type = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Size = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    CreatedBy = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    UpdatedBy = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    IsActive = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    DeletedBy = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    PostId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Attachment", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Attachment_Posts_PostId",
+                        column: x => x.PostId,
+                        principalTable: "Posts",
+                        principalColumn: "Id");
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "Category",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    Name = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Description = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    PostId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Category", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Category_Posts_PostId",
+                        column: x => x.PostId,
+                        principalTable: "Posts",
+                        principalColumn: "Id");
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "Comment",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    Text = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    CreatedBy = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    UpdatedBy = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    IsActive = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    DeletedBy = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    PostId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Comment", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Comment_Posts_PostId",
+                        column: x => x.PostId,
+                        principalTable: "Posts",
+                        principalColumn: "Id");
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "Link",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    Url = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Name = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Description = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    CreatedBy = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    UpdatedBy = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    IsActive = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    DeletedBy = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    PostId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Link", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Link_Posts_PostId",
+                        column: x => x.PostId,
+                        principalTable: "Posts",
+                        principalColumn: "Id");
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "Tags",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    Name = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Description = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Slug = table.Column<string>(type: "varchar(255)", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    PostId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tags", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Tags_Posts_PostId",
+                        column: x => x.PostId,
+                        principalTable: "Posts",
+                        principalColumn: "Id");
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    Email = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    NormalizedEmail = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    FirstName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    LastName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    UserName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    NormalizedUserName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    PasswordHash = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    IsAdmin = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    UserId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    DeletedAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    ProfilePicture = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    CreatedBy = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    UpdatedBy = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    DeletedBy = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    IsActive = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    DateOfBirth = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    LastLogin = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    FailedLoginAttempts = table.Column<int>(type: "int", nullable: false),
+                    IsLockedOut = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    LockoutEnd = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    SecurityStamp = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    ConcurrencyStamp = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    PhoneNumber = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    PhoneNumberConfirmed = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    EmailConfirmed = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    Remark = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    PenName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Website = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Biography = table.Column<string>(type: "varchar(1000)", maxLength: 1000, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    PostId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    PostId1 = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Users_Posts_PostId",
+                        column: x => x.PostId,
+                        principalTable: "Posts",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Users_Posts_PostId1",
+                        column: x => x.PostId1,
+                        principalTable: "Posts",
+                        principalColumn: "Id");
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "GeographicalPreferences",
                 columns: table => new
                 {
@@ -395,6 +715,56 @@ namespace ASafariM.Infrastructure.Migrations
                         principalTable: "TimeZones",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "SitemapItemTopic",
+                columns: table => new
+                {
+                    SitemapItemId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    TopicsId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SitemapItemTopic", x => new { x.SitemapItemId, x.TopicsId });
+                    table.ForeignKey(
+                        name: "FK_SitemapItemTopic_SitemapItems_SitemapItemId",
+                        column: x => x.SitemapItemId,
+                        principalTable: "SitemapItems",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_SitemapItemTopic_Topics_TopicsId",
+                        column: x => x.TopicsId,
+                        principalTable: "Topics",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "PostTags",
+                columns: table => new
+                {
+                    PostId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    TagId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PostTags", x => new { x.PostId, x.TagId });
+                    table.ForeignKey(
+                        name: "FK_PostTags_Posts_PostId",
+                        column: x => x.PostId,
+                        principalTable: "Posts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PostTags_Tags_TagId",
+                        column: x => x.TagId,
+                        principalTable: "Tags",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -725,19 +1095,19 @@ namespace ASafariM.Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "Countries",
-                columns: new[] { "Id", "CreatedAt", "IsActive", "IsoCode", "IsoCode3", "Name", "NativeName", "PhoneCode", "UpdatedAt" },
+                columns: new[] { "Id", "Capital", "CreatedAt", "IsActive", "IsoCode", "IsoCode3", "Name", "NativeName", "PhoneCode", "UpdatedAt" },
                 values: new object[,]
                 {
-                    { new Guid("1b7856de-235e-4669-b343-5ddfbc0eeeef"), new DateTime(2025, 1, 28, 20, 21, 26, 987, DateTimeKind.Utc).AddTicks(5051), true, "CH", "CHE", "Switzerland", "Schweiz", "+41", null },
-                    { new Guid("3321a811-4ef8-4e01-a3f1-76f327a8bdc5"), new DateTime(2025, 1, 28, 20, 21, 26, 987, DateTimeKind.Utc).AddTicks(5036), true, "FR", "FRA", "France", "France", "+33", null },
-                    { new Guid("55e7dd8f-0b49-442f-80a2-1c34c05e6b9c"), new DateTime(2025, 1, 28, 20, 21, 26, 987, DateTimeKind.Utc).AddTicks(5045), true, "IT", "ITA", "Italy", "Italia", "+39", null },
-                    { new Guid("89fc43c9-0ff6-45d9-b523-943d0f286b1e"), new DateTime(2025, 1, 28, 20, 21, 26, 987, DateTimeKind.Utc).AddTicks(5038), true, "DE", "DEU", "Germany", "Deutschland", "+49", null },
-                    { new Guid("8b880caf-9bd4-4b1e-b0ff-185b67795588"), new DateTime(2025, 1, 28, 20, 21, 26, 987, DateTimeKind.Utc).AddTicks(5043), true, "GB", "GBR", "United Kingdom", "United Kingdom", "+44", null },
-                    { new Guid("8e54a7ed-fc5d-45e1-b2da-dac3dfb3e12e"), new DateTime(2025, 1, 28, 20, 21, 26, 987, DateTimeKind.Utc).AddTicks(5047), true, "ES", "ESP", "Spain", "España", "+34", null },
-                    { new Guid("d060a2c4-18df-4c2a-b12f-b9472d993f42"), new DateTime(2025, 1, 28, 20, 21, 26, 987, DateTimeKind.Utc).AddTicks(5053), true, "AT", "AUT", "Austria", "Österreich", "+43", null },
-                    { new Guid("f48ec768-9bf2-445a-bbc7-bcf424868923"), new DateTime(2025, 1, 28, 20, 21, 26, 987, DateTimeKind.Utc).AddTicks(5041), true, "NL", "NLD", "Netherlands", "Nederland", "+31", null },
-                    { new Guid("f659063e-1620-4e90-98f0-fa20beb2528c"), new DateTime(2025, 1, 28, 20, 21, 26, 987, DateTimeKind.Utc).AddTicks(5033), true, "BE", "BEL", "Belgium", "België", "+32", null },
-                    { new Guid("fb24e2cf-4940-4c6e-a7fb-ebd23ff22700"), new DateTime(2025, 1, 28, 20, 21, 26, 987, DateTimeKind.Utc).AddTicks(5055), true, "LU", "LUX", "Luxembourg", "Luxembourg", "+352", null }
+                    { new Guid("0614b917-16d8-4fb4-a3ee-fffc48755323"), "Brussels", new DateTime(2025, 2, 1, 17, 48, 30, 345, DateTimeKind.Utc).AddTicks(9221), true, "LU", "LUX", "Luxembourg", "Luxembourg", "+352", null },
+                    { new Guid("16032238-ccc5-4d1a-ad70-5293e97af4fa"), "Brussels", new DateTime(2025, 2, 1, 17, 48, 30, 345, DateTimeKind.Utc).AddTicks(9214), true, "AT", "AUT", "Austria", "Österreich", "+43", null },
+                    { new Guid("218beb0d-a067-41e4-bc0f-01615cfe888f"), "Brussels", new DateTime(2025, 2, 1, 17, 48, 30, 345, DateTimeKind.Utc).AddTicks(9207), true, "IT", "ITA", "Italy", "Italia", "+39", null },
+                    { new Guid("5378504d-1d3e-4191-af87-b64917aa7c2e"), "Brussels", new DateTime(2025, 2, 1, 17, 48, 30, 345, DateTimeKind.Utc).AddTicks(9195), true, "NL", "NLD", "Netherlands", "Nederland", "+31", null },
+                    { new Guid("625520bd-7f1b-4d33-8b3c-97797f47747e"), "Brussels", new DateTime(2025, 2, 1, 17, 48, 30, 345, DateTimeKind.Utc).AddTicks(9185), true, "FR", "FRA", "France", "France", "+33", null },
+                    { new Guid("82c231d1-2252-4852-85b1-30affd8eda76"), "Brussels", new DateTime(2025, 2, 1, 17, 48, 30, 345, DateTimeKind.Utc).AddTicks(9189), true, "DE", "DEU", "Germany", "Deutschland", "+49", null },
+                    { new Guid("9360a8b2-aca9-486b-afec-50745443aab0"), "Brussels", new DateTime(2025, 2, 1, 17, 48, 30, 345, DateTimeKind.Utc).AddTicks(9209), true, "ES", "ESP", "Spain", "España", "+34", null },
+                    { new Guid("b75c00e6-d678-4a75-91ee-9c7deb95079a"), "Brussels", new DateTime(2025, 2, 1, 17, 48, 30, 345, DateTimeKind.Utc).AddTicks(9212), true, "CH", "CHE", "Switzerland", "Schweiz", "+41", null },
+                    { new Guid("bbf61c4f-ed35-4661-9017-e48124d0da0d"), "Brussels", new DateTime(2025, 2, 1, 17, 48, 30, 345, DateTimeKind.Utc).AddTicks(9177), true, "BE", "BEL", "Belgium", "België", "+32", null },
+                    { new Guid("fdd3ce3b-454f-4a84-bcf4-86f9fb6e1a4b"), "Brussels", new DateTime(2025, 2, 1, 17, 48, 30, 345, DateTimeKind.Utc).AddTicks(9204), true, "GB", "GBR", "United Kingdom", "United Kingdom", "+44", null }
                 });
 
             migrationBuilder.InsertData(
@@ -745,10 +1115,10 @@ namespace ASafariM.Infrastructure.Migrations
                 columns: new[] { "Id", "Code", "CreatedAt", "DecimalPlaces", "IsActive", "Name", "Symbol", "UpdatedAt" },
                 values: new object[,]
                 {
-                    { new Guid("2e41d2de-2495-496f-bde1-f82aaaa0d8ce"), "EUR", new DateTime(2025, 1, 28, 20, 21, 26, 987, DateTimeKind.Utc).AddTicks(4913), 2, true, "Euro", "€", null },
-                    { new Guid("65c70f44-0fab-442c-b4c3-3a8fccdeca3f"), "USD", new DateTime(2025, 1, 28, 20, 21, 26, 987, DateTimeKind.Utc).AddTicks(4915), 2, true, "US Dollar", "$", null },
-                    { new Guid("7672ca09-d81c-4db7-b154-8c48ce58e1ce"), "GBP", new DateTime(2025, 1, 28, 20, 21, 26, 987, DateTimeKind.Utc).AddTicks(4918), 2, true, "British Pound", "£", null },
-                    { new Guid("c4caabe2-ee97-4b09-aafa-7955132648a6"), "CHF", new DateTime(2025, 1, 28, 20, 21, 26, 987, DateTimeKind.Utc).AddTicks(4919), 2, true, "Swiss Franc", "Fr.", null }
+                    { new Guid("1489cab6-b1b2-4105-8388-e179f9b6a985"), "USD", new DateTime(2025, 2, 1, 17, 48, 30, 345, DateTimeKind.Utc).AddTicks(9049), 2, true, "US Dollar", "$", null },
+                    { new Guid("5b1c2dbd-6335-496b-8cd1-8f6b1e870c08"), "CHF", new DateTime(2025, 2, 1, 17, 48, 30, 345, DateTimeKind.Utc).AddTicks(9056), 2, true, "Swiss Franc", "Fr.", null },
+                    { new Guid("707c64fd-332c-4fcd-b6b8-c09a1cec7631"), "GBP", new DateTime(2025, 2, 1, 17, 48, 30, 345, DateTimeKind.Utc).AddTicks(9053), 2, true, "British Pound", "£", null },
+                    { new Guid("c5b749d5-b7fd-4a64-a028-4b806288b0bb"), "EUR", new DateTime(2025, 2, 1, 17, 48, 30, 345, DateTimeKind.Utc).AddTicks(9043), 2, true, "Euro", "€", null }
                 });
 
             migrationBuilder.InsertData(
@@ -756,10 +1126,10 @@ namespace ASafariM.Infrastructure.Migrations
                 columns: new[] { "Id", "CreatedAt", "DisplayName", "Example", "Format", "IsActive", "IsDefault", "UpdatedAt" },
                 values: new object[,]
                 {
-                    { new Guid("025b7e8d-4b32-4811-b318-89477e0f1fd5"), new DateTime(2025, 1, 28, 20, 21, 26, 987, DateTimeKind.Utc).AddTicks(4885), "US Date Format", "12/31/2024", "MM/dd/yyyy", true, false, null },
-                    { new Guid("532ead27-9bf3-4dbe-9b7b-2e3435c205d0"), new DateTime(2025, 1, 28, 20, 21, 26, 987, DateTimeKind.Utc).AddTicks(4887), "ISO Date Format", "2024-12-31", "yyyy-MM-dd", true, false, null },
-                    { new Guid("94e9295e-07bb-4c07-a336-5cb76237e7ad"), new DateTime(2025, 1, 28, 20, 21, 26, 987, DateTimeKind.Utc).AddTicks(4880), "Belgian/European Date Format", "31/12/2024", "dd/MM/yyyy", true, false, null },
-                    { new Guid("b5a9b039-b530-4586-852a-f99ec742ddd2"), new DateTime(2025, 1, 28, 20, 21, 26, 987, DateTimeKind.Utc).AddTicks(4883), "Belgian Date Format (Dot)", "31.12.2024", "dd.MM.yyyy", true, false, null }
+                    { new Guid("480d519a-c773-4e74-97e8-80a7b7a24ed3"), new DateTime(2025, 2, 1, 17, 48, 30, 345, DateTimeKind.Utc).AddTicks(8982), "ISO Date Format", "2024-12-31", "yyyy-MM-dd", true, false, null },
+                    { new Guid("8aee26d5-f204-4586-89aa-df79b8cb7d9c"), new DateTime(2025, 2, 1, 17, 48, 30, 345, DateTimeKind.Utc).AddTicks(8972), "Belgian Date Format (Dot)", "31.12.2024", "dd.MM.yyyy", true, false, null },
+                    { new Guid("9ed1d3cc-dd95-4756-81e6-a5cafe541bb5"), new DateTime(2025, 2, 1, 17, 48, 30, 345, DateTimeKind.Utc).AddTicks(8979), "US Date Format", "12/31/2024", "MM/dd/yyyy", true, false, null },
+                    { new Guid("b93208d5-e3f9-4d7b-bbb2-c91806ae18fc"), new DateTime(2025, 2, 1, 17, 48, 30, 345, DateTimeKind.Utc).AddTicks(8953), "Belgian/European Date Format", "31/12/2024", "dd/MM/yyyy", true, false, null }
                 });
 
             migrationBuilder.InsertData(
@@ -767,43 +1137,63 @@ namespace ASafariM.Infrastructure.Migrations
                 columns: new[] { "Id", "CreatedAt", "Description", "Extension", "IsActive", "IsDefault", "MaxSizeInMB", "MimeType", "Name", "SupportsAnnotations", "SupportsEditing", "UpdatedAt" },
                 values: new object[,]
                 {
-                    { new Guid("16d61393-81e2-4e46-a1cd-97a56a1219b5"), new DateTime(2025, 1, 28, 20, 21, 26, 987, DateTimeKind.Utc).AddTicks(4813), "TypeScript React component file", ".tsx", true, false, 10, "application/typescript+react", "TypeScript React", true, false, null },
-                    { new Guid("3c30fd5e-e7ef-41a3-af62-9effb3883f94"), new DateTime(2025, 1, 28, 20, 21, 26, 987, DateTimeKind.Utc).AddTicks(4820), "JavaScript Object Notation data file", ".json", true, false, 10, "application/json", "JSON", true, false, null },
-                    { new Guid("46566d1f-826e-4185-8f2a-a40805b574ba"), new DateTime(2025, 1, 28, 20, 21, 26, 987, DateTimeKind.Utc).AddTicks(4822), "Markdown text format", ".md", true, false, 10, "text/markdown", "Markdown", true, false, null },
-                    { new Guid("666216ee-9658-4db7-9898-b2cbf06d724c"), new DateTime(2025, 1, 28, 20, 21, 26, 987, DateTimeKind.Utc).AddTicks(4811), "TypeScript source code file", ".ts", true, false, 10, "application/typescript", "TypeScript", true, false, null },
-                    { new Guid("a42b361d-4307-4146-ad70-cd17e72f4276"), new DateTime(2025, 1, 28, 20, 21, 26, 987, DateTimeKind.Utc).AddTicks(4818), "JavaScript source code file", ".js", true, false, 10, "application/javascript", "JavaScript", true, false, null },
-                    { new Guid("d0d5232d-5878-48bb-9186-fc3d345c5fe9"), new DateTime(2025, 1, 28, 20, 21, 26, 987, DateTimeKind.Utc).AddTicks(4805), "Simple text document format", ".txt", true, false, 10, "text/plain", "Plain Text", true, false, null }
+                    { new Guid("095ec5d8-581b-48fb-b444-fb84b4ba10e2"), new DateTime(2025, 2, 1, 17, 48, 30, 345, DateTimeKind.Utc).AddTicks(8824), "Markdown text format", ".md", true, false, 10, "text/markdown", "Markdown", true, false, null },
+                    { new Guid("38077468-9446-4e69-9f4d-ef59ae4041eb"), new DateTime(2025, 2, 1, 17, 48, 30, 345, DateTimeKind.Utc).AddTicks(8821), "JavaScript Object Notation data file", ".json", true, false, 10, "application/json", "JSON", true, false, null },
+                    { new Guid("3b18c810-d159-4ebe-af61-66f892a3f50a"), new DateTime(2025, 2, 1, 17, 48, 30, 345, DateTimeKind.Utc).AddTicks(8817), "JavaScript source code file", ".js", true, false, 10, "application/javascript", "JavaScript", true, false, null },
+                    { new Guid("4d618819-ce9e-40ac-be5a-dd2326319f27"), new DateTime(2025, 2, 1, 17, 48, 30, 345, DateTimeKind.Utc).AddTicks(8795), "Simple text document format", ".txt", true, false, 10, "text/plain", "Plain Text", true, false, null },
+                    { new Guid("a17b81f4-384f-4037-96f6-5a7fd4fe3293"), new DateTime(2025, 2, 1, 17, 48, 30, 345, DateTimeKind.Utc).AddTicks(8810), "TypeScript source code file", ".ts", true, false, 10, "application/typescript", "TypeScript", true, false, null },
+                    { new Guid("f16b127c-b4d1-4938-b0f8-a5cb30994d75"), new DateTime(2025, 2, 1, 17, 48, 30, 345, DateTimeKind.Utc).AddTicks(8814), "TypeScript React component file", ".tsx", true, false, 10, "application/typescript+react", "TypeScript React", true, false, null }
                 });
 
             migrationBuilder.InsertData(
                 table: "PaginationSettings",
                 columns: new[] { "Id", "CreatedAt", "EnableInfiniteScroll", "IsActive", "IsDefault", "ItemsPerPage", "PageSizeOptions", "ShowFirstLastButtons", "ShowItemsCount", "ShowPageNumbers", "ShowPageSizeSelector", "UpdatedAt", "VisiblePageRange" },
-                values: new object[] { new Guid("6e2d9e60-629e-42c2-8615-7c3fd61103d7"), new DateTime(2025, 1, 28, 20, 21, 26, 987, DateTimeKind.Utc).AddTicks(4855), false, true, false, 10, "[10,20,50,100]", true, true, true, true, null, 5 });
+                values: new object[] { new Guid("b47cbac8-55f2-47e4-b14e-e0a7451ac858"), new DateTime(2025, 2, 1, 17, 48, 30, 345, DateTimeKind.Utc).AddTicks(8900), false, true, false, 10, "[10,20,50,100]", true, true, true, true, null, 5 });
 
             migrationBuilder.InsertData(
                 table: "Roles",
                 columns: new[] { "Id", "Description", "Name" },
                 values: new object[,]
                 {
-                    { new Guid("1fb4eeca-83cf-40d3-9854-98f0e0fa7bc6"), "Has full control over the application and can manage all aspects.", "SuperAdmin" },
-                    { new Guid("6b900762-bb55-4618-b4e4-564138f4fc0b"), "Manages user interactions and content moderation. They can create and manage their own tasks, projects, and content, and can edit other public articles than their own.", "Moderator" },
-                    { new Guid("6e17060d-a475-462b-8b0d-d3095bd3abba"), "Focuses on content creation and management without full administrative privileges. They can create and manage their own articles, but cannot edit other public articles than their own.", "Editor" },
-                    { new Guid("76f273e9-5f18-4bb7-ba0d-1a0374cfb08e"), "Guest role is the least privileged role. They can only view public articles.", "Guest" },
-                    { new Guid("b29b4f61-e7fa-4125-b368-cc636e021cc4"), "User role with limited privileges. A user can create and manage their own tasks, projects, and content, and cannot edit other public articles than their own.", "User" },
-                    { new Guid("e9cf88cf-3033-41c0-950e-d7cfbb279910"), "Admin role has full administrative privileges, except for application management.", "Admin" }
+                    { new Guid("287aa247-0789-49e0-953f-58d6484a6dd0"), "Admin role has full administrative privileges, except for application management.", "Admin" },
+                    { new Guid("75d5a158-b0ff-4640-91d8-0ba1e582d980"), "Guest role is the least privileged role. They can only view public articles.", "Guest" },
+                    { new Guid("b708454e-4758-413f-8908-8ccd1d715f31"), "User role with limited privileges. A user can create and manage their own tasks, projects, and content, and cannot edit other public articles than their own.", "User" },
+                    { new Guid("ca182bdc-3792-431c-a52d-150c43c345a4"), "Manages user interactions and content moderation. They can create and manage their own tasks, projects, and content, and can edit other public articles than their own.", "Moderator" },
+                    { new Guid("da9c4948-f48c-4429-b987-dada354ef2f1"), "Focuses on content creation and management without full administrative privileges. They can create and manage their own articles, but cannot edit other public articles than their own.", "Editor" },
+                    { new Guid("ecdb0854-30e8-45db-a3bf-3019dd1760ae"), "Has full control over the application and can manage all aspects.", "SuperAdmin" }
                 });
+
+            migrationBuilder.InsertData(
+                table: "Tags",
+                columns: new[] { "Id", "Description", "Name", "PostId", "Slug" },
+                values: new object[] { new Guid("1c35b931-8441-499f-a899-5add6c54ecf7"), "Test Tag description", "Test Tag name", null, "test-tag-slug" });
 
             migrationBuilder.InsertData(
                 table: "TimeZones",
                 columns: new[] { "Id", "CreatedAt", "DstOffset", "IsActive", "Name", "StandardName", "UpdatedAt", "UsesDaylightSaving", "UtcOffset" },
                 values: new object[,]
                 {
-                    { new Guid("2ca7d9a7-3b31-42e5-ad2d-c62b7d5ba7d7"), new DateTime(2025, 1, 28, 20, 21, 26, 987, DateTimeKind.Utc).AddTicks(4947), "+02:00", true, "CET", "Central European Time (Belgium)", null, true, "+01:00" },
-                    { new Guid("56438c14-004a-4008-90df-6ac91093a4e0"), new DateTime(2025, 1, 28, 20, 21, 26, 987, DateTimeKind.Utc).AddTicks(4999), "+01:00", true, "WET", "Western European Time", null, true, "+00:00" },
-                    { new Guid("688f3344-afdc-4680-b64c-57e9cbc467ac"), new DateTime(2025, 1, 28, 20, 21, 26, 987, DateTimeKind.Utc).AddTicks(5004), "+03:00", true, "EET", "Eastern European Time", null, true, "+02:00" },
-                    { new Guid("af8ced53-6ac5-45ff-aaa4-eb5cd6277a2f"), new DateTime(2025, 1, 28, 20, 21, 26, 987, DateTimeKind.Utc).AddTicks(4952), "+02:00", true, "UTC", "Coordinated Universal Time", null, true, "+00:00" },
-                    { new Guid("eaa5d070-1a0e-46bc-8005-d400444feb36"), new DateTime(2025, 1, 28, 20, 21, 26, 987, DateTimeKind.Utc).AddTicks(4950), "+02:00", true, "CEST", "Central European Summer Time", null, true, "+02:00" }
+                    { new Guid("2bbb02c3-450c-403e-8c09-c30d1d42b6d7"), new DateTime(2025, 2, 1, 17, 48, 30, 345, DateTimeKind.Utc).AddTicks(9126), "+01:00", true, "WET", "Western European Time", null, true, "+00:00" },
+                    { new Guid("78b75327-0cdc-4375-b3cd-fbf12e386f9d"), new DateTime(2025, 2, 1, 17, 48, 30, 345, DateTimeKind.Utc).AddTicks(9113), "+02:00", true, "CET", "Central European Time (Belgium)", null, true, "+01:00" },
+                    { new Guid("8e3fe821-c8a1-4582-b7c5-d853d51284ca"), new DateTime(2025, 2, 1, 17, 48, 30, 345, DateTimeKind.Utc).AddTicks(9129), "+03:00", true, "EET", "Eastern European Time", null, true, "+02:00" },
+                    { new Guid("c22a3ead-0d91-4bc7-a269-f4b25cb21793"), new DateTime(2025, 2, 1, 17, 48, 30, 345, DateTimeKind.Utc).AddTicks(9120), "+02:00", true, "CEST", "Central European Summer Time", null, true, "+02:00" },
+                    { new Guid("dad259aa-f545-4f25-a544-0153aeb79e1d"), new DateTime(2025, 2, 1, 17, 48, 30, 345, DateTimeKind.Utc).AddTicks(9123), "+02:00", true, "UTC", "Coordinated Universal Time", null, true, "+00:00" }
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Attachment_PostId",
+                table: "Attachment",
+                column: "PostId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Category_PostId",
+                table: "Category",
+                column: "PostId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comment_PostId",
+                table: "Comment",
+                column: "PostId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Countries_IsoCode",
@@ -862,6 +1252,11 @@ namespace ASafariM.Infrastructure.Migrations
                 column: "TimeZoneId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Link_PostId",
+                table: "Link",
+                column: "PostId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_MarkdownFileHistories_MarkdownFileId",
                 table: "MarkdownFileHistories",
                 column: "MarkdownFileId");
@@ -895,6 +1290,16 @@ namespace ASafariM.Infrastructure.Migrations
                 name: "IX_MiscellaneousPreferences_PaginationSettingsId",
                 table: "MiscellaneousPreferences",
                 column: "PaginationSettingsId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Posts_PostId",
+                table: "Posts",
+                column: "PostId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PostTags_TagId",
+                table: "PostTags",
+                column: "TagId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Preferences_AccessibilityId",
@@ -963,6 +1368,32 @@ namespace ASafariM.Infrastructure.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_SitemapItems_ParentItemId",
+                table: "SitemapItems",
+                column: "ParentItemId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SitemapItems_SitemapItemId",
+                table: "SitemapItems",
+                column: "SitemapItemId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SitemapItemTopic_TopicsId",
+                table: "SitemapItemTopic",
+                column: "TopicsId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tags_PostId",
+                table: "Tags",
+                column: "PostId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tags_Slug",
+                table: "Tags",
+                column: "Slug",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ThemePreferences_LanguageId",
                 table: "ThemePreferences",
                 column: "LanguageId");
@@ -971,6 +1402,17 @@ namespace ASafariM.Infrastructure.Migrations
                 name: "IX_TimeZones_StandardName",
                 table: "TimeZones",
                 column: "StandardName",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Topics_ParentTopicId",
+                table: "Topics",
+                column: "ParentTopicId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Topics_Slug",
+                table: "Topics",
+                column: "Slug",
                 unique: true);
 
             migrationBuilder.CreateIndex(
@@ -988,6 +1430,16 @@ namespace ASafariM.Infrastructure.Migrations
                 name: "IX_UserRoles_RoleId",
                 table: "UserRoles",
                 column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_PostId",
+                table: "Users",
+                column: "PostId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_PostId1",
+                table: "Users",
+                column: "PostId1");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_MarkdownFileHistories_MarkdownFiles_MarkdownFileId",
@@ -1010,8 +1462,28 @@ namespace ASafariM.Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
+                name: "FK_Users_Posts_PostId",
+                table: "Users");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_Users_Posts_PostId1",
+                table: "Users");
+
+            migrationBuilder.DropForeignKey(
                 name: "FK_Projects_MarkdownFiles_MarkdownFileId",
                 table: "Projects");
+
+            migrationBuilder.DropTable(
+                name: "Attachment");
+
+            migrationBuilder.DropTable(
+                name: "Category");
+
+            migrationBuilder.DropTable(
+                name: "Comment");
+
+            migrationBuilder.DropTable(
+                name: "Link");
 
             migrationBuilder.DropTable(
                 name: "MarkdownFileHistories");
@@ -1020,16 +1492,31 @@ namespace ASafariM.Infrastructure.Migrations
                 name: "MarkdownFileUsers");
 
             migrationBuilder.DropTable(
+                name: "PostTags");
+
+            migrationBuilder.DropTable(
                 name: "ProgressHistories");
 
             migrationBuilder.DropTable(
                 name: "ProjectMembers");
 
             migrationBuilder.DropTable(
+                name: "SitemapItemTopic");
+
+            migrationBuilder.DropTable(
                 name: "UserPreferences");
 
             migrationBuilder.DropTable(
                 name: "UserRoles");
+
+            migrationBuilder.DropTable(
+                name: "Tags");
+
+            migrationBuilder.DropTable(
+                name: "SitemapItems");
+
+            migrationBuilder.DropTable(
+                name: "Topics");
 
             migrationBuilder.DropTable(
                 name: "Preferences");
@@ -1075,6 +1562,9 @@ namespace ASafariM.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "LanguagePreferences");
+
+            migrationBuilder.DropTable(
+                name: "Posts");
 
             migrationBuilder.DropTable(
                 name: "MarkdownFiles");

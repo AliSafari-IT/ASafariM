@@ -8,6 +8,7 @@ using ASafariM.Domain.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace ASafariM.Presentation.Controllers
 {
@@ -17,17 +18,26 @@ namespace ASafariM.Presentation.Controllers
     {
         private readonly ITopicRepository _topicRepository;
         private readonly IMapper _mapper;
+        private readonly ILogger<TopicsController> _logger;
 
-        public TopicsController(ITopicRepository topicRepository, IMapper mapper)
+        public TopicsController(
+            ITopicRepository topicRepository,
+            IMapper mapper,
+            ILogger<TopicsController> logger
+        )
         {
             _topicRepository = topicRepository;
             _mapper = mapper;
+            _logger = logger;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TopicDto>>> GetTopics()
         {
             var topics = await _topicRepository.GetAllAsync();
+            if (topics == null)
+                return NotFound();
+            _logger.LogInformation("Retrieved {count} topics", topics.Count());
             return Ok(_mapper.Map<IEnumerable<TopicDto>>(topics));
         }
 
@@ -37,7 +47,7 @@ namespace ASafariM.Presentation.Controllers
             var topic = await _topicRepository.GetByIdAsync(id);
             if (topic == null)
                 return NotFound();
-
+            _logger.LogInformation("Retrieved topic with id {id}", id);
             return Ok(_mapper.Map<TopicDto>(topic));
         }
 
@@ -47,7 +57,7 @@ namespace ASafariM.Presentation.Controllers
             var topic = await _topicRepository.GetBySlugAsync(slug);
             if (topic == null)
                 return NotFound();
-
+            _logger.LogInformation("Retrieved topic with slug {slug}", slug);
             return Ok(_mapper.Map<TopicDto>(topic));
         }
 
@@ -55,10 +65,12 @@ namespace ASafariM.Presentation.Controllers
         public async Task<ActionResult<IEnumerable<TopicDto>>> GetChildTopics(Guid id)
         {
             var topics = await _topicRepository.GetChildTopicsAsync(id);
+            if (topics == null)
+                return NotFound();
+            _logger.LogInformation("Retrieved child topics for topic with id {id}", id);
             return Ok(_mapper.Map<IEnumerable<TopicDto>>(topics));
         }
 
-        [Authorize(Roles = "Admin,Editor")]
         [HttpPost]
         public async Task<ActionResult<TopicDto>> CreateTopic(CreateTopicCommand command)
         {
@@ -66,14 +78,20 @@ namespace ASafariM.Presentation.Controllers
                 return BadRequest("Slug already exists");
 
             var topic = _mapper.Map<Topic>(command);
-            topic.CreatedBy = !string.IsNullOrEmpty(User.Identity?.Name)
-                ? Guid.Parse(User.Identity.Name)
-                : null;
-            topic.CreatedAt = DateTime.UtcNow;
-            topic.UpdatedAt = DateTime.UtcNow;
-            topic.IsDeleted = false;
-            topic.DeletedAt = null;
+            topic.Slug = command.Slug.ToLower();
             await _topicRepository.AddAsync(topic);
+            await _topicRepository.SaveChangesAsync();
+            _logger.LogInformation("Created topic with id {id}", topic.Id);
+            _logger.LogInformation("Created topic with slug {slug}", topic.Slug);
+            _logger.LogInformation("Created topic with name {name}", topic.Name);
+            _logger.LogInformation(
+                "Created topic with description {description}",
+                topic.Description
+            );
+            _logger.LogInformation(
+                "Created topic with parent topic id {parentTopicId}",
+                topic.ParentTopicId
+            );
             return CreatedAtAction(
                 nameof(GetTopic),
                 new { id = topic.Id },
@@ -81,7 +99,6 @@ namespace ASafariM.Presentation.Controllers
             );
         }
 
-        [Authorize(Roles = "Admin,Editor")]
         [HttpPut("{id}")]
         public async Task<ActionResult<TopicDto>> UpdateTopic(Guid id, UpdateTopicCommand command)
         {
@@ -99,11 +116,6 @@ namespace ASafariM.Presentation.Controllers
                 return BadRequest("Slug already exists");
 
             _mapper.Map(command, existingTopic);
-            existingTopic.UpdatedBy = !string.IsNullOrEmpty(User.Identity?.Name)
-                ? Guid.Parse(User.Identity.Name)
-                : null;
-            existingTopic.UpdatedAt = DateTime.UtcNow;
-
             await _topicRepository.UpdateAsync(existingTopic);
             return Ok(_mapper.Map<TopicDto>(existingTopic));
         }
@@ -115,10 +127,6 @@ namespace ASafariM.Presentation.Controllers
             var topic = await _topicRepository.GetByIdAsync(id);
             if (topic == null)
                 return NotFound();
-
-            topic.DeletedBy = !string.IsNullOrEmpty(User.Identity?.Name)
-                ? Guid.Parse(User.Identity.Name)
-                : null;
             await _topicRepository.DeleteAsync(id);
             return NoContent();
         }

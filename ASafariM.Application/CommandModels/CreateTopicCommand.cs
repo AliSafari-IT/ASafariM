@@ -9,10 +9,4 @@ namespace ASafariM.Application.CommandModels
         public string Slug { get; set; }
         public Guid? ParentTopicId { get; set; }
     }
-
-    public class UpdateTopicCommand : CreateTopicCommand
-    {
-        public Guid Id { get; set; }
-        public bool IsActive { get; set; }
-    }
 }

@@ -1,97 +1,126 @@
-import React, { useState, useEffect } from 'react';
-import { Button, makeStyles } from '@fluentui/react-components';
-import { useNavigate, useParams } from 'react-router-dom';
-import { TextField } from '@fluentui/react';
-import Wrapper from '../../layout/Wrapper/Wrapper';
-import dashboardServices from '../../api/entityServices';
-import { isAxiosError } from 'axios';
-import { ITopic } from '@/interfaces/ITopic';
+import React, { FC, useState, useEffect, FormEvent } from "react";
+import axios from "axios";
+import { useNavigate, useParams } from "react-router-dom";
+import { TextField, Dropdown, IDropdownOption, PrimaryButton, Stack, Label } from "@fluentui/react";
+import Wrapper from "@/layout/Wrapper/Wrapper";
+import { makeStyles } from "@fluentui/react-components";
+import { isAxiosError } from "axios";
+import { ITopic } from "@/interfaces/ITopic";
+import { apiUrls } from "@/api/getApiUrls";
+
+const topicUrl = apiUrls(window.location.hostname) + '/topics';
 
 const useStyles = makeStyles({
     formContainer: {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        gap: '10px',
-        padding: '20px',
+        width: "600px",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "column",
+        gap: "20px",
+        padding: "40px",
+        backgroundColor: "var(--bg-primary)",
+        borderRadius: "10px",
+        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+        margin: "0 auto",
     },
-    formField: {
-        width: '300px',
-        marginBottom: '15px',
+    label: {
+        color: "var(--text-primary)",
+        fontWeight: "bold",
+        fontSize: "16px",
+    },
+    inputField: {
+        width: "100%",
+    },
+    submitButton: {
+        width: "100%",
+        backgroundColor: "var(--button-primary)",
+        color: "var(--button-primary-text)",
+        "&:hover": {
+            backgroundColor: "var(--button-primary-hover)",
+        },
     },
 });
 
-const EditTopicForm: React.FC = () => {
+const EditTopicForm: FC = () => {
     const classes = useStyles();
     const navigate = useNavigate();
     const { id } = useParams<{ id: string }>();
 
-    const [topic, setTopic] = useState<ITopic>({
-        id: '',
-        name: '',
-        title: '',
-        description: '',
-        difficultyLevel: '',
-        technologyCategory: '',
-        updatedAt: new Date(),
-        createdAt: new Date(),
-    });
-    
-    const [error, setError] = useState<string>('');
+    const [parentTopicId, setParentTopicId] = useState<string | null>(null);
+    const [parentTopics, setParentTopics] = useState<ITopic[]>([]);
+    const [topic, setTopic] = useState<ITopic>();
+
+    const [error, setError] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
         const fetchTopic = async () => {
-            if (!id) return;
-            
             try {
-                const data = await dashboardServices.fetchEntityById('topics', id) as ITopic;
+                const { data } = await axios.get(`${topicUrl}/${id}`);
                 setTopic(data);
+                setParentTopicId(data?.parentTopicId?.toString() || null);
                 setLoading(false);
             } catch (error) {
-                console.error('Error fetching topic:', error);
+                console.error("Error fetching topic:", error);
                 if (isAxiosError(error)) {
-                    setError(error.response?.data.message || 'Failed to fetch the topic. Please try again.');
+                    setError(error.response?.data?.message || "Failed to fetch the topic. Please try again.");
                 } else {
-                    setError('An unexpected error occurred. Please try again later.');
+                    setError("An unexpected error occurred. Please try again later.");
                 }
                 setLoading(false);
             }
         };
 
+        const fetchParentTopics = async () => {
+            try {
+                const response = await axios.get(topicUrl);
+                setParentTopics(response.data);
+            } catch (error) {
+                console.error("Error fetching parent topics:", error);
+            }
+        };
+
         fetchTopic();
+        fetchParentTopics();
     }, [id]);
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        setError('');
+        setError("");
+
+        if (!topic) {
+            setError("Topic data is missing");
+            return;
+        }
 
         try {
-            await dashboardServices.updateEntity('topics', id!, {
-                name: topic.name,
-                title: topic.title,
-                description: topic.description,
-                difficultyLevel: topic.difficultyLevel,
-                technologyCategory: topic.technologyCategory,
-            });
-            alert('Topic updated successfully!');
-            navigate('/dashboard');
+            await axios.put(`${topicUrl}/${id}`, { ...topic, parentTopicId });
+            alert("Topic updated successfully!");
+            navigate("/dashboard");
         } catch (error) {
-            console.error('Error updating topic:', error);
+            console.error("Error updating topic:", error);
             if (isAxiosError(error)) {
-                setError(error.response?.data.message || 'Failed to update the topic. Please try again.');
+                const errorMessage = error.response?.data?.message || "Failed to update the topic. Please try again.";
+                setError(errorMessage);
             } else {
-                setError('An unexpected error occurred. Please try again later.');
+                setError("An unexpected error occurred. Please try again later.");
             }
         }
     };
 
-    const handleInputChange = (e: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        const { name, value } = e.target as HTMLInputElement;
-        setTopic(prev => ({
-            ...prev,
-            [name]: value
-        }));
+    const handleChange = (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
+        const target = event.target as HTMLInputElement | HTMLTextAreaElement;
+        setTopic(prev => prev ? { ...prev, [target.name]: newValue !== undefined ? newValue : target.value } : prev);
+    };
+
+    const handleDropdownChange = (_: React.FormEvent<HTMLDivElement>, option?: IDropdownOption) => {
+        setParentTopicId(option ? option.key.toString() : null);
+    };
+
+    const renderError = () => {
+        if (!error) return null;
+        return <div style={{ color: 'red', marginBottom: '1rem' }}>{error}</div>;
     };
 
     if (loading) {
@@ -99,52 +128,32 @@ const EditTopicForm: React.FC = () => {
     }
 
     return (
-        <Wrapper header={<h1 className="text-3xl font-bold text-center">Edit Topic</h1>} error={error}>
-            <div className={classes.formContainer}>
+        <Wrapper header={<h1 className="text-3xl font-bold text-center mb-8">Edit Topic</h1>} error={error}>
+            <Stack tokens={{ childrenGap: 20 }} className={classes.formContainer}>
                 <form onSubmit={handleSubmit}>
-                    <TextField
-                        label="Topic Name"
-                        name="name"
-                        className={classes.formField}
-                        value={topic.name}
-                        onChange={handleInputChange}
-                        required
-                    />
-                    <TextField
-                        label="Title"
-                        name="title"
-                        className={classes.formField}
-                        value={topic.title}
-                        onChange={handleInputChange}
-                        required
-                    />
-                    <TextField
-                        label="Description"
-                        name="description"
-                        className={classes.formField}
-                        value={topic.description || ''}
-                        onChange={handleInputChange}
-                        multiline
-                        rows={4}
-                    />
-                    <TextField
-                        label="Difficulty Level"
-                        name="difficultyLevel"
-                        className={classes.formField}
-                        value={topic.difficultyLevel || ''}
-                        onChange={handleInputChange}
-                    />
-                    <TextField
-                        label="Technology Category"
-                        name="technologyCategory"
-                        className={classes.formField}
-                        value={topic.technologyCategory || ''}
-                        onChange={handleInputChange}
-                    />
-
-                    <Button type="submit" style={{ float: 'right', marginTop: '10px' }}>Update Topic</Button>
+                    {renderError()}
+                    <Stack tokens={{ childrenGap: 10 }}>
+                        <Label className={classes.label}>Topic Name</Label>
+                        <TextField name="name" onChange={handleChange} value={topic?.name} required className={classes.inputField} />
+                        <Label className={classes.label}>Slug</Label>
+                        <TextField name="slug" onChange={handleChange} value={topic?.slug} required className={classes.inputField} />
+                        <Label className={classes.label}>Description</Label>
+                        <TextField name="description" onChange={handleChange} multiline rows={4} value={topic?.description} required className={classes.inputField} />
+                        {parentTopics.length > 0 && (
+                            <>
+                                <Label className={classes.label}>Parent Topic</Label>
+                                <Dropdown
+                                    selectedKey={parentTopicId || ''}
+                                    onChange={handleDropdownChange}
+                                    options={parentTopics.map(topic => ({ key: topic.id, text: topic.name }))}
+                                    className={classes.inputField}
+                                />
+                            </>
+                        )}
+                        <PrimaryButton type="submit" className={classes.submitButton}>Update Topic</PrimaryButton>
+                    </Stack>
                 </form>
-            </div>
+            </Stack>
         </Wrapper>
     );
 };
