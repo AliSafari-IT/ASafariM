@@ -1,5 +1,5 @@
 # Refactor: Improve Topic Update Functionality in EditTopicForm
-Date: 01-02-2025
+Date: 2025-02-01
 
 ## Description of Changes
 This update improves the topic update functionality by refactoring the EditTopicForm component to match the successful pattern used in AddTopicForm. The following changes were implemented:
