@@ -748,6 +748,64 @@ public class AppDbContext : DbContext
                     Name = "Test Tag name",
                     Slug = "test-tag-slug",
                     Description = "Test Tag description",
+                },
+                new Tag
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "Test Tag name 2",
+                    Slug = "test-tag-slug-2",
+                    Description = "Test Tag description 2",
+                },
+                new Tag
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "Test Tag name 3",
+                    Slug = "test-tag-slug-3",
+                    Description = "Test Tag description 3",
+                },
+                new Tag
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "Test Tag name 4",
+                    Slug = "test-tag-slug-4",
+                    Description = "Test Tag description 4",
+                }
+            );
+
+        // Seed Topic
+        modelBuilder
+            .Entity<Topic>()
+            .HasData(
+                new Topic
+                {
+                    Id = Guid.Parse("3fa85f64-5717-4562-b3fc-2c963f66afa6"),
+                    Name = "Test Topic name",
+                    Slug = "test-topic-slug",
+                    Description = "Test Topic description",
+                },
+                new Topic
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "Test Topic name 2",
+                    Slug = "test-topic-slug-2",
+                    Description = "Test Topic description 2",
+                    ParentTopicId = Guid.Parse("3fa85f64-5717-4562-b3fc-2c963f66afa6"),
+                },
+                new Topic
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "Test Topic name 3",
+                    Slug = "test-topic-slug-3",
+                    Description = "Test Topic description 3",
+                    ParentTopicId = null,
+                },
+                new Topic
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "Test Topic name 4",
+                    Slug = "test-topic-slug-4",
+                    Description = "Test Topic description 4",
+                    ParentTopicId = Guid.Parse("3fa85f64-5717-4562-b3fc-2c963f66afa6"),
                 }
             );
 
