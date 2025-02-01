@@ -1,105 +1,116 @@
-import { FC, useState, FormEvent } from "react";
-import { IField } from "@/interfaces/IField";
+import { FC, useState, FormEvent, useEffect } from "react";
 import axios from "axios";
 import { ITopic } from "@/interfaces/ITopic";
-import API_URL from "@/api/getApiUrls";
-import { TextField } from '@fluentui/react';
+import { apiUrls } from "@/api/getApiUrls";
+import { TextField, Dropdown, IDropdownOption, PrimaryButton, Stack, Label } from "@fluentui/react";
 import Wrapper from "@/layout/Wrapper/Wrapper";
 import { makeStyles } from "@fluentui/react-components";
 
-const topicUrl = API_URL + '/topics';
+const topicUrl = apiUrls(window.location.hostname) + '/topics';
 
 const useStyles = makeStyles({
-    formContainer: {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        gap: '10px',
-        padding: '20px',
+    inputField: {
+        width: '350px',
     },
-    formField: {
-        width: '300px',
+    formContainer: {
+        width: '500px',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'column',
+        gap: '20px',
+        padding: '40px',
+        backgroundColor: 'var(--bg-primary)',
+        borderRadius: '10px',
+        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+        margin: '0 auto',
+    },
+    label: {
+        color: 'var(--text-primary)',
+        fontWeight: 'bold',
+        fontSize: '16px',
+    },
+    dropdown: {
+        backgroundColor: 'var(--bg-secondary)',
+    },
+    submitButton: {
+        width: '100%',
+        backgroundColor: 'var(--button-primary)',
+        color: 'var(--button-primary-text)',
+        '&:hover': {
+            backgroundColor: 'var(--button-primary-hover)'
+        }
     },
 });
 
 export const AddTopicForm: FC = () => {
     const classes = useStyles();
+    const [parentTopicId, setParentTopicId] = useState<string | undefined>(undefined);
+    const [parentTopics, setParentTopics] = useState<ITopic[]>([]);
     const [topic, setTopic] = useState<ITopic>({
         id: '',
         name: '',
-        title: '',
+        slug: '',
         description: '',
-        difficultyLevel: '',
-        technologyCategory: '',
-        updatedAt:  new Date(),
-        createdAt: new Date(),
+        parentTopicId: undefined,
     });
 
-    const fields: IField[] = [
-        {
-            name: 'name',
-            label: 'Name',
-            type: 'text',
-            value: topic.name,
-        },
-        {
-            name: 'title',
-            label: 'Title',
-            type: 'text',
-            value: topic.title,
-        },
-        {
-            name: 'description',
-            label: 'Description',
-            type: 'text',
-            value: topic.description,
-        },
-        {
-            name: 'difficulty',
-            label: 'Difficulty',
-            type: 'number',
-            value: topic.difficultyLevel,
-        },
-    ];
+    useEffect(() => {
+        const fetchTopics = async () => {
+            try {
+                const response = await axios.get(topicUrl);
+                setParentTopics(response.data);
+            } catch (error) {
+                console.error('Error fetching topics:', error);
+            }
+        };
+        fetchTopics();
+    }, []);
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
-          // Send a POST request to the API to add the new topic
-          console.log('Topic data:', topic);
-            const response = await axios.post(topicUrl, topic);
-            console.log(response.data);
+            await axios.post(topicUrl, { ...topic, parentTopicId });
         } catch (error) {
             console.error('Error adding topic:', error);
-            console.log(error);
         }
     };
 
-    const handleChange = (event: FormEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        const target = event.target as HTMLInputElement;
-        setTopic(prev => ({ ...prev, [target.name]: target.value }));
+    const handleChange = (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
+        const target = event.target as HTMLInputElement | HTMLTextAreaElement;
+        setTopic(prev => ({ ...prev, [target.name]: newValue !== undefined ? newValue : target.value }));
+    };
+
+    const handleDropdownChange = (_: React.FormEvent<HTMLDivElement>, option?: IDropdownOption) => {
+        setParentTopicId(option?.key as string);
     };
 
     return (
-        <Wrapper header={<h1 className="text-3xl font-bold text-center">Add New Topic</h1>} >
-            <div className={classes.formContainer}>
+        <Wrapper header={<h1 className="text-3xl font-bold text-center mb-8">Add New Topic</h1>}>
+            <Stack tokens={{ childrenGap: 20 }} className={classes.formContainer}>
                 <form onSubmit={handleSubmit}>
-                    {fields?.map((field) => (
-                        <TextField
-                            key={field.name}
-                            label={field.label} 
-                            name={field.name}
-                            onChange={handleChange}
-                            className={classes.formField}
-                            value={field.value}
-                            required={false}
-                            placeholder={field.placeholder}
-                                type={field.type}
-                            />
-                    ))}
-                    <button type="submit" style={{ float: 'right', marginTop: '10px' }}>Add Topic</button>
+                    <Stack tokens={{ childrenGap: 10 }}>
+                        <Label className={classes.label}>Name</Label>
+                        <TextField name="name" onChange={handleChange} value={topic.name} required className={classes.inputField} />
+                        <Label className={classes.label}>Slug</Label>
+                        <TextField name="slug" onChange={handleChange} value={topic.slug} required className={classes.inputField} />
+                        <Label className={classes.label}>Description</Label>
+                        <TextField name="description" onChange={handleChange} multiline rows={3} value={topic.description} required className={classes.inputField} />
+                        {parentTopics.length > 0 && (
+                            <>
+                                <Label className={classes.label}>Parent Topic</Label>
+                                <Dropdown
+                                    selectedKey={parentTopicId || ''}
+                                    onChange={handleDropdownChange}
+                                    options={parentTopics.map(topic => ({ key: topic.id, text: topic.name }))}
+                                    className={classes.dropdown}
+                                />
+                            </>
+                        )}
+                        <PrimaryButton type="submit" className={classes.submitButton}>Add Topic</PrimaryButton>
+                    </Stack>
                 </form>
-            </div>
+            </Stack>
         </Wrapper>
     );
 };

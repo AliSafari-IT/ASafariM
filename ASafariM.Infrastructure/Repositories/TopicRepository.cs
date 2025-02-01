@@ -20,37 +20,24 @@ namespace ASafariM.Infrastructure.Repositories
 
         public async Task<IEnumerable<Topic>> GetAllAsync()
         {
-            return await _context
-                .Topics.Include(t => t.ParentTopic)
-                .Include(t => t.ChildTopics)
-                .Include(t => t.Posts)
-                .Where(t => !t.IsDeleted)
-                .ToListAsync();
+            return await _context.Topics.ToListAsync();
         }
 
         public async Task<Topic> GetByIdAsync(Guid id)
         {
-            return await _context
-                .Topics.Include(t => t.ParentTopic)
-                .Include(t => t.ChildTopics)
-                .Include(t => t.Posts)
-                .FirstOrDefaultAsync(t => t.Id == id && !t.IsDeleted);
+            return await _context.Topics.FindAsync(id);
         }
 
         public async Task<Topic> GetBySlugAsync(string slug)
         {
-            return await _context
-                .Topics.Include(t => t.ParentTopic)
-                .Include(t => t.ChildTopics)
-                .Include(t => t.Posts)
-                .FirstOrDefaultAsync(t => t.Slug == slug && !t.IsDeleted);
+            return await _context.Topics.FirstOrDefaultAsync(t => t.Slug == slug);
         }
 
         public async Task<IEnumerable<Topic>> GetChildTopicsAsync(Guid parentId)
         {
             return await _context
-                .Topics.Include(t => t.Posts)
-                .Where(t => t.ParentTopicId == parentId && !t.IsDeleted)
+                .Topics
+                .Where(t => t.ParentTopicId == parentId)
                 .ToListAsync();
         }
 
@@ -76,20 +63,24 @@ namespace ASafariM.Infrastructure.Repositories
             if (topic == null)
                 return false;
 
-            topic.IsDeleted = true;
-            topic.DeletedAt = DateTime.UtcNow;
+            _context.Topics.Remove(topic);
             await _context.SaveChangesAsync();
             return true;
         }
 
         public async Task<bool> ExistsAsync(Guid id)
         {
-            return await _context.Topics.AnyAsync(t => t.Id == id && !t.IsDeleted);
+            return await _context.Topics.AnyAsync(t => t.Id == id);
         }
 
         public async Task<bool> SlugExistsAsync(string slug)
         {
-            return await _context.Topics.AnyAsync(t => t.Slug == slug && !t.IsDeleted);
+            return await _context.Topics.AnyAsync(t => t.Slug == slug);
+        }
+
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
         }
     }
 }

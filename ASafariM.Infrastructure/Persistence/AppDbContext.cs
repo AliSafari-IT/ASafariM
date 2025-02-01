@@ -69,6 +69,8 @@ public class AppDbContext : DbContext
             entity.HasMany(s => s.Topics).WithMany();
         });
 
+        modelBuilder.Entity<Topic>().HasIndex(t => t.Slug).IsUnique();
+        modelBuilder.Entity<Tag>().HasIndex(t => t.Slug).IsUnique();
         // Configure User entity
         modelBuilder.Entity<User>(entity =>
         {
@@ -389,6 +391,37 @@ public class AppDbContext : DbContext
             entity.Property(ph => ph.RiskDescription).HasMaxLength(500);
             entity.Property(ph => ph.MitigationPlan).HasMaxLength(1000);
         });
+
+        // Seed User
+        modelBuilder
+            .Entity<User>()
+            .HasData(
+                new User
+                {
+                    Id = Guid.NewGuid(),
+                    FirstName = "Ali",
+                    LastName = "Safari",
+                    Email = "ali@asafarim.com",
+                    PasswordHash =
+                        "m7ihFmnrEpIIJEgVEX+SM7YxcMXf0hbpciQjhE53ZplNJQw8CT/JufmeUV+AQk3G",
+                    LastLogin = DateTime.UtcNow,
+                    NormalizedUserName = "ali@asafarim.com",
+                    SecurityStamp = "ali@asafarim.com",
+                    ConcurrencyStamp = "ali@asafarim.com",
+                    IsActive = true,
+                    ProfilePicture = "https://example.com/profile.jpg",
+                    CreatedBy = Guid.NewGuid(),
+                    CreatedAt = DateTime.UtcNow,
+                    UpdatedBy = Guid.NewGuid(),
+                    UpdatedAt = DateTime.UtcNow,
+                    IsAdmin = true,
+                    IsDeleted = false,
+                    DeletedAt = null,
+                    DeletedBy = null,
+                    DateOfBirth = new DateTime(1975, 7, 15),
+                }
+            );
+
         modelBuilder
             .Entity<Role>()
             .HasData(

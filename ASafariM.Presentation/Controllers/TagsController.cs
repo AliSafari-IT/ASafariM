@@ -25,10 +25,10 @@ namespace ASafariM.Presentation.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Tag>>> GetTags()
+        public async Task<ActionResult<IEnumerable<TagDto>>> GetTags()
         {
             var tags = await _tagRepository.GetAllAsync();
-            return Ok(_mapper.Map<IEnumerable<Tag>>(tags));
+            return Ok(_mapper.Map<IEnumerable<TagDto>>(tags));
         }
 
         // Create a new tag
@@ -51,34 +51,34 @@ namespace ASafariM.Presentation.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Tag>> GetTag(Guid id)
+        public async Task<ActionResult<TagDto>> GetTag(Guid id)
         {
             var tag = await _tagRepository.GetByIdAsync(id);
             if (tag == null)
                 return NotFound();
 
-            return Ok(_mapper.Map<Tag>(tag));
+            return Ok(_mapper.Map<TagDto>(tag));
         }
 
         [HttpGet("slug/{slug}")]
-        public async Task<ActionResult<Tag>> GetTagBySlug(string slug)
+        public async Task<ActionResult<TagDto>> GetTagBySlug(string slug)
         {
             var tag = await _tagRepository.GetBySlugAsync(slug);
             if (tag == null)
                 return NotFound();
 
-            return Ok(_mapper.Map<Tag>(tag));
+            return Ok(_mapper.Map<TagDto>(tag));
         }
 
         [HttpGet("post/{postId}")]
-        public async Task<ActionResult<IEnumerable<Tag>>> GetTagsByPost(Guid postId)
+        public async Task<ActionResult<IEnumerable<TagDto>>> GetTagsByPost(Guid postId)
         {
             var tags = await _tagRepository.GetTagsByPostIdAsync(postId);
-            return Ok(_mapper.Map<IEnumerable<Tag>>(tags));
+            return Ok(_mapper.Map<IEnumerable<TagDto>>(tags));
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<Tag>> UpdateTag(Guid id, UpdateTagCommand command)
+        public async Task<ActionResult<TagDto>> UpdateTag(Guid id, UpdateTagCommand command)
         {
             try
             {
