@@ -1,7 +1,7 @@
 import { IPost } from "./post-types";
 
 export interface ITopic {
-  parentTopicId: string | undefined;
+  parentTopicId?: string | undefined;
   id: string;
   name: string;
   description?: string;
