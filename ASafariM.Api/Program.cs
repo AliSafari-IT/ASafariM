@@ -47,7 +47,12 @@ builder.Services.AddCors(options =>
         builder =>
         {
             builder
-                .WithOrigins("http://localhost:5173", "http://localhost:3000", "asafarim.com") // Frontend URL
+                .WithOrigins(
+                    "http://localhost:5173",
+                    "http://localhost:3000",
+                    "asafarim.com",
+                    "https://www.asafarim.com"
+                ) // Frontend URL
                 .AllowAnyMethod()
                 .AllowAnyHeader()
                 .AllowCredentials();
