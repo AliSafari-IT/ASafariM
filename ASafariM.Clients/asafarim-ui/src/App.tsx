@@ -12,7 +12,7 @@ import AkkodisTargetedResume from "./pages/AboutMe/TailoredCV/Akkodis";
 import DelCard from "./components/Containers/Card/DelCard";
 import EditCard from "./components/Containers/Card/EditCard";
 import ProjectHome from "./pages/Project/Index";
-import PostDetail from "./pages/Post/PostDetail";
+import PostDetail from "./pages/Post/PostDetail"; 
 import LogoutPage from "./pages/Accountpage/LogoutPage";
 import Register from "./pages/Accountpage/Register";
 import LoginPage from "./pages/Accountpage/LoginPage";
