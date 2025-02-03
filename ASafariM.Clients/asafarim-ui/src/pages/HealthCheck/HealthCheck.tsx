@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Layout from "../../layout/Layout";
 import Footer from "../../layout/Footer/Footer";
 import apiUrls from "@/api/getApiUrls";
+import "./HealthCheck.css";
 
 interface HealthStatus {
   status: string;
@@ -36,13 +37,13 @@ interface HealthStatus {
   };
 }
 
-/**
- * HealthCheck is a React functional component that fetches and displays
- * the system health status from the "/api/health" endpoint. It manages
- * loading and error states, and updates the health status every 30 seconds.
- * The component renders different layouts based on the loading and error
- * states, and displays detailed health information when available.
- */
+const formatValue = (value: string | number) => {
+  if (typeof value === 'number') {
+    return value.toFixed(2);
+  }
+  return value;
+};
+
 const HealthCheck: React.FC = () => {
   const [healthData, setHealthData] = useState<HealthStatus | null>(null);
   const [loading, setLoading] = useState(true);
@@ -75,8 +76,8 @@ const HealthCheck: React.FC = () => {
   if (loading) {
     return (
       <Layout header={<></>} footer={<Footer />}>
-        <div className="flex items-center justify-center min-h-screen">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+        <div className="health-check__loading">
+          <div className="health-check__spinner"></div>
         </div>
       </Layout>
     );
@@ -85,8 +86,8 @@ const HealthCheck: React.FC = () => {
   if (error) {
     return (
       <Layout header={<></>} footer={<Footer />}>
-        <div className="min-h-screen p-6">
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+        <div className="health-check__container">
+          <div className="health-check__error">
             <p>{error}</p>
           </div>
         </div>
@@ -94,110 +95,155 @@ const HealthCheck: React.FC = () => {
     );
   }
 
+  const cUsage = healthData?.cpuUsage;
+
   return (
     <Layout header={<></>} footer={<Footer />}>
-      <div className="min-h-screen p-6">
-        <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-lg p-6">
-          <h1 className="text-2xl font-bold mb-6">System Health Status</h1>
+      <div className="health-check__container">
+        <div className="health-check__content">
+          <h1 className="health-check__title">System Health Status</h1>
 
           {healthData && (
-            <div className="space-y-6">
-              <div className="flex items-center">
+            <div className="health-check__grid">
+              <div className="health-check__status">
                 <div
-                  className={`h-4 w-4 rounded-full mr-2 ${healthData.status === "healthy"
-                      ? "bg-green-500"
-                      : "bg-red-500"
+                  className={`health-check__status-indicator ${healthData.status === "healthy" ? "healthy" : "unhealthy"
                     }`}
                 ></div>
-                <span className="text-lg font-semibold">
-                  Status: {healthData.status}
+                <span className="health-check__status-text">
+                  System Status: {healthData.status}
                 </span>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* System Info */}
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <h2 className="font-semibold mb-2">System Info</h2>
-                  <p>Version: {healthData.version}</p>
+              <div className="health-check__card">
+                <h2>System Info</h2>
+                <p>
+                  <span>Version</span>
+                  <span>{healthData.version}</span>
+                </p>
+                <p>
+                  <span>Last Updated</span>
+                  <span>{new Date(healthData.timestamp).toLocaleString()}</span>
+                </p>
+                {healthData.uptime && (
                   <p>
-                    Last Updated:{" "}
-                    {new Date(healthData.timestamp).toLocaleString()}
+                    <span>Uptime</span>
+                    <span>{healthData.uptime}</span>
                   </p>
-                  {healthData.uptime && <p>Uptime: {healthData.uptime}</p>}
-                </div>
-
-                {/* Services Status */}
-                {healthData.services && (
-                  <div className="bg-gray-50 p-4 rounded-lg">
-                    <h2 className="font-semibold mb-2">Services Status</h2>
-                    <p>Database: {healthData.services.database}</p>
-                    <p>Cache: {healthData.services.cache}</p>
-                    <p>API: {healthData.services.api}</p>
-                  </div>
-                )}
-
-                {/* Memory Usage */}
-                {healthData.memoryUsage && (
-                  <div className="bg-gray-50 p-4 rounded-lg col-span-full">
-                    <h2 className="font-semibold mb-2">Memory Usage</h2>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                      <div>
-                        <p className="text-sm text-gray-600">Total Allocated</p>
-                        <p>{healthData.memoryUsage.totalAllocated}</p>
-                      </div>
-                      <div>
-                        <p className="text-sm text-gray-600">Used</p>
-                        <p>{healthData.memoryUsage.used}</p>
-                      </div>
-                      <div>
-                        <p className="text-sm text-gray-600">Working Set</p>
-                        <p>{healthData.memoryUsage.workingSet}</p>
-                      </div>
-                      <div>
-                        <p className="text-sm text-gray-600">Peak Usage</p>
-                        <p>{healthData.memoryUsage.peakPagedMemory}</p>
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {/* CPU Usage */}
-                {healthData.cpuUsage && (
-                  <div className="bg-gray-50 p-4 rounded-lg">
-                    <h2 className="font-semibold mb-2">CPU Usage</h2>
-                    <p>{healthData.cpuUsage}</p>
-                  </div>
-                )}
-
-                {/* Disk Space */}
-                {healthData.diskSpace && (
-                  <div className="bg-gray-50 p-4 rounded-lg">
-                    <h2 className="font-semibold mb-2">Disk Space</h2>
-                    <p>Drive: {healthData.diskSpace.name}</p>
-                    <p>Total: {healthData.diskSpace.totalSpace}</p>
-                    <p>Free: {healthData.diskSpace.freeSpace}</p>
-                  </div>
-                )}
-
-                {/* Environment Info */}
-                {healthData.environment && (
-                  <div className="bg-gray-50 p-4 rounded-lg">
-                    <h2 className="font-semibold mb-2">Environment</h2>
-                    <p>Machine Name: {healthData.environment.machineName}</p>
-                    <p>OS: {healthData.environment.osVersion}</p>
-                    <p>Framework: {healthData.environment.frameworkVersion}</p>
-                    <p>Architecture: {healthData.environment.processArchitecture}</p>
-                  </div>
-                )}
-
-                {/* Active Threads */}
-                {healthData.activeThreads && (
-                  <div className="bg-gray-50 p-4 rounded-lg">
-                    <h2 className="font-semibold mb-2">Active Threads</h2>
-                    <p>Thread Count: {healthData.activeThreads.threadCount}</p>
-                  </div>
                 )}
               </div>
+
+              {healthData.services && (
+                <div className="health-check__card">
+                  <h2>Services Status</h2>
+                  <p>
+                    <span>Database</span>
+                    <span>{healthData.services.database}</span>
+                  </p>
+                  <p>
+                    <span>Cache</span>
+                    <span>{healthData.services.cache}</span>
+                  </p>
+                  <p>
+                    <span>API</span>
+                    <span>{healthData.services.api}</span>
+                  </p>
+                </div>
+              )}
+
+              {
+                <div className="health-check__card">
+                  <h2>CPU Usage</h2>
+                  <div className="health-check__cpu-usage">
+                    <div className="cpu-usage-indicator">
+                      <div
+                        className="cpu-usage-fill"
+                        style={{ width: cUsage ? `${Math.min(parseFloat(cUsage), 100)}%` : '2%' }}
+                      ></div>
+                    </div>
+                    <p>
+                      <span>Current Usage</span>
+                      {cUsage ? <span className={`cpu-value ${parseFloat(cUsage) > 80 ? 'high' : parseFloat(cUsage) > 50 ? 'medium' : 'low'}`}>
+                        {formatValue(cUsage)}%
+                      </span> : 'N/A'}
+                    </p>
+                  </div>
+                </div>
+              }
+
+              {healthData.memoryUsage && (
+                <div className="health-check__card">
+                  <h2>Memory Usage</h2>
+                  <div className="health-check__memory-grid">
+                    <div>
+                      <p className="label">Total Allocated</p>
+                      <p className="value">{healthData.memoryUsage.totalAllocated}</p>
+                    </div>
+                    <div>
+                      <p className="label">Used</p>
+                      <p className="value">{healthData.memoryUsage.used}</p>
+                    </div>
+                    <div>
+                      <p className="label">Working Set</p>
+                      <p className="value">{healthData.memoryUsage.workingSet}</p>
+                    </div>
+                    <div>
+                      <p className="label">Peak Usage</p>
+                      <p className="value">{healthData.memoryUsage.peakPagedMemory}</p>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {healthData.diskSpace && (
+                <div className="health-check__card">
+                  <h2>Disk Space</h2>
+                  <p>
+                    <span>Drive</span>
+                    <span>{healthData.diskSpace.name}</span>
+                  </p>
+                  <p>
+                    <span>Total Space</span>
+                    <span>{healthData.diskSpace.totalSpace}</span>
+                  </p>
+                  <p>
+                    <span>Free Space</span>
+                    <span>{healthData.diskSpace.freeSpace}</span>
+                  </p>
+                </div>
+              )}
+
+              {healthData.environment && (
+                <div className="health-check__card">
+                  <h2>Environment</h2>
+                  <p>
+                    <span>Machine</span>
+                    <span>{healthData.environment.machineName}</span>
+                  </p>
+                  <p>
+                    <span>OS</span>
+                    <span>{healthData.environment.osVersion}</span>
+                  </p>
+                  <p>
+                    <span>Framework</span>
+                    <span>{healthData.environment.frameworkVersion}</span>
+                  </p>
+                  <p>
+                    <span>Architecture</span>
+                    <span>{healthData.environment.processArchitecture}</span>
+                  </p>
+                </div>
+              )}
+
+              {healthData.activeThreads && (
+                <div className="health-check__card">
+                  <h2>Active Threads</h2>
+                  <p>
+                    <span>Thread Count</span>
+                    <span>{healthData.activeThreads.threadCount}</span>
+                  </p>
+                </div>
+              )}
             </div>
           )}
         </div>
