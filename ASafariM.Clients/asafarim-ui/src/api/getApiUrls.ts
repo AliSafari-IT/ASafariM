@@ -1,4 +1,7 @@
 const apiUrls = (host: string) => {
+    const isDevelopment = import.meta.env.VITE_ENVIRONMENT === 'development';
+    console.debug('isDevelopment:', isDevelopment, 'host:', host);
+
     switch (host) {
         case 'preview.asafarim.com':
             return 'https://preview.asafarim.com/api';

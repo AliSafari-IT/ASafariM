@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../../layout/Layout";
 import Footer from "../../layout/Footer/Footer";
+import apiUrls from "@/api/getApiUrls";
 
 interface HealthStatus {
   status: string;
@@ -42,8 +43,9 @@ const HealthCheck: React.FC = () => {
 
   useEffect(() => {
     const fetchHealthStatus = async () => {
+      const baseUrl = apiUrls(window.location.hostname);
       try {
-        const response = await fetch("/api/health");
+        const response = await fetch(`${baseUrl}/api/health`);
         if (!response.ok) {
           throw new Error("Health check failed");
         }
