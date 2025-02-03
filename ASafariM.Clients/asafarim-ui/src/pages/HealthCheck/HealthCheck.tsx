@@ -7,10 +7,15 @@ import "./HealthCheck.css";
 interface HealthStatus {
   status: string;
   version: string;
+  buildDate: string;
+  buildCommit: string;
+  buildBranch: string;
+  buildAuthor: string;
   timestamp: string;
   services?: {
     database: string;
     cache: string;
+    session: string;
     api: string;
   };
   uptime?: string;
@@ -31,6 +36,7 @@ interface HealthStatus {
     osVersion: string;
     frameworkVersion: string;
     processArchitecture: string;
+    environmentVariables?: Record<string, string>;
   };
   activeThreads?: {
     threadCount: number;
@@ -38,7 +44,7 @@ interface HealthStatus {
 }
 
 const formatValue = (value: string | number) => {
-  if (typeof value === 'number') {
+  if (typeof value === "number") {
     return value.toFixed(2);
   }
   return value;
@@ -95,8 +101,6 @@ const HealthCheck: React.FC = () => {
     );
   }
 
-  const cUsage = healthData?.cpuUsage;
-
   return (
     <Layout header={<></>} footer={<Footer />}>
       <div className="health-check__container">
@@ -105,21 +109,40 @@ const HealthCheck: React.FC = () => {
 
           {healthData && (
             <div className="health-check__grid">
+              {/* System Status */}
               <div className="health-check__status">
                 <div
-                  className={`health-check__status-indicator ${healthData.status === "healthy" ? "healthy" : "unhealthy"
-                    }`}
+                  className={`health-check__status-indicator ${
+                    healthData.status === "healthy" ? "healthy" : "unhealthy"
+                  }`}
                 ></div>
                 <span className="health-check__status-text">
                   System Status: {healthData.status}
                 </span>
               </div>
 
+              {/* System Information */}
               <div className="health-check__card">
                 <h2>System Info</h2>
                 <p>
                   <span>Version</span>
                   <span>{healthData.version}</span>
+                </p>
+                <p>
+                  <span>Build Date</span>
+                  <span>{healthData.buildDate}</span>
+                </p>
+                <p>
+                  <span>Build Commit</span>
+                  <span>{healthData.buildCommit}</span>
+                </p>
+                <p>
+                  <span>Build Branch</span>
+                  <span>{healthData.buildBranch}</span>
+                </p>
+                <p>
+                  <span>Build Author</span>
+                  <span>{healthData.buildAuthor}</span>
                 </p>
                 <p>
                   <span>Last Updated</span>
@@ -133,108 +156,96 @@ const HealthCheck: React.FC = () => {
                 )}
               </div>
 
+              {/* Services Status */}
               {healthData.services && (
                 <div className="health-check__card">
                   <h2>Services Status</h2>
-                  <p>
-                    <span>Database</span>
-                    <span>{healthData.services.database}</span>
-                  </p>
-                  <p>
-                    <span>Cache</span>
-                    <span>{healthData.services.cache}</span>
-                  </p>
-                  <p>
-                    <span>API</span>
-                    <span>{healthData.services.api}</span>
-                  </p>
+                  {Object.entries(healthData.services).map(([key, value]) => (
+                    <p key={key}>
+                      <span>{key.charAt(0).toUpperCase() + key.slice(1)}</span>
+                      <span>{value}</span>
+                    </p>
+                  ))}
                 </div>
               )}
 
-              {
+              {/* CPU Usage */}
+              {healthData.cpuUsage && (
                 <div className="health-check__card">
                   <h2>CPU Usage</h2>
                   <div className="health-check__cpu-usage">
                     <div className="cpu-usage-indicator">
                       <div
                         className="cpu-usage-fill"
-                        style={{ width: cUsage ? `${Math.min(parseFloat(cUsage), 100)}%` : '2%' }}
+                        style={{
+                          width: `${Math.min(parseFloat(healthData.cpuUsage), 100)}%`,
+                        }}
                       ></div>
                     </div>
                     <p>
                       <span>Current Usage</span>
-                      {cUsage ? <span className={`cpu-value ${parseFloat(cUsage) > 80 ? 'high' : parseFloat(cUsage) > 50 ? 'medium' : 'low'}`}>
-                        {formatValue(cUsage)}%
-                      </span> : 'N/A'}
+                      <span
+                        className={`cpu-value ${
+                          parseFloat(healthData.cpuUsage) > 80
+                            ? "high"
+                            : parseFloat(healthData.cpuUsage) > 50
+                            ? "medium"
+                            : "low"
+                        }`}
+                      >
+                        {formatValue(healthData.cpuUsage)}%
+                      </span>
                     </p>
                   </div>
                 </div>
-              }
+              )}
 
+              {/* Memory Usage */}
               {healthData.memoryUsage && (
                 <div className="health-check__card">
                   <h2>Memory Usage</h2>
                   <div className="health-check__memory-grid">
-                    <div>
-                      <p className="label">Total Allocated</p>
-                      <p className="value">{healthData.memoryUsage.totalAllocated}</p>
-                    </div>
-                    <div>
-                      <p className="label">Used</p>
-                      <p className="value">{healthData.memoryUsage.used}</p>
-                    </div>
-                    <div>
-                      <p className="label">Working Set</p>
-                      <p className="value">{healthData.memoryUsage.workingSet}</p>
-                    </div>
-                    <div>
-                      <p className="label">Peak Usage</p>
-                      <p className="value">{healthData.memoryUsage.peakPagedMemory}</p>
-                    </div>
+                    {Object.entries(healthData.memoryUsage).map(([key, value]) => (
+                      <div key={key}>
+                        <p className="label">{key.replace(/([A-Z])/g, " $1")}</p>
+                        <p className="value">{formatValue(value)}</p>
+                      </div>
+                    ))}
                   </div>
                 </div>
               )}
 
+              {/* Disk Space */}
               {healthData.diskSpace && (
                 <div className="health-check__card">
                   <h2>Disk Space</h2>
-                  <p>
-                    <span>Drive</span>
-                    <span>{healthData.diskSpace.name}</span>
-                  </p>
-                  <p>
-                    <span>Total Space</span>
-                    <span>{healthData.diskSpace.totalSpace}</span>
-                  </p>
-                  <p>
-                    <span>Free Space</span>
-                    <span>{healthData.diskSpace.freeSpace}</span>
-                  </p>
+                  {Object.entries(healthData.diskSpace).map(([key, value]) => (
+                    <p key={key}>
+                      <span>{key.replace(/([A-Z])/g, " $1")}</span>
+                      <span>{value}</span>
+                    </p>
+                  ))}
                 </div>
               )}
 
+              {/* Environment Details */}
               {healthData.environment && (
                 <div className="health-check__card">
                   <h2>Environment</h2>
-                  <p>
-                    <span>Machine</span>
-                    <span>{healthData.environment.machineName}</span>
-                  </p>
-                  <p>
-                    <span>OS</span>
-                    <span>{healthData.environment.osVersion}</span>
-                  </p>
-                  <p>
-                    <span>Framework</span>
-                    <span>{healthData.environment.frameworkVersion}</span>
-                  </p>
-                  <p>
-                    <span>Architecture</span>
-                    <span>{healthData.environment.processArchitecture}</span>
-                  </p>
+                  {Object.entries(healthData.environment).map(([key, value]) => {
+                    // Skip rendering if value is an object (like environmentVariables)
+                    if (typeof value === 'object') return null;
+                    return (
+                      <p key={key}>
+                        <span>{key.replace(/([A-Z])/g, " $1").trim()}</span>
+                        <span>{String(value)}</span>
+                      </p>
+                    );
+                  })}
                 </div>
               )}
 
+              {/* Active Threads */}
               {healthData.activeThreads && (
                 <div className="health-check__card">
                   <h2>Active Threads</h2>

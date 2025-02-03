@@ -5,10 +5,12 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using MySql.Data.MySqlClient;
 
 namespace ASafariM.Presentation.Controllers
 {
-
     /// <summary>
     /// Provides health status information for the application.
     /// </summary>
@@ -20,115 +22,278 @@ namespace ASafariM.Presentation.Controllers
     [Route("api/health")]
     public class HealthCheckController : ControllerBase
     {
+        private readonly ILogger<HealthCheckController> _logger;
+        private readonly string _connectionString;
+
+        public HealthCheckController(
+            ILogger<HealthCheckController> logger,
+            IConfiguration configuration
+        )
+        {
+            _logger = logger;
+            _connectionString = configuration.GetConnectionString("DefaultConnection");
+        }
+
         [HttpGet]
         public IActionResult GetHealthStatus()
         {
-            var healthStatus = new
+            try
             {
-                status = "healthy",
-                version = "1.0.0",
-                timestamp = DateTime.UtcNow,
-                services = new
+                var healthStatus = new
                 {
-                    database = CheckDatabaseHealth(),
-                    cache = CheckCacheHealth(),
-                    api = "healthy",
-                },
-                uptime = GetUptime(),
-                memoryUsage = GetMemoryUsage(),
-                cpuUsage = GetCpuUsage(),
-                diskSpace = GetDiskSpace(),
-                environment = GetEnvironmentDetails(),
-                activeThreads = GetActiveThreads(),
-            };
+                    status = "healthy",
+                    version = "1.0.0",
+                    buildDate = GetBuildDate(),
+                    buildCommit = GetGitCommitHash(),
+                    buildBranch = GetGitBranchName(),
+                    buildAuthor = "A. Safari M.",
+                    timestamp = DateTime.UtcNow,
+                    services = new
+                    {
+                        database = CheckDatabaseHealth(),
+                        cache = CheckCacheHealth(),
+                        session = CheckSessionHealth(),
+                        api = "healthy",
+                    },
+                    uptime = GetUptime(),
+                    memoryUsage = GetMemoryUsage(),
+                    cpuUsage = GetCpuUsage(),
+                    diskSpace = GetDiskSpace(),
+                    environment = GetEnvironmentDetails(),
+                    activeThreads = GetActiveThreads(),
+                };
 
-            return Ok(healthStatus);
+                _logger.LogInformation("Health check successful.");
+                return Ok(healthStatus);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Health check failed: {ex.Message}");
+                return StatusCode(500, new { status = "unhealthy", error = ex.Message });
+            }
         }
 
         private string GetUptime()
         {
-            var uptime = DateTime.UtcNow - Process.GetCurrentProcess().StartTime.ToUniversalTime();
-            return uptime.ToString(@"dd\.hh\:mm\:ss");
+            try
+            {
+                var uptime =
+                    DateTime.UtcNow - Process.GetCurrentProcess().StartTime.ToUniversalTime();
+                return uptime.ToString(@"dd\.hh\:mm\:ss");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Failed to retrieve uptime: {ex.Message}");
+                return "Unknown";
+            }
         }
 
         private object GetMemoryUsage()
         {
-            var process = Process.GetCurrentProcess();
-            return new
+            try
             {
-                totalAllocated = GC.GetTotalMemory(false) / 1024 / 1024 + " MB",
-                used = process.PrivateMemorySize64 / 1024 / 1024 + " MB",
-                workingSet = process.WorkingSet64 / 1024 / 1024 + " MB",
-                peakPagedMemory = process.PeakPagedMemorySize64 / 1024 / 1024 + " MB",
-            };
+                var process = Process.GetCurrentProcess();
+                return new
+                {
+                    totalAllocated = $"{GC.GetTotalMemory(false) / 1024 / 1024} MB",
+                    used = $"{process.PrivateMemorySize64 / 1024 / 1024} MB",
+                    workingSet = $"{process.WorkingSet64 / 1024 / 1024} MB",
+                    peakPagedMemory = $"{process.PeakPagedMemorySize64 / 1024 / 1024} MB",
+                };
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Failed to retrieve memory usage: {ex.Message}");
+                return new { error = "Memory usage could not be retrieved" };
+            }
         }
 
-        private double GetCpuUsage()
+        private object GetCpuUsage()
         {
-            var process = Process.GetCurrentProcess();
-            var startCpuUsage = process.TotalProcessorTime;
-            var startTime = DateTime.UtcNow;
+            try
+            {
+                var process = Process.GetCurrentProcess();
+                var startCpuUsage = process.TotalProcessorTime;
+                var startTime = DateTime.UtcNow;
 
-            Thread.Sleep(500); // Allow some time for CPU calculation
+                Thread.Sleep(500); // Allow time for CPU calculation
 
-            var endCpuUsage = process.TotalProcessorTime;
-            var endTime = DateTime.UtcNow;
-            var cpuUsedMs = (endCpuUsage - startCpuUsage).TotalMilliseconds;
-            var elapsedMs = (endTime - startTime).TotalMilliseconds;
-            var cpuUsage = (cpuUsedMs / elapsedMs) * 100;
+                var endCpuUsage = process.TotalProcessorTime;
+                var endTime = DateTime.UtcNow;
+                var cpuUsedMs = (endCpuUsage - startCpuUsage).TotalMilliseconds;
+                var elapsedMs = (endTime - startTime).TotalMilliseconds;
+                var cpuUsage = (cpuUsedMs / elapsedMs) * 100;
 
-            return Math.Round(cpuUsage, 2);
+                return $"{Math.Round(cpuUsage, 2)} %";
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Failed to retrieve CPU usage: {ex.Message}");
+                return "Unknown";
+            }
         }
-
 
         private object GetDiskSpace()
         {
-            var drive = DriveInfo.GetDrives().FirstOrDefault(d => d.IsReady);
-            return drive != null
-                ? new
-                {
-                    drive.Name,
-                    totalSpace = drive.TotalSize / 1024 / 1024 / 1024 + " GB",
-                    freeSpace = drive.TotalFreeSpace / 1024 / 1024 / 1024 + " GB",
-                }
-                : "Drive not available";
+            try
+            {
+                var drive = DriveInfo.GetDrives().FirstOrDefault(d => d.IsReady);
+                return drive != null
+                    ? new
+                    {
+                        drive.Name,
+                        totalSpace = $"{drive.TotalSize / 1024 / 1024 / 1024} GB",
+                        freeSpace = $"{drive.TotalFreeSpace / 1024 / 1024 / 1024} GB",
+                    }
+                    : "Drive not available";
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Failed to retrieve disk space: {ex.Message}");
+                return "Unknown";
+            }
         }
 
         private object GetEnvironmentDetails()
         {
-            return new
+            try
             {
-                machineName = Environment.MachineName,
-                osVersion = Environment.OSVersion.ToString(),
-                frameworkVersion = System
-                    .Runtime
-                    .InteropServices
-                    .RuntimeInformation
-                    .FrameworkDescription,
-                processArchitecture = System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture.ToString(),
-                environmentVariables = Environment
-                    .GetEnvironmentVariables()
-                    .Keys.Cast<string>()
-                    .Take(5)
-                    .ToDictionary(k => k, k => Environment.GetEnvironmentVariable(k)),
-            };
+                return new
+                {
+                    machineName = Environment.MachineName,
+                    osVersion = Environment.OSVersion.ToString(),
+                    frameworkVersion = System
+                        .Runtime
+                        .InteropServices
+                        .RuntimeInformation
+                        .FrameworkDescription,
+                    processArchitecture = System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture.ToString(),
+                    environmentVariables = Environment
+                        .GetEnvironmentVariables()
+                        .Keys.Cast<string>()
+                        .Take(5)
+                        .ToDictionary(k => k, k => Environment.GetEnvironmentVariable(k)),
+                };
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Failed to retrieve environment details: {ex.Message}");
+                return "Unknown";
+            }
         }
 
         private object GetActiveThreads()
         {
-            return new { threadCount = Process.GetCurrentProcess().Threads.Count };
+            try
+            {
+                return new { threadCount = Process.GetCurrentProcess().Threads.Count };
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Failed to retrieve thread count: {ex.Message}");
+                return "Unknown";
+            }
         }
 
         private string CheckDatabaseHealth()
         {
-            // You may implement a real DB connection check
-            return "healthy"; // Placeholder for real DB check
+            if (string.IsNullOrEmpty(_connectionString))
+            {
+                _logger.LogError("Database health check failed: Connection string is not configured");
+                return "unhealthy (no connection string)";
+            }
+
+            try
+            {
+                using (var connection = new MySqlConnection(_connectionString))
+                {
+                    // First try to connect
+                    try
+                    {
+                        connection.Open();
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.LogError($"Database connection failed: {ex.Message}");
+                        return $"unhealthy (connection failed)";
+                    }
+
+                    // Then try to execute a simple query
+                    try
+                    {
+                        using (var command = connection.CreateCommand())
+                        {
+                            command.CommandText = "SELECT 1";
+                            command.CommandTimeout = 5; // 5 seconds timeout
+                            command.ExecuteScalar();
+                        }
+                        _logger.LogInformation("Database health check successful");
+                        return "healthy";
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.LogError($"Database query failed: {ex.Message}");
+                        return $"unhealthy (query failed)";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Database health check failed: {ex.Message}");
+                return $"unhealthy (general error)";
+            }
         }
 
         private string CheckCacheHealth()
         {
-            // Implement cache connection check if needed (e.g., Redis, MemoryCache)
-            return "healthy"; // Placeholder for cache health check
+            // Placeholder: Implement real cache connection check
+            return "healthy";
+        }
+
+        private string CheckSessionHealth()
+        {
+            // Placeholder: Implement session store check
+            return "healthy";
+        }
+
+        private string GetBuildDate()
+        {
+            return DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+        }
+
+        private string GetGitCommitHash()
+        {
+            try
+            {
+                var gitHeadPath = Path.Combine(Directory.GetCurrentDirectory(), ".git", "HEAD");
+                if (System.IO.File.Exists(gitHeadPath))
+                {
+                    var refPath = System.IO.File.ReadAllText(gitHeadPath).Trim();
+                    if (refPath.StartsWith("ref:"))
+                    {
+                        var branchRef = refPath.Split(' ')[1].Trim();
+                        var commitPath = Path.Combine(
+                            Directory.GetCurrentDirectory(),
+                            ".git",
+                            branchRef
+                        );
+                        return System.IO.File.Exists(commitPath)
+                            ? System.IO.File.ReadAllText(commitPath).Trim()
+                            : "Unknown";
+                    }
+                }
+                return "Unknown";
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Failed to retrieve Git commit hash: {ex.Message}");
+                return "Unknown";
+            }
+        }
+
+        private string GetGitBranchName()
+        {
+            return "main"; // Change this dynamically if needed
         }
     }
 }
