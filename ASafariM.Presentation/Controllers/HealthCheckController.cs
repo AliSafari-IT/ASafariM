@@ -199,7 +199,9 @@ namespace ASafariM.Presentation.Controllers
         {
             if (string.IsNullOrEmpty(_connectionString))
             {
-                _logger.LogError("Database health check failed: Connection string is not configured");
+                _logger.LogError(
+                    "Database health check failed: Connection string is not configured"
+                );
                 return "unhealthy (no connection string)";
             }
 
@@ -265,23 +267,68 @@ namespace ASafariM.Presentation.Controllers
         {
             try
             {
-                var gitHeadPath = Path.Combine(Directory.GetCurrentDirectory(), ".git", "HEAD");
-                if (System.IO.File.Exists(gitHeadPath))
+                // Try multiple possible locations for the .git directory
+                var possiblePaths = new[]
                 {
-                    var refPath = System.IO.File.ReadAllText(gitHeadPath).Trim();
-                    if (refPath.StartsWith("ref:"))
+                    "/var/www/asafarim", // Main project directory
+                    Directory.GetCurrentDirectory(), // Current directory
+                    Path.GetDirectoryName(Directory.GetCurrentDirectory()), // Parent of current directory
+                    Environment.GetEnvironmentVariable("GIT_DIR"), // From environment variable
+                }
+                .Where(p => !string.IsNullOrEmpty(p))
+                .Select(p => Path.Combine(p, ".git", "HEAD"))
+                .Where(p => File.Exists(p));
+
+                _logger.LogInformation($"Searching for git info in: {string.Join(", ", possiblePaths)}");
+
+                foreach (var gitHeadPath in possiblePaths)
+                {
+                    _logger.LogInformation($"Checking git path: {gitHeadPath}");
+                    var refPath = File.ReadAllText(gitHeadPath).Trim();
+                    
+                    if (refPath.StartsWith("ref: "))
                     {
-                        var branchRef = refPath.Split(' ')[1].Trim();
-                        var commitPath = Path.Combine(
-                            Directory.GetCurrentDirectory(),
-                            ".git",
-                            branchRef
-                        );
-                        return System.IO.File.Exists(commitPath)
-                            ? System.IO.File.ReadAllText(commitPath).Trim()
-                            : "Unknown";
+                        // It's a reference, follow it
+                        var gitDir = Path.GetDirectoryName(gitHeadPath); // Path to .git directory
+                        var branchRef = refPath.Substring(5).Trim(); // Remove "ref: "
+                        
+                        // Try in .git directory
+                        var commitPath = Path.Combine(gitDir, branchRef);
+                        if (File.Exists(commitPath))
+                        {
+                            var hash = File.ReadAllText(commitPath).Trim();
+                            _logger.LogInformation($"Found commit hash in {commitPath}: {hash}");
+                            return hash;
+                        }
+                        
+                        // Try in .git/refs directory
+                        commitPath = Path.Combine(gitDir, "refs", branchRef);
+                        if (File.Exists(commitPath))
+                        {
+                            var hash = File.ReadAllText(commitPath).Trim();
+                            _logger.LogInformation($"Found commit hash in refs: {hash}");
+                            return hash;
+                        }
+
+                        _logger.LogWarning($"Could not find commit file at {commitPath}");
+                    }
+                    else
+                    {
+                        // It's a direct commit hash
+                        _logger.LogInformation($"Found direct commit hash: {refPath}");
+                        return refPath;
                     }
                 }
+
+                // If we get here, try to get it from an environment variable
+                var envCommit = Environment.GetEnvironmentVariable("GIT_COMMIT");
+                if (!string.IsNullOrEmpty(envCommit))
+                {
+                    _logger.LogInformation($"Found commit hash from environment: {envCommit}");
+                    return envCommit;
+                }
+
+                _logger.LogWarning("Could not find git commit hash in any location");
                 return "Unknown";
             }
             catch (Exception ex)

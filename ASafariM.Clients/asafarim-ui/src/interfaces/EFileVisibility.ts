@@ -1,6 +1,9 @@
 
 export enum EFileVisibility {
     Public = 'Public',
-    Private = 'Private',
-    Protected = 'Protected'
+    OnlyMe = 'OnlyMe',
+    Protected = 'Protected',
+    Internal = 'Internal',
+    Restricted = 'Restricted',
+    MembersOnly = 'MembersOnly'
 }

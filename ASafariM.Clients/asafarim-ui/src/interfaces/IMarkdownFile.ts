@@ -9,6 +9,6 @@ export interface IMarkdownFile {
     authorId?: string;
     dateCreated?: string;
     dateModified?: string;
-    visibility?: EFileVisibility.Private | EFileVisibility.Public | EFileVisibility.Protected;
+    visibility?: EFileVisibility.OnlyMe | EFileVisibility.Public | EFileVisibility.Protected;
 }
 

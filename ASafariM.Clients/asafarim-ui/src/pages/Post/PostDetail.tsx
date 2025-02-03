@@ -5,6 +5,7 @@ import { IPost } from "../../interfaces/post-types";
 import Wrapper from "../../layout/Wrapper/Wrapper";
 import dashboardServices from "@/api/entityServices";
 import { ITag } from "@fluentui/react";
+import apiUrls from "@/api/getApiUrls";
 
 const PostDetail = () => {
     const { slug } = useParams<{ slug: string }>();
@@ -12,12 +13,12 @@ const PostDetail = () => {
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
     const [tagNames, setTagNames] = useState<{name: string, id: string}[]>([]);
-    const API_URL = import.meta.env.VITE_API_URL;
+    const API_URL = apiUrls(window.location.hostname);
     console.log(`API URL is: ${API_URL}`, `import.meta.env.VITE_API_URL is: ${import.meta.env.VITE_API_URL}`);
 
     useEffect(() => {
         axios
-            .get(`${API_URL}/blogposts/${slug}`)
+            .get(`${API_URL}/posts/${slug}`)
             .then((response) => {
                 setPost(response.data);
                 setLoading(false);

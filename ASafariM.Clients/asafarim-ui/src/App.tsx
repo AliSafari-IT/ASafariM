@@ -46,6 +46,8 @@ import AddSitemapItemForm from "./components/crud/AddSitemapItemForm";
 import DeleteForm from "./components/crud/DeleteForm";
 import AddTagForm from "./components/crud/AddTagForm";
 import EditTagForm from "./components/crud/EditTagForm";
+import PostsList from "./pages/Post/PostsList";
+import CreatePost from "./pages/Post/CreatePost";
 import HealthCheck from "./pages/HealthCheck/HealthCheck";
 
 // const userUrl = API_URL + '/users';
@@ -283,6 +285,8 @@ function App() {
           <Route path="/topics/add" element={<AddTopicForm />} />
           <Route path="/topics/edit/:id" element={<EditTopicForm />} />
           <Route path="/topics/delete/:id" element={<DeleteForm entity="topics"  />} />
+          <Route path="/posts" element={<PostsList />} />
+          <Route path="/posts/create" element={<CreatePost />} />
           <Route path="/posts/add" element={<AddPostForm />} />
           <Route path="/posts/edit/:id" element={<EditPostForm />} />
           <Route path="/posts/delete/:id" element={<DeleteForm entity="posts"  />} />
