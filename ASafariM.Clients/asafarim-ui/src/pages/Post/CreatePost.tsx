@@ -60,9 +60,9 @@ const CreatePost: React.FC = () => {
                 {success && <MessageBar messageBarType={MessageBarType.success}>Post created successfully!</MessageBar>}
                 <form onSubmit={handleSubmit}>
                     <Stack tokens={{ childrenGap: 10 }}>
-                        <TextField label="Title" value={title} onChange={(e, newValue) => setTitle(newValue || '')} required />
+                        <TextField label="Title" value={title} onChange={(_e, newValue) => setTitle(newValue || '')} required />
                         <TextField label="Author" value={author} readOnly required />
-                        <TextField label="Content" multiline rows={5} value={content} onChange={(e, newValue) => setContent(newValue || '')} required />
+                        <TextField label="Content" multiline rows={5} value={content} onChange={(_e, newValue) => setContent(newValue || '')} required />
                         <PrimaryButton text="Submit" type="submit" />
                     </Stack>
                 </form>
