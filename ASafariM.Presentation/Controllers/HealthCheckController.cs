@@ -275,23 +275,25 @@ namespace ASafariM.Presentation.Controllers
                     Path.GetDirectoryName(Directory.GetCurrentDirectory()), // Parent of current directory
                     Environment.GetEnvironmentVariable("GIT_DIR"), // From environment variable
                 }
-                .Where(p => !string.IsNullOrEmpty(p))
-                .Select(p => Path.Combine(p, ".git", "HEAD"))
-                .Where(p => File.Exists(p));
+                    .Where(p => !string.IsNullOrEmpty(p))
+                    .Select(p => Path.Combine(p, ".git", "HEAD"))
+                    .Where(p => File.Exists(p));
 
-                _logger.LogInformation($"Searching for git info in: {string.Join(", ", possiblePaths)}");
+                _logger.LogInformation(
+                    $"Searching for git info in: {string.Join(", ", possiblePaths)}"
+                );
 
                 foreach (var gitHeadPath in possiblePaths)
                 {
                     _logger.LogInformation($"Checking git path: {gitHeadPath}");
                     var refPath = File.ReadAllText(gitHeadPath).Trim();
-                    
+
                     if (refPath.StartsWith("ref: "))
                     {
                         // It's a reference, follow it
                         var gitDir = Path.GetDirectoryName(gitHeadPath); // Path to .git directory
                         var branchRef = refPath.Substring(5).Trim(); // Remove "ref: "
-                        
+
                         // Try in .git directory
                         var commitPath = Path.Combine(gitDir, branchRef);
                         if (File.Exists(commitPath))
@@ -300,7 +302,7 @@ namespace ASafariM.Presentation.Controllers
                             _logger.LogInformation($"Found commit hash in {commitPath}: {hash}");
                             return hash;
                         }
-                        
+
                         // Try in .git/refs directory
                         commitPath = Path.Combine(gitDir, "refs", branchRef);
                         if (File.Exists(commitPath))
