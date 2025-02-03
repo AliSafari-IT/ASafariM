@@ -1,7 +1,6 @@
 import {
   Routes,
   Route,
-  Navigate,
 } from "react-router-dom";
 import PrivateRoute from "./components/PrivateRoute";
 import About from "./pages/AboutMe/About";
@@ -13,7 +12,7 @@ import AkkodisTargetedResume from "./pages/AboutMe/TailoredCV/Akkodis";
 import DelCard from "./components/Containers/Card/DelCard";
 import EditCard from "./components/Containers/Card/EditCard";
 import ProjectHome from "./pages/Project/Index";
-import PostDetail from "./pages/Post/PostDetail";
+import PostDetail from "./pages/Post/PostDetail"; 
 import LogoutPage from "./pages/Accountpage/LogoutPage";
 import Register from "./pages/Accountpage/Register";
 import LoginPage from "./pages/Accountpage/LoginPage";
@@ -49,6 +48,7 @@ import AddTagForm from "./components/crud/AddTagForm";
 import EditTagForm from "./components/crud/EditTagForm";
 import PostsList from "./pages/Post/PostsList";
 import CreatePost from "./pages/Post/CreatePost";
+import HealthCheck from "./pages/HealthCheck/HealthCheck";
 
 // const userUrl = API_URL + '/users';
 
@@ -293,7 +293,7 @@ function App() {
           <Route path="/sitemap-items/add" element={<AddSitemapItemForm />} />
           <Route path="/sitemap-items/edit/:id" element={<EditSitemapItemForm />} />
           <Route path="/sitemap-items/delete/:id" element={<DeleteForm entity="sitemapitems"  />} />
-          <Route path="/health-ui" element={<Navigate to="/health-ui" />} />
+          <Route path="/health-ui" element={<HealthCheck />} />
           <Route path="/access-denied" element={<AccessDenied />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

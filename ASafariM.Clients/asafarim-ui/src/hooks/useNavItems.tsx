@@ -129,6 +129,14 @@ const dashboardDD: IMenuItem = {
   icon: <IconDashboard />,
   subMenu: [
     {
+      id: 'system-health-status',
+      name: 'system-health-status',
+      title: 'System Health Status',
+      label: 'System Health Status',
+      to: '/health-ui',
+      icon: <IconDashboard />,
+    },
+    {
       id: 'user-dashboard',
       name: 'user-dashboard',
       title: 'Dashboard',
