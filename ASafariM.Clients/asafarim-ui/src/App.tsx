@@ -1,7 +1,6 @@
 import {
   Routes,
   Route,
-  Navigate,
 } from "react-router-dom";
 import PrivateRoute from "./components/PrivateRoute";
 import About from "./pages/AboutMe/About";
@@ -290,8 +289,7 @@ function App() {
           <Route path="/sitemap-items/add" element={<AddSitemapItemForm />} />
           <Route path="/sitemap-items/edit/:id" element={<EditSitemapItemForm />} />
           <Route path="/sitemap-items/delete/:id" element={<DeleteForm entity="sitemapitems"  />} />
-          <Route path="/health-ui" element={<Navigate to="/health-ui" />} />
-          <Route path="/health" element={<HealthCheck />} />
+          <Route path="/health-ui" element={<HealthCheck />} />
           <Route path="/access-denied" element={<AccessDenied />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
