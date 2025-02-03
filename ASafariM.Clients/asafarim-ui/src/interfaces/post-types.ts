@@ -1,4 +1,5 @@
 import { DifficultyLevelEnum } from "./DifficultyLevelEnum";
+import { EFileVisibility } from "./EFileVisibility";
 
 export interface IPost {
     difficultyLevel?: DifficultyLevelEnum;
@@ -12,13 +13,12 @@ export interface IPost {
     slug?: string;
     excerpt?: string;
     viewCount?: number;
-    topicId?: string;
-    lastUpdated?: string;
     isPublished?: boolean;
     imageUrl?: string;
+    visibility?: EFileVisibility;
     metaDescription?: string;
     tags?: string[]; // tagIds
     topic?: string; // topicId
     createdAt: Date;
-    updatedAt?: Date;
+    updatedAt: Date;
   }
