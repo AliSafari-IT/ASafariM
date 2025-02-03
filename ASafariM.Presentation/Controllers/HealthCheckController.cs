@@ -44,7 +44,7 @@ namespace ASafariM.Presentation.Controllers
                     status = "healthy",
                     version = "1.0.0",
                     buildDate = GetBuildDate(),
-                    buildCommit = GetGitCommitHash(),
+                    buildCommit = GetGitCommitHash()?.Substring(0, 8),
                     buildBranch = GetGitBranchName(),
                     buildAuthor = "A. Safari M.",
                     timestamp = DateTime.UtcNow,
