@@ -36,6 +36,13 @@ interface HealthStatus {
   };
 }
 
+/**
+ * HealthCheck is a React functional component that fetches and displays
+ * the system health status from the "/api/health" endpoint. It manages
+ * loading and error states, and updates the health status every 30 seconds.
+ * The component renders different layouts based on the loading and error
+ * states, and displays detailed health information when available.
+ */
 const HealthCheck: React.FC = () => {
   const [healthData, setHealthData] = useState<HealthStatus | null>(null);
   const [loading, setLoading] = useState(true);
@@ -45,7 +52,7 @@ const HealthCheck: React.FC = () => {
     const fetchHealthStatus = async () => {
       const baseUrl = apiUrls(window.location.hostname);
       try {
-        const response = await fetch(`${baseUrl}/api/health`);
+        const response = await fetch(`${baseUrl}/health`);
         if (!response.ok) {
           throw new Error("Health check failed");
         }
@@ -97,11 +104,10 @@ const HealthCheck: React.FC = () => {
             <div className="space-y-6">
               <div className="flex items-center">
                 <div
-                  className={`h-4 w-4 rounded-full mr-2 ${
-                    healthData.status === "healthy"
+                  className={`h-4 w-4 rounded-full mr-2 ${healthData.status === "healthy"
                       ? "bg-green-500"
                       : "bg-red-500"
-                  }`}
+                    }`}
                 ></div>
                 <span className="text-lg font-semibold">
                   Status: {healthData.status}

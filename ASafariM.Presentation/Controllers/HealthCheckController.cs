@@ -8,6 +8,14 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ASafariM.Presentation.Controllers
 {
+
+    /// <summary>
+    /// Provides health status information for the application.
+    /// </summary>
+    /// <remarks>
+    /// This controller returns various health metrics including service status,
+    /// uptime, memory and CPU usage, disk space, environment details, and active threads.
+    /// </remarks>
     [ApiController]
     [Route("api/health")]
     public class HealthCheckController : ControllerBase
