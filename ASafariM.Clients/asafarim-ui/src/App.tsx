@@ -47,6 +47,7 @@ import AddSitemapItemForm from "./components/crud/AddSitemapItemForm";
 import DeleteForm from "./components/crud/DeleteForm";
 import AddTagForm from "./components/crud/AddTagForm";
 import EditTagForm from "./components/crud/EditTagForm";
+import HealthCheck from "./pages/HealthCheck/HealthCheck";
 
 // const userUrl = API_URL + '/users';
 
@@ -290,6 +291,7 @@ function App() {
           <Route path="/sitemap-items/edit/:id" element={<EditSitemapItemForm />} />
           <Route path="/sitemap-items/delete/:id" element={<DeleteForm entity="sitemapitems"  />} />
           <Route path="/health-ui" element={<Navigate to="/health-ui" />} />
+          <Route path="/health" element={<HealthCheck />} />
           <Route path="/access-denied" element={<AccessDenied />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
