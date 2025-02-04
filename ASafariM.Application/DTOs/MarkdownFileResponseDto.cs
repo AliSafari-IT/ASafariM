@@ -9,6 +9,7 @@ namespace ASafariM.Application.DTOs
         public Guid Id { get; set; }
         public string Title { get; set; } = string.Empty;
         public string Content { get; set; } = string.Empty;
+        public string Path { get; set; } = string.Empty;
         public VisibilityEnum Visibility { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }

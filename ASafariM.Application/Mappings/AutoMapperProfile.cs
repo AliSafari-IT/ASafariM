@@ -9,7 +9,8 @@ namespace ASafariM.Application.Mappings
         public AutoMapperProfile()
         {
             CreateMap<MarkdownFile, MarkdownFileResponseDto>();
-
+            CreateMap<User, UserDto>();
+            CreateMap<UserDto, User>();
             CreateMap<MarkdownFileUser, ContributorDto>()
                 .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserId))
                 .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.User.Email))

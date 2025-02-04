@@ -45,6 +45,8 @@ namespace ASafariM.Domain.Entities
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime? UpdatedAt { get; set; }
 
+        public string Path { get; set; } = string.Empty;
+
         // Associated Projects (many-to-many)
         public ICollection<Project>? Projects { get; set; } = [];
     }

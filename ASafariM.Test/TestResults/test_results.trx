@@ -1,0 +1,200 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="a68e05e4-f46c-4811-8c1b-3cd33f83d44c" name="User@DESKTOP-5E9MTG1 2025-02-04 18:09:31" runUser="DESKTOP-5E9MTG1\User" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2025-02-04T18:09:31.1335144+01:00" queuing="2025-02-04T18:09:31.1335149+01:00" start="2025-02-04T18:09:27.1563340+01:00" finish="2025-02-04T18:09:31.5085724+01:00" />
+  <TestSettings name="default" id="eef18449-6ce1-476a-b27f-f2b1cf575494">
+    <Deployment runDeploymentRoot="User_DESKTOP-5E9MTG1_2025-02-04_18_09_31" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="91c608c3-4bbd-42cd-ab0d-f656153feff2" testId="ba20961b-6799-d652-45b7-03c3d3864402" testName="DeleteUserAsync_ShouldCallRepository_WhenUserExists" computerName="DESKTOP-5E9MTG1" duration="00:00:00.0552206" startTime="2025-02-04T18:09:31.0298631+01:00" endTime="2025-02-04T18:09:31.0853143+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="91c608c3-4bbd-42cd-ab0d-f656153feff2" />
+    <UnitTestResult executionId="197dd23c-f71c-4feb-b862-a537a0ecb149" testId="d5b473e6-9454-2cf2-3a3c-92deae82e5b9" testName="AddUserAsync_ShouldAddUser" computerName="DESKTOP-5E9MTG1" duration="00:00:00.0017520" startTime="2025-02-04T18:09:31.1962451+01:00" endTime="2025-02-04T18:09:31.1981510+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="197dd23c-f71c-4feb-b862-a537a0ecb149" />
+    <UnitTestResult executionId="0f5f9e81-5477-4cc5-8c1d-74e9afc0d020" testId="6c84fd6b-b951-9caf-b632-ed552763edfd" testName="HandleDuplicateInitializationOfUserRepository" computerName="DESKTOP-5E9MTG1" duration="00:00:00.0662322" startTime="2025-02-04T18:09:31.3302984+01:00" endTime="2025-02-04T18:09:31.3967183+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="0f5f9e81-5477-4cc5-8c1d-74e9afc0d020" />
+    <UnitTestResult executionId="50f0ee6f-b58a-4e88-b7c6-f525e010006e" testId="89640849-ce9a-7557-fb0e-f8647c1da9e3" testName="InitializeMockLoggerForUserRepository" computerName="DESKTOP-5E9MTG1" duration="00:00:00.0003088" startTime="2025-02-04T18:09:31.3975298+01:00" endTime="2025-02-04T18:09:31.3991177+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="50f0ee6f-b58a-4e88-b7c6-f525e010006e" />
+    <UnitTestResult executionId="9246b31d-c93c-44c1-a614-21ffaf5506c0" testId="c8b082a5-27d2-f23a-d277-2904cd3a52e9" testName="CheckAvailability_UsernameTaken_ReturnsMessages" computerName="DESKTOP-5E9MTG1" duration="00:00:00.0127586" startTime="2025-02-04T18:09:31.0146093+01:00" endTime="2025-02-04T18:09:31.0275025+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="9246b31d-c93c-44c1-a614-21ffaf5506c0" />
+    <UnitTestResult executionId="5eb518e0-b98b-4855-a2ec-e816a9bc391c" testId="ca9ddfba-3d81-f766-9da2-67005f62daeb" testName="GetUserByUserNameAsync_ShouldReturnUser_WhenUserExists" computerName="DESKTOP-5E9MTG1" duration="00:00:00.0228888" startTime="2025-02-04T18:09:31.2058497+01:00" endTime="2025-02-04T18:09:31.2292070+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="5eb518e0-b98b-4855-a2ec-e816a9bc391c" />
+    <UnitTestResult executionId="72531ac1-57c5-46a5-9f14-557f3b6f5860" testId="ca3cefb5-cdf1-d311-b21a-39e4d7aaec90" testName="GetAllUsersAsync_ShouldReturnAllUsers" computerName="DESKTOP-5E9MTG1" duration="00:00:00.0160615" startTime="2025-02-04T18:09:31.1799170+01:00" endTime="2025-02-04T18:09:31.1961293+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="72531ac1-57c5-46a5-9f14-557f3b6f5860" />
+    <UnitTestResult executionId="2be1c800-7c56-4968-84a6-457183feb3e0" testId="45bae863-9364-c702-6f6a-3938e34061ee" testName="RemoveRolesFromUserAsync_ShouldRemoveRoles_WhenRolesExist" computerName="DESKTOP-5E9MTG1" duration="00:00:00.0035872" startTime="2025-02-04T18:09:31.2623808+01:00" endTime="2025-02-04T18:09:31.2660978+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="2be1c800-7c56-4968-84a6-457183feb3e0" />
+    <UnitTestResult executionId="9fe43dfc-2766-4b94-bc68-ded0876c0a02" testId="52e5d5a0-6b82-6d43-8752-2e9943a58242" testName="ContextInitializesWithInMemoryDatabase" computerName="DESKTOP-5E9MTG1" duration="00:00:00.0002409" startTime="2025-02-04T18:09:31.3287011+01:00" endTime="2025-02-04T18:09:31.3290517+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="9fe43dfc-2766-4b94-bc68-ded0876c0a02" />
+    <UnitTestResult executionId="95d11f25-2b5c-4cd6-a960-5632321c266f" testId="6e9ac420-203d-ac82-511b-8145260abdee" testName="CheckAvailability_UsernameAvailable_ReturnsNoMessages" computerName="DESKTOP-5E9MTG1" duration="00:00:00.0021194" startTime="2025-02-04T18:09:31.0275681+01:00" endTime="2025-02-04T18:09:31.0298078+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="95d11f25-2b5c-4cd6-a960-5632321c266f" />
+    <UnitTestResult executionId="d1daef39-0ec8-4440-9e78-ffb0d052ad99" testId="c0c47d89-bbbe-d55f-688c-61e9a03495d4" testName="GetUserByEmailAsync_ShouldReturnUser_WhenUserExists" computerName="DESKTOP-5E9MTG1" duration="00:00:00.0446162" startTime="2025-02-04T18:09:31.1051845+01:00" endTime="2025-02-04T18:09:31.1501759+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="d1daef39-0ec8-4440-9e78-ffb0d052ad99" />
+    <UnitTestResult executionId="1602c840-e411-4443-8d1e-77cd4022c8aa" testId="baef49de-de00-6939-72cd-64a39497f822" testName="GetUserByEmailAsync_ShouldReturnNull_WhenUserDoesNotExist" computerName="DESKTOP-5E9MTG1" duration="00:00:00.0015532" startTime="2025-02-04T18:09:31.1502448+01:00" endTime="2025-02-04T18:09:31.1519807+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="1602c840-e411-4443-8d1e-77cd4022c8aa" />
+    <UnitTestResult executionId="8d414723-8e6c-4a04-9128-ac18c3cc221b" testId="d7c4a17f-0b3c-a153-e347-4a402c9def8b" testName="GetRolesByUserIdAsync_ShouldReturnRoles_WhenUserHasRoles" computerName="DESKTOP-5E9MTG1" duration="00:00:00.0047855" startTime="2025-02-04T18:09:31.2661698+01:00" endTime="2025-02-04T18:09:31.2711054+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="8d414723-8e6c-4a04-9128-ac18c3cc221b" />
+    <UnitTestResult executionId="c359fc42-069d-450b-8d77-e9198164a9d0" testId="751e710e-fc0d-d3ba-d75a-78632f7f2eb7" testName="AddUserAsync_ShouldLogAndSaveChanges" computerName="DESKTOP-5E9MTG1" duration="00:00:00.0209750" startTime="2025-02-04T18:09:31.2735597+01:00" endTime="2025-02-04T18:09:31.2947519+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="c359fc42-069d-450b-8d77-e9198164a9d0" />
+    <UnitTestResult executionId="95820d75-dae9-4f2d-98e3-f1ec2aa8de8c" testId="b40d2ee4-eff1-c0b6-107b-21589dc6cf09" testName="AssignRolesToUserAsync_ShouldThrowException_WhenRoleDoesNotExist" computerName="DESKTOP-5E9MTG1" duration="00:00:00.0030225" startTime="2025-02-04T18:09:31.2590569+01:00" endTime="2025-02-04T18:09:31.2622838+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="95820d75-dae9-4f2d-98e3-f1ec2aa8de8c" />
+    <UnitTestResult executionId="e40dc4c4-351f-45cb-88e7-dedf79489996" testId="57b7cf17-8b55-af5c-84a8-a7b50c2d2678" testName="GetUserByEmailAsync_ShouldReturnNull_WhenUserDoesNotExist" computerName="DESKTOP-5E9MTG1" duration="00:00:00.0149414" startTime="2025-02-04T18:09:31.3115804+01:00" endTime="2025-02-04T18:09:31.3266800+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="e40dc4c4-351f-45cb-88e7-dedf79489996" />
+    <UnitTestResult executionId="63487f8c-10c4-44a5-a0ce-37cf211f2dea" testId="f9143d72-d4ae-f69b-d07f-62ccd78b6213" testName="GetAllUsers_ReturnsOkWithUsers" computerName="DESKTOP-5E9MTG1" duration="00:00:00.0325995" startTime="2025-02-04T18:09:30.9817728+01:00" endTime="2025-02-04T18:09:31.0145445+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="63487f8c-10c4-44a5-a0ce-37cf211f2dea" />
+    <UnitTestResult executionId="15855a83-63ac-4303-b855-e2254432cc51" testId="7df8e149-97c1-4416-d662-56097ab8526a" testName="GetRolesByUserIdAsync_ShouldReturnEmptyList_WhenUserHasNoRoles" computerName="DESKTOP-5E9MTG1" duration="00:00:00.0021323" startTime="2025-02-04T18:09:31.2711859+01:00" endTime="2025-02-04T18:09:31.2734942+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="15855a83-63ac-4303-b855-e2254432cc51" />
+    <UnitTestResult executionId="4b311300-993f-4ddb-a70d-a7e26c87cfff" testId="a9bbc64b-6c36-56f8-8fe3-cf9770a86971" testName="GetUserByIdAsync_ShouldReturnUser_WhenUserExists" computerName="DESKTOP-5E9MTG1" duration="00:00:00.0275749" startTime="2025-02-04T18:09:31.1520681+01:00" endTime="2025-02-04T18:09:31.1798282+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="4b311300-993f-4ddb-a70d-a7e26c87cfff" />
+    <UnitTestResult executionId="15c26c60-c27a-472e-917b-79b97ae79c85" testId="fd5701a1-d9c5-0923-867b-cc0967647b90" testName="GetUserByEmailAsync_ShouldReturnUser_WhenUserExists" computerName="DESKTOP-5E9MTG1" duration="00:00:00.0164796" startTime="2025-02-04T18:09:31.2948638+01:00" endTime="2025-02-04T18:09:31.3114982+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="15c26c60-c27a-472e-917b-79b97ae79c85" />
+    <UnitTestResult executionId="01be463a-4f48-4051-b179-42a850ef5069" testId="d95c0fc3-5b9b-5346-b441-627830ae2b68" testName="UpdateUserAsync_ShouldUpdateUser" computerName="DESKTOP-5E9MTG1" duration="00:00:00.0071667" startTime="2025-02-04T18:09:31.1982018+01:00" endTime="2025-02-04T18:09:31.2055253+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="01be463a-4f48-4051-b179-42a850ef5069" />
+    <UnitTestResult executionId="dacc9af2-1040-4b11-a3a6-7fb1ba743370" testId="73db3971-f82f-de3f-8734-b8990916c7f3" testName="initialize_mock_logger_for_user_repository" computerName="DESKTOP-5E9MTG1" duration="00:00:00.0010395" startTime="2025-02-04T18:09:31.0854002+01:00" endTime="2025-02-04T18:09:31.0866666+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="dacc9af2-1040-4b11-a3a6-7fb1ba743370" />
+    <UnitTestResult executionId="db538ca3-143d-44ba-b935-39e307256260" testId="97ec3dce-d371-19ac-021e-38edd5c10edf" testName="CompleteRoleManagementFlow_ShouldSucceed" computerName="DESKTOP-5E9MTG1" duration="00:00:02.5583425" startTime="2025-02-04T18:09:28.3164137+01:00" endTime="2025-02-04T18:09:30.8998552+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="db538ca3-143d-44ba-b935-39e307256260" />
+    <UnitTestResult executionId="526d2a15-bc92-4a5f-a778-00a0beaa64c3" testId="d804816e-265f-e41e-74cb-89ab5435acd9" testName="HandleInvalidDatabaseName_ThrowsException" computerName="DESKTOP-5E9MTG1" duration="00:00:00.0004795" startTime="2025-02-04T18:09:31.3968137+01:00" endTime="2025-02-04T18:09:31.3974592+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="526d2a15-bc92-4a5f-a778-00a0beaa64c3" />
+    <UnitTestResult executionId="627765f9-06ad-4ea1-a27b-5cfe3c7d9079" testId="1ba3a6a2-3048-ee98-8cac-456578ce17bc" testName="handle_null_context_options_throws_exception" computerName="DESKTOP-5E9MTG1" duration="00:00:00.0021557" startTime="2025-02-04T18:09:31.0867346+01:00" endTime="2025-02-04T18:09:31.0891740+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="627765f9-06ad-4ea1-a27b-5cfe3c7d9079" />
+    <UnitTestResult executionId="f630d9e0-bd14-4973-8eea-ced476e512b2" testId="36291326-1b1c-e4a2-a519-44282bcfec4d" testName="AssignRolesToUserAsync_ShouldAssignRoles_WhenRolesExist" computerName="DESKTOP-5E9MTG1" duration="00:00:00.0086531" startTime="2025-02-04T18:09:31.2470694+01:00" endTime="2025-02-04T18:09:31.2558975+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f630d9e0-bd14-4973-8eea-ced476e512b2" />
+    <UnitTestResult executionId="6589189b-bb15-4313-8a04-6480e4698632" testId="749d4f59-99a8-c257-0f06-d901dbb280e1" testName="handle_invalid_database_name_throws_exception" computerName="DESKTOP-5E9MTG1" duration="00:00:00.0013893" startTime="2025-02-04T18:09:31.0892628+01:00" endTime="2025-02-04T18:09:31.0908416+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="6589189b-bb15-4313-8a04-6480e4698632" />
+    <UnitTestResult executionId="f9b2722f-20cc-4259-adf3-11374a399703" testId="cd877712-f446-be07-90ba-7be95dd82230" testName="CascadeDelete_ShouldRemoveUserRoles_WhenUserIsDeleted" computerName="DESKTOP-5E9MTG1" duration="00:00:00.0734815" startTime="2025-02-04T18:09:30.9073413+01:00" endTime="2025-02-04T18:09:30.9812613+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f9b2722f-20cc-4259-adf3-11374a399703" />
+    <UnitTestResult executionId="ceeec42f-ed6f-49b0-9455-90bb4055382f" testId="4e24bf9f-0eea-ab65-b8b4-60c80bf74219" testName="GetUserByPhoneNumberAsync_ShouldReturnUser_WhenUserExists" computerName="DESKTOP-5E9MTG1" duration="00:00:00.0175431" startTime="2025-02-04T18:09:31.2292870+01:00" endTime="2025-02-04T18:09:31.2469862+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ceeec42f-ed6f-49b0-9455-90bb4055382f" />
+    <UnitTestResult executionId="c9673cc9-3f2d-4203-8c14-3d0bc15c0b18" testId="a752dc08-217a-04bb-facb-9aac2ec3e88b" testName="SaveChangesAsync_CompletesSuccessfully" computerName="DESKTOP-5E9MTG1" duration="00:00:00.0017188" startTime="2025-02-04T18:09:31.3267633+01:00" endTime="2025-02-04T18:09:31.3286531+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="c9673cc9-3f2d-4203-8c14-3d0bc15c0b18" />
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="GetUserByEmailAsync_ShouldReturnUser_WhenUserExists" storage="e:\asafarim\asafarim.test\bin\debug\net9.0\asafarim.test.dll" id="c0c47d89-bbbe-d55f-688c-61e9a03495d4">
+      <Execution id="d1daef39-0ec8-4440-9e78-ffb0d052ad99" />
+      <TestMethod codeBase="E:\ASafariM\ASafariM.Test\bin\Debug\net9.0\ASafariM.Test.dll" adapterTypeName="executor://mstestadapter/v2" className="ASafariM.Test.InfrastructureTests.Repository.UserRepositoryTests" name="GetUserByEmailAsync_ShouldReturnUser_WhenUserExists" />
+    </UnitTest>
+    <UnitTest name="handle_invalid_database_name_throws_exception" storage="e:\asafarim\asafarim.test\bin\debug\net9.0\asafarim.test.dll" id="749d4f59-99a8-c257-0f06-d901dbb280e1">
+      <Execution id="6589189b-bb15-4313-8a04-6480e4698632" />
+      <TestMethod codeBase="E:\ASafariM\ASafariM.Test\bin\Debug\net9.0\ASafariM.Test.dll" adapterTypeName="executor://mstestadapter/v2" className="ASafariM.Test.InfrastructureTests.Repository.UserRepositoryTests" name="handle_invalid_database_name_throws_exception" />
+    </UnitTest>
+    <UnitTest name="GetUserByIdAsync_ShouldReturnUser_WhenUserExists" storage="e:\asafarim\asafarim.test\bin\debug\net9.0\asafarim.test.dll" id="a9bbc64b-6c36-56f8-8fe3-cf9770a86971">
+      <Execution id="4b311300-993f-4ddb-a70d-a7e26c87cfff" />
+      <TestMethod codeBase="E:\ASafariM\ASafariM.Test\bin\Debug\net9.0\ASafariM.Test.dll" adapterTypeName="executor://mstestadapter/v2" className="ASafariM.Test.InfrastructureTests.Repository.UserRepositoryTests" name="GetUserByIdAsync_ShouldReturnUser_WhenUserExists" />
+    </UnitTest>
+    <UnitTest name="UpdateUserAsync_ShouldUpdateUser" storage="e:\asafarim\asafarim.test\bin\debug\net9.0\asafarim.test.dll" id="d95c0fc3-5b9b-5346-b441-627830ae2b68">
+      <Execution id="01be463a-4f48-4051-b179-42a850ef5069" />
+      <TestMethod codeBase="E:\ASafariM\ASafariM.Test\bin\Debug\net9.0\ASafariM.Test.dll" adapterTypeName="executor://mstestadapter/v2" className="ASafariM.Test.InfrastructureTests.Repository.UserRepositoryTests" name="UpdateUserAsync_ShouldUpdateUser" />
+    </UnitTest>
+    <UnitTest name="AddUserAsync_ShouldAddUser" storage="e:\asafarim\asafarim.test\bin\debug\net9.0\asafarim.test.dll" id="d5b473e6-9454-2cf2-3a3c-92deae82e5b9">
+      <Execution id="197dd23c-f71c-4feb-b862-a537a0ecb149" />
+      <TestMethod codeBase="E:\ASafariM\ASafariM.Test\bin\Debug\net9.0\ASafariM.Test.dll" adapterTypeName="executor://mstestadapter/v2" className="ASafariM.Test.InfrastructureTests.Repository.UserRepositoryTests" name="AddUserAsync_ShouldAddUser" />
+    </UnitTest>
+    <UnitTest name="AddUserAsync_ShouldLogAndSaveChanges" storage="e:\asafarim\asafarim.test\bin\debug\net9.0\asafarim.test.dll" id="751e710e-fc0d-d3ba-d75a-78632f7f2eb7">
+      <Execution id="c359fc42-069d-450b-8d77-e9198164a9d0" />
+      <TestMethod codeBase="E:\ASafariM\ASafariM.Test\bin\Debug\net9.0\ASafariM.Test.dll" adapterTypeName="executor://mstestadapter/v2" className="ASafariM.Test.DomainTests.Persistence.AppDbContextTests" name="AddUserAsync_ShouldLogAndSaveChanges" />
+    </UnitTest>
+    <UnitTest name="GetRolesByUserIdAsync_ShouldReturnRoles_WhenUserHasRoles" storage="e:\asafarim\asafarim.test\bin\debug\net9.0\asafarim.test.dll" id="d7c4a17f-0b3c-a153-e347-4a402c9def8b">
+      <Execution id="8d414723-8e6c-4a04-9128-ac18c3cc221b" />
+      <TestMethod codeBase="E:\ASafariM\ASafariM.Test\bin\Debug\net9.0\ASafariM.Test.dll" adapterTypeName="executor://mstestadapter/v2" className="ASafariM.Test.InfrastructureTests.Repository.UserRepositoryTests" name="GetRolesByUserIdAsync_ShouldReturnRoles_WhenUserHasRoles" />
+    </UnitTest>
+    <UnitTest name="SaveChangesAsync_CompletesSuccessfully" storage="e:\asafarim\asafarim.test\bin\debug\net9.0\asafarim.test.dll" id="a752dc08-217a-04bb-facb-9aac2ec3e88b">
+      <Execution id="c9673cc9-3f2d-4203-8c14-3d0bc15c0b18" />
+      <TestMethod codeBase="E:\ASafariM\ASafariM.Test\bin\Debug\net9.0\ASafariM.Test.dll" adapterTypeName="executor://mstestadapter/v2" className="ASafariM.Test.DomainTests.Persistence.AppDbContextTests" name="SaveChangesAsync_CompletesSuccessfully" />
+    </UnitTest>
+    <UnitTest name="GetUserByPhoneNumberAsync_ShouldReturnUser_WhenUserExists" storage="e:\asafarim\asafarim.test\bin\debug\net9.0\asafarim.test.dll" id="4e24bf9f-0eea-ab65-b8b4-60c80bf74219">
+      <Execution id="ceeec42f-ed6f-49b0-9455-90bb4055382f" />
+      <TestMethod codeBase="E:\ASafariM\ASafariM.Test\bin\Debug\net9.0\ASafariM.Test.dll" adapterTypeName="executor://mstestadapter/v2" className="ASafariM.Test.InfrastructureTests.Repository.UserRepositoryTests" name="GetUserByPhoneNumberAsync_ShouldReturnUser_WhenUserExists" />
+    </UnitTest>
+    <UnitTest name="GetRolesByUserIdAsync_ShouldReturnEmptyList_WhenUserHasNoRoles" storage="e:\asafarim\asafarim.test\bin\debug\net9.0\asafarim.test.dll" id="7df8e149-97c1-4416-d662-56097ab8526a">
+      <Execution id="15855a83-63ac-4303-b855-e2254432cc51" />
+      <TestMethod codeBase="E:\ASafariM\ASafariM.Test\bin\Debug\net9.0\ASafariM.Test.dll" adapterTypeName="executor://mstestadapter/v2" className="ASafariM.Test.InfrastructureTests.Repository.UserRepositoryTests" name="GetRolesByUserIdAsync_ShouldReturnEmptyList_WhenUserHasNoRoles" />
+    </UnitTest>
+    <UnitTest name="DeleteUserAsync_ShouldCallRepository_WhenUserExists" storage="e:\asafarim\asafarim.test\bin\debug\net9.0\asafarim.test.dll" id="ba20961b-6799-d652-45b7-03c3d3864402">
+      <Execution id="91c608c3-4bbd-42cd-ab0d-f656153feff2" />
+      <TestMethod codeBase="E:\ASafariM\ASafariM.Test\bin\Debug\net9.0\ASafariM.Test.dll" adapterTypeName="executor://mstestadapter/v2" className="ASafariM.Test.InfrastructureTests.Services.UserServiceTests" name="DeleteUserAsync_ShouldCallRepository_WhenUserExists" />
+    </UnitTest>
+    <UnitTest name="HandleInvalidDatabaseName_ThrowsException" storage="e:\asafarim\asafarim.test\bin\debug\net9.0\asafarim.test.dll" id="d804816e-265f-e41e-74cb-89ab5435acd9">
+      <Execution id="526d2a15-bc92-4a5f-a778-00a0beaa64c3" />
+      <TestMethod codeBase="E:\ASafariM\ASafariM.Test\bin\Debug\net9.0\ASafariM.Test.dll" adapterTypeName="executor://mstestadapter/v2" className="ASafariM.Test.DomainTests.Persistence.AppDbContextTests" name="HandleInvalidDatabaseName_ThrowsException" />
+    </UnitTest>
+    <UnitTest name="InitializeMockLoggerForUserRepository" storage="e:\asafarim\asafarim.test\bin\debug\net9.0\asafarim.test.dll" id="89640849-ce9a-7557-fb0e-f8647c1da9e3">
+      <Execution id="50f0ee6f-b58a-4e88-b7c6-f525e010006e" />
+      <TestMethod codeBase="E:\ASafariM\ASafariM.Test\bin\Debug\net9.0\ASafariM.Test.dll" adapterTypeName="executor://mstestadapter/v2" className="ASafariM.Test.DomainTests.Persistence.AppDbContextTests" name="InitializeMockLoggerForUserRepository" />
+    </UnitTest>
+    <UnitTest name="GetUserByUserNameAsync_ShouldReturnUser_WhenUserExists" storage="e:\asafarim\asafarim.test\bin\debug\net9.0\asafarim.test.dll" id="ca9ddfba-3d81-f766-9da2-67005f62daeb">
+      <Execution id="5eb518e0-b98b-4855-a2ec-e816a9bc391c" />
+      <TestMethod codeBase="E:\ASafariM\ASafariM.Test\bin\Debug\net9.0\ASafariM.Test.dll" adapterTypeName="executor://mstestadapter/v2" className="ASafariM.Test.InfrastructureTests.Repository.UserRepositoryTests" name="GetUserByUserNameAsync_ShouldReturnUser_WhenUserExists" />
+    </UnitTest>
+    <UnitTest name="GetAllUsersAsync_ShouldReturnAllUsers" storage="e:\asafarim\asafarim.test\bin\debug\net9.0\asafarim.test.dll" id="ca3cefb5-cdf1-d311-b21a-39e4d7aaec90">
+      <Execution id="72531ac1-57c5-46a5-9f14-557f3b6f5860" />
+      <TestMethod codeBase="E:\ASafariM\ASafariM.Test\bin\Debug\net9.0\ASafariM.Test.dll" adapterTypeName="executor://mstestadapter/v2" className="ASafariM.Test.InfrastructureTests.Repository.UserRepositoryTests" name="GetAllUsersAsync_ShouldReturnAllUsers" />
+    </UnitTest>
+    <UnitTest name="AssignRolesToUserAsync_ShouldAssignRoles_WhenRolesExist" storage="e:\asafarim\asafarim.test\bin\debug\net9.0\asafarim.test.dll" id="36291326-1b1c-e4a2-a519-44282bcfec4d">
+      <Execution id="f630d9e0-bd14-4973-8eea-ced476e512b2" />
+      <TestMethod codeBase="E:\ASafariM\ASafariM.Test\bin\Debug\net9.0\ASafariM.Test.dll" adapterTypeName="executor://mstestadapter/v2" className="ASafariM.Test.InfrastructureTests.Repository.UserRepositoryTests" name="AssignRolesToUserAsync_ShouldAssignRoles_WhenRolesExist" />
+    </UnitTest>
+    <UnitTest name="ContextInitializesWithInMemoryDatabase" storage="e:\asafarim\asafarim.test\bin\debug\net9.0\asafarim.test.dll" id="52e5d5a0-6b82-6d43-8752-2e9943a58242">
+      <Execution id="9fe43dfc-2766-4b94-bc68-ded0876c0a02" />
+      <TestMethod codeBase="E:\ASafariM\ASafariM.Test\bin\Debug\net9.0\ASafariM.Test.dll" adapterTypeName="executor://mstestadapter/v2" className="ASafariM.Test.DomainTests.Persistence.AppDbContextTests" name="ContextInitializesWithInMemoryDatabase" />
+    </UnitTest>
+    <UnitTest name="CascadeDelete_ShouldRemoveUserRoles_WhenUserIsDeleted" storage="e:\asafarim\asafarim.test\bin\debug\net9.0\asafarim.test.dll" id="cd877712-f446-be07-90ba-7be95dd82230">
+      <Execution id="f9b2722f-20cc-4259-adf3-11374a399703" />
+      <TestMethod codeBase="E:\ASafariM\ASafariM.Test\bin\Debug\net9.0\ASafariM.Test.dll" adapterTypeName="executor://mstestadapter/v2" className="ASafariM.Test.PresentationTests.Controllers.UserRolesControllerIntegrationTests" name="CascadeDelete_ShouldRemoveUserRoles_WhenUserIsDeleted" />
+    </UnitTest>
+    <UnitTest name="CheckAvailability_UsernameAvailable_ReturnsNoMessages" storage="e:\asafarim\asafarim.test\bin\debug\net9.0\asafarim.test.dll" id="6e9ac420-203d-ac82-511b-8145260abdee">
+      <Execution id="95d11f25-2b5c-4cd6-a960-5632321c266f" />
+      <TestMethod codeBase="E:\ASafariM\ASafariM.Test\bin\Debug\net9.0\ASafariM.Test.dll" adapterTypeName="executor://mstestadapter/v2" className="ASafariM.Test.PresentationTests.Controllers.UsersControllerTests" name="CheckAvailability_UsernameAvailable_ReturnsNoMessages" />
+    </UnitTest>
+    <UnitTest name="GetUserByEmailAsync_ShouldReturnNull_WhenUserDoesNotExist" storage="e:\asafarim\asafarim.test\bin\debug\net9.0\asafarim.test.dll" id="baef49de-de00-6939-72cd-64a39497f822">
+      <Execution id="1602c840-e411-4443-8d1e-77cd4022c8aa" />
+      <TestMethod codeBase="E:\ASafariM\ASafariM.Test\bin\Debug\net9.0\ASafariM.Test.dll" adapterTypeName="executor://mstestadapter/v2" className="ASafariM.Test.InfrastructureTests.Repository.UserRepositoryTests" name="GetUserByEmailAsync_ShouldReturnNull_WhenUserDoesNotExist" />
+    </UnitTest>
+    <UnitTest name="AssignRolesToUserAsync_ShouldThrowException_WhenRoleDoesNotExist" storage="e:\asafarim\asafarim.test\bin\debug\net9.0\asafarim.test.dll" id="b40d2ee4-eff1-c0b6-107b-21589dc6cf09">
+      <Execution id="95820d75-dae9-4f2d-98e3-f1ec2aa8de8c" />
+      <TestMethod codeBase="E:\ASafariM\ASafariM.Test\bin\Debug\net9.0\ASafariM.Test.dll" adapterTypeName="executor://mstestadapter/v2" className="ASafariM.Test.InfrastructureTests.Repository.UserRepositoryTests" name="AssignRolesToUserAsync_ShouldThrowException_WhenRoleDoesNotExist" />
+    </UnitTest>
+    <UnitTest name="GetAllUsers_ReturnsOkWithUsers" storage="e:\asafarim\asafarim.test\bin\debug\net9.0\asafarim.test.dll" id="f9143d72-d4ae-f69b-d07f-62ccd78b6213">
+      <Execution id="63487f8c-10c4-44a5-a0ce-37cf211f2dea" />
+      <TestMethod codeBase="E:\ASafariM\ASafariM.Test\bin\Debug\net9.0\ASafariM.Test.dll" adapterTypeName="executor://mstestadapter/v2" className="ASafariM.Test.PresentationTests.Controllers.UsersControllerTests" name="GetAllUsers_ReturnsOkWithUsers" />
+    </UnitTest>
+    <UnitTest name="HandleDuplicateInitializationOfUserRepository" storage="e:\asafarim\asafarim.test\bin\debug\net9.0\asafarim.test.dll" id="6c84fd6b-b951-9caf-b632-ed552763edfd">
+      <Execution id="0f5f9e81-5477-4cc5-8c1d-74e9afc0d020" />
+      <TestMethod codeBase="E:\ASafariM\ASafariM.Test\bin\Debug\net9.0\ASafariM.Test.dll" adapterTypeName="executor://mstestadapter/v2" className="ASafariM.Test.DomainTests.Persistence.AppDbContextTests" name="HandleDuplicateInitializationOfUserRepository" />
+    </UnitTest>
+    <UnitTest name="CheckAvailability_UsernameTaken_ReturnsMessages" storage="e:\asafarim\asafarim.test\bin\debug\net9.0\asafarim.test.dll" id="c8b082a5-27d2-f23a-d277-2904cd3a52e9">
+      <Execution id="9246b31d-c93c-44c1-a614-21ffaf5506c0" />
+      <TestMethod codeBase="E:\ASafariM\ASafariM.Test\bin\Debug\net9.0\ASafariM.Test.dll" adapterTypeName="executor://mstestadapter/v2" className="ASafariM.Test.PresentationTests.Controllers.UsersControllerTests" name="CheckAvailability_UsernameTaken_ReturnsMessages" />
+    </UnitTest>
+    <UnitTest name="RemoveRolesFromUserAsync_ShouldRemoveRoles_WhenRolesExist" storage="e:\asafarim\asafarim.test\bin\debug\net9.0\asafarim.test.dll" id="45bae863-9364-c702-6f6a-3938e34061ee">
+      <Execution id="2be1c800-7c56-4968-84a6-457183feb3e0" />
+      <TestMethod codeBase="E:\ASafariM\ASafariM.Test\bin\Debug\net9.0\ASafariM.Test.dll" adapterTypeName="executor://mstestadapter/v2" className="ASafariM.Test.InfrastructureTests.Repository.UserRepositoryTests" name="RemoveRolesFromUserAsync_ShouldRemoveRoles_WhenRolesExist" />
+    </UnitTest>
+    <UnitTest name="GetUserByEmailAsync_ShouldReturnNull_WhenUserDoesNotExist" storage="e:\asafarim\asafarim.test\bin\debug\net9.0\asafarim.test.dll" id="57b7cf17-8b55-af5c-84a8-a7b50c2d2678">
+      <Execution id="e40dc4c4-351f-45cb-88e7-dedf79489996" />
+      <TestMethod codeBase="E:\ASafariM\ASafariM.Test\bin\Debug\net9.0\ASafariM.Test.dll" adapterTypeName="executor://mstestadapter/v2" className="ASafariM.Test.DomainTests.Persistence.AppDbContextTests" name="GetUserByEmailAsync_ShouldReturnNull_WhenUserDoesNotExist" />
+    </UnitTest>
+    <UnitTest name="GetUserByEmailAsync_ShouldReturnUser_WhenUserExists" storage="e:\asafarim\asafarim.test\bin\debug\net9.0\asafarim.test.dll" id="fd5701a1-d9c5-0923-867b-cc0967647b90">
+      <Execution id="15c26c60-c27a-472e-917b-79b97ae79c85" />
+      <TestMethod codeBase="E:\ASafariM\ASafariM.Test\bin\Debug\net9.0\ASafariM.Test.dll" adapterTypeName="executor://mstestadapter/v2" className="ASafariM.Test.DomainTests.Persistence.AppDbContextTests" name="GetUserByEmailAsync_ShouldReturnUser_WhenUserExists" />
+    </UnitTest>
+    <UnitTest name="handle_null_context_options_throws_exception" storage="e:\asafarim\asafarim.test\bin\debug\net9.0\asafarim.test.dll" id="1ba3a6a2-3048-ee98-8cac-456578ce17bc">
+      <Execution id="627765f9-06ad-4ea1-a27b-5cfe3c7d9079" />
+      <TestMethod codeBase="E:\ASafariM\ASafariM.Test\bin\Debug\net9.0\ASafariM.Test.dll" adapterTypeName="executor://mstestadapter/v2" className="ASafariM.Test.InfrastructureTests.Repository.UserRepositoryTests" name="handle_null_context_options_throws_exception" />
+    </UnitTest>
+    <UnitTest name="initialize_mock_logger_for_user_repository" storage="e:\asafarim\asafarim.test\bin\debug\net9.0\asafarim.test.dll" id="73db3971-f82f-de3f-8734-b8990916c7f3">
+      <Execution id="dacc9af2-1040-4b11-a3a6-7fb1ba743370" />
+      <TestMethod codeBase="E:\ASafariM\ASafariM.Test\bin\Debug\net9.0\ASafariM.Test.dll" adapterTypeName="executor://mstestadapter/v2" className="ASafariM.Test.InfrastructureTests.Repository.UserRepositoryTests" name="initialize_mock_logger_for_user_repository" />
+    </UnitTest>
+    <UnitTest name="CompleteRoleManagementFlow_ShouldSucceed" storage="e:\asafarim\asafarim.test\bin\debug\net9.0\asafarim.test.dll" id="97ec3dce-d371-19ac-021e-38edd5c10edf">
+      <Execution id="db538ca3-143d-44ba-b935-39e307256260" />
+      <TestMethod codeBase="E:\ASafariM\ASafariM.Test\bin\Debug\net9.0\ASafariM.Test.dll" adapterTypeName="executor://mstestadapter/v2" className="ASafariM.Test.PresentationTests.Controllers.UserRolesControllerIntegrationTests" name="CompleteRoleManagementFlow_ShouldSucceed" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="ba20961b-6799-d652-45b7-03c3d3864402" executionId="91c608c3-4bbd-42cd-ab0d-f656153feff2" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="d5b473e6-9454-2cf2-3a3c-92deae82e5b9" executionId="197dd23c-f71c-4feb-b862-a537a0ecb149" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="6c84fd6b-b951-9caf-b632-ed552763edfd" executionId="0f5f9e81-5477-4cc5-8c1d-74e9afc0d020" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="89640849-ce9a-7557-fb0e-f8647c1da9e3" executionId="50f0ee6f-b58a-4e88-b7c6-f525e010006e" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="c8b082a5-27d2-f23a-d277-2904cd3a52e9" executionId="9246b31d-c93c-44c1-a614-21ffaf5506c0" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="ca9ddfba-3d81-f766-9da2-67005f62daeb" executionId="5eb518e0-b98b-4855-a2ec-e816a9bc391c" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="ca3cefb5-cdf1-d311-b21a-39e4d7aaec90" executionId="72531ac1-57c5-46a5-9f14-557f3b6f5860" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="45bae863-9364-c702-6f6a-3938e34061ee" executionId="2be1c800-7c56-4968-84a6-457183feb3e0" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="52e5d5a0-6b82-6d43-8752-2e9943a58242" executionId="9fe43dfc-2766-4b94-bc68-ded0876c0a02" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="6e9ac420-203d-ac82-511b-8145260abdee" executionId="95d11f25-2b5c-4cd6-a960-5632321c266f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="c0c47d89-bbbe-d55f-688c-61e9a03495d4" executionId="d1daef39-0ec8-4440-9e78-ffb0d052ad99" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="baef49de-de00-6939-72cd-64a39497f822" executionId="1602c840-e411-4443-8d1e-77cd4022c8aa" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="d7c4a17f-0b3c-a153-e347-4a402c9def8b" executionId="8d414723-8e6c-4a04-9128-ac18c3cc221b" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="751e710e-fc0d-d3ba-d75a-78632f7f2eb7" executionId="c359fc42-069d-450b-8d77-e9198164a9d0" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="b40d2ee4-eff1-c0b6-107b-21589dc6cf09" executionId="95820d75-dae9-4f2d-98e3-f1ec2aa8de8c" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="57b7cf17-8b55-af5c-84a8-a7b50c2d2678" executionId="e40dc4c4-351f-45cb-88e7-dedf79489996" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="f9143d72-d4ae-f69b-d07f-62ccd78b6213" executionId="63487f8c-10c4-44a5-a0ce-37cf211f2dea" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="7df8e149-97c1-4416-d662-56097ab8526a" executionId="15855a83-63ac-4303-b855-e2254432cc51" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="a9bbc64b-6c36-56f8-8fe3-cf9770a86971" executionId="4b311300-993f-4ddb-a70d-a7e26c87cfff" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="fd5701a1-d9c5-0923-867b-cc0967647b90" executionId="15c26c60-c27a-472e-917b-79b97ae79c85" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="d95c0fc3-5b9b-5346-b441-627830ae2b68" executionId="01be463a-4f48-4051-b179-42a850ef5069" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="73db3971-f82f-de3f-8734-b8990916c7f3" executionId="dacc9af2-1040-4b11-a3a6-7fb1ba743370" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="97ec3dce-d371-19ac-021e-38edd5c10edf" executionId="db538ca3-143d-44ba-b935-39e307256260" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="d804816e-265f-e41e-74cb-89ab5435acd9" executionId="526d2a15-bc92-4a5f-a778-00a0beaa64c3" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="1ba3a6a2-3048-ee98-8cac-456578ce17bc" executionId="627765f9-06ad-4ea1-a27b-5cfe3c7d9079" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="36291326-1b1c-e4a2-a519-44282bcfec4d" executionId="f630d9e0-bd14-4973-8eea-ced476e512b2" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="749d4f59-99a8-c257-0f06-d901dbb280e1" executionId="6589189b-bb15-4313-8a04-6480e4698632" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="cd877712-f446-be07-90ba-7be95dd82230" executionId="f9b2722f-20cc-4259-adf3-11374a399703" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="4e24bf9f-0eea-ab65-b8b4-60c80bf74219" executionId="ceeec42f-ed6f-49b0-9455-90bb4055382f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="a752dc08-217a-04bb-facb-9aac2ec3e88b" executionId="c9673cc9-3f2d-4203-8c14-3d0bc15c0b18" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Completed">
+    <Counters total="30" executed="30" passed="30" failed="0" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+  </ResultSummary>
+</TestRun>

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ASafariM.Domain.Entities;
+using ASafariM.Domain.Enums;
 
 namespace ASafariM.Application.DTOs;
 
@@ -23,8 +25,21 @@ public class UserDto
     public DateTime? DeletedAt { get; set; } = null;
     public DateTime? LastLogin { get; set; } = null; // Timestamp of the user's last login,
     public string? Biography { get; set; }
-    public UserPreferenceDto? Preferences { get; set; }
+    public UserPreferenceDto Preferences { get; set; } =
+        new UserPreferenceDto
+        {
+            Theme = new ThemePreferenceDto
+            {
+                Name = "Default Theme",
+                Value = "Default Value",
+                FontSize = "14px",
+                AccentColor = "#FF0000",
+                IsDarkTheme = false,
+                Language = new LanguagePreference { Language = LanguageEnum.en_US },
+            },
+        };
     public string? Remark { get; set; }
     public string? ProfilePicture { get; set; }
+    public string? Address { get; set; }
     public DateTime? DateOfBirth { get; set; }
 }

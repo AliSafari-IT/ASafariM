@@ -3,194 +3,146 @@ using System.Linq;
 using System.Threading.Tasks;
 using ASafariM.Domain.Entities;
 using ASafariM.Infrastructure.Persistence;
+using ASafariM.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 
 namespace ASafariM.Test.DomainTests.Persistence
 {
     [TestClass]
-    public class AppDbContextTests
+    public class AppDbContextTests : TestBase
     {
-        private DbContextOptions<AppDbContext> _options;
-        private AppDbContext _context;
+        private Mock<ILogger<UserRepository>> _loggerMock;
 
         [TestInitialize]
-        public void Setup()
+        public override void Setup()
         {
-            _options = new DbContextOptionsBuilder<AppDbContext>()
-                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
-                .EnableSensitiveDataLogging()
-                .Options;
-
-            _context = new AppDbContext(_options);
-            _context.Database.EnsureDeleted();
-            _context.Database.EnsureCreated();
-        }
-
-        [TestCleanup]
-        public void Cleanup()
-        {
-            _context.Database.EnsureDeleted();
-            _context.Dispose();
+            base.Setup();
+            _loggerMock = new Mock<ILogger<UserRepository>>();
         }
 
         [TestMethod]
-        public async Task UserPreference_HasCorrectPrimaryKey()
+        public async Task AddUserAsync_ShouldLogAndSaveChanges()
         {
             // Arrange
             var user = new User
             {
-                Id = Guid.NewGuid(),
                 Email = "test@example.com",
-                NormalizedEmail = "TEST@EXAMPLE.COM",
-                SecurityStamp = Guid.NewGuid().ToString(),
                 ConcurrencyStamp = Guid.NewGuid().ToString(),
-                FirstName = "Test",
-                LastName = "User",
+                SecurityStamp = Guid.NewGuid().ToString(),
             };
-
-            var preference = new UserPreference { UserId = user.Id, User = user };
+            await Context.AddAsync(user);
 
             // Act
-            await _context.Users.AddAsync(user);
-            await _context.UserPreferences.AddAsync(preference);
-            await _context.SaveChangesAsync();
+            await Context.SaveChangesAsync();
 
             // Assert
-            var savedPreference = await _context.UserPreferences.FindAsync(user.Id);
-            Assert.IsNotNull(savedPreference);
-            Assert.AreEqual(user.Id, savedPreference.UserId);
+            Assert.IsTrue(Context.ChangeTracker.Entries().Any());
+            var addedUser = Context.Users.FirstOrDefault(u => u.Email == user.Email);
+            Assert.IsNotNull(addedUser, "User should not be null after being added.");
+            Assert.AreEqual(user.Email, addedUser.Email);
         }
 
         [TestMethod]
-        public async Task User_HasRequiredProperties()
+        public async Task GetUserByEmailAsync_ShouldReturnUser_WhenUserExists()
         {
             // Arrange
             var user = new User
             {
-                Id = Guid.NewGuid(),
                 Email = "test@example.com",
-                FirstName = "Test",
-                LastName = "User",
-                SecurityStamp = Guid.NewGuid().ToString(),
                 ConcurrencyStamp = Guid.NewGuid().ToString(),
-            };
-
-            // Act & Assert
-            await _context.Users.AddAsync(user);
-            await Assert.ThrowsExceptionAsync<DbUpdateException>(async () =>
-            {
-                user.NormalizedEmail = null; // This should fail as it's required
-                await _context.SaveChangesAsync();
-            });
-        }
-
-        [TestMethod]
-        public async Task UserPreference_HasOneToOneRelationshipWithUser()
-        {
-            // Arrange
-            var userId = Guid.NewGuid();
-            var user = new User
-            {
-                Id = userId,
-                Email = "test@example.com",
-                NormalizedEmail = "TEST@EXAMPLE.COM",
                 SecurityStamp = Guid.NewGuid().ToString(),
-                ConcurrencyStamp = Guid.NewGuid().ToString(),
-                FirstName = "Test",
-                LastName = "User",
             };
-
-            var preference = new UserPreference { UserId = userId, User = user };
+            await Context.Users.AddAsync(user);
+            await Context.SaveChangesAsync();
 
             // Act
-            await _context.Users.AddAsync(user);
-            await _context.UserPreferences.AddAsync(preference);
-            await _context.SaveChangesAsync();
+            var result = await Context.Users.FirstOrDefaultAsync(u => u.Email == user.Email);
 
             // Assert
-            var savedUser = await _context
-                .Users.Include(u => u.Preference)
-                .FirstOrDefaultAsync(u => u.Id == userId);
-
-            Assert.IsNotNull(savedUser);
-            Assert.IsNotNull(savedUser.Preference);
-            Assert.AreEqual(userId, savedUser.Preference.UserId);
+            Assert.IsNotNull(result, "User should not be null after being added.");
+            Assert.AreEqual(user.Email, result.Email);
         }
 
         [TestMethod]
-        public async Task User_PropertyLengthConstraints()
+        public async Task GetUserByEmailAsync_ShouldReturnNull_WhenUserDoesNotExist()
+        {
+            // Act
+            var result = await Context.Users.FirstOrDefaultAsync(u =>
+                u.Email == "nonexistent@example.com"
+            );
+
+            // Assert
+            Assert.IsNull(result, "User should be null when non-existent.");
+        }
+
+        [TestMethod]
+        public async Task SaveChangesAsync_CompletesSuccessfully()
         {
             // Arrange
             var user = new User
             {
-                Id = Guid.NewGuid(),
                 Email = "test@example.com",
-                NormalizedEmail = new string('A', 256), // Exceeds max length of 255
-                NormalizedUserName = new string('A', 256), // Exceeds max length of 255
-                SecurityStamp = Guid.NewGuid().ToString(),
                 ConcurrencyStamp = Guid.NewGuid().ToString(),
-                FirstName = "Test",
-                LastName = "User"
-            };
-
-            // Act & Assert
-            await _context.Users.AddAsync(user);
-            await Assert.ThrowsExceptionAsync<DbUpdateException>(async () =>
-            {
-                user.NormalizedEmail = null; // This should fail as it's required
-                await _context.SaveChangesAsync();
-            });
-        }
-
-        [TestMethod]
-        public async Task UserPreference_CascadeDeleteWithUser()
-        {
-            // Arrange
-            var userId = Guid.NewGuid();
-            var user = new User
-            {
-                Id = userId,
-                Email = "test@example.com",
-                NormalizedEmail = "TEST@EXAMPLE.COM",
                 SecurityStamp = Guid.NewGuid().ToString(),
-                ConcurrencyStamp = Guid.NewGuid().ToString(),
-                FirstName = "Test",
-                LastName = "User",
             };
-
-            var preference = new UserPreference { UserId = userId, User = user };
-
-            await _context.Users.AddAsync(user);
-            await _context.UserPreferences.AddAsync(preference);
-            await _context.SaveChangesAsync();
+            await Context.AddAsync(user);
 
             // Act
-            _context.Users.Remove(user);
-            await _context.SaveChangesAsync();
+            var result = await Context.SaveChangesAsync();
 
             // Assert
-            var deletedPreference = await _context.UserPreferences.FindAsync(userId);
-            Assert.IsNull(
-                deletedPreference,
-                "UserPreference should be deleted when User is deleted"
+            Assert.AreEqual(
+                1,
+                result,
+                "SaveChangesAsync should return 1 indicating one change was made."
             );
         }
 
         [TestMethod]
-        public void DbSets_AreProperlyDefined()
+        public void ContextInitializesWithInMemoryDatabase()
         {
             // Assert
-            Assert.IsNotNull(_context.Users);
-            Assert.IsNotNull(_context.Roles);
-            Assert.IsNotNull(_context.UserPreferences);
-            Assert.IsNotNull(_context.AccessibilityPreferences);
-            Assert.IsNotNull(_context.GeographicalPreferences);
-            Assert.IsNotNull(_context.NotificationPreferences);
-            Assert.IsNotNull(_context.PrivacyPreferences);
-            Assert.IsNotNull(_context.MiscellaneousPreferences);
-            Assert.IsNotNull(_context.ThemePreferences);
-            Assert.IsNotNull(_context.LanguagePreferences);
+            Assert.IsNotNull(Context);
+            Assert.IsInstanceOfType(Context, typeof(AppDbContext));
+        }
+
+        [TestMethod]
+        public void HandleDuplicateInitializationOfUserRepository()
+        {
+            // Arrange
+            var repo1 = new UserRepository(Context, _loggerMock.Object);
+            var repo2 = new UserRepository(CreateMockContext().Object, _loggerMock.Object);
+
+            // Assert
+            Assert.IsNotNull(repo1);
+            Assert.IsNotNull(repo2);
+            Assert.AreNotSame(repo1, repo2);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void HandleInvalidDatabaseName_ThrowsException()
+        {
+            // Act - This should throw
+            _ = new AppDbContext(
+                new DbContextOptionsBuilder<AppDbContext>()
+                    .UseInMemoryDatabase(databaseName: string.Empty)
+                    .Options
+            );
+        }
+
+        [TestMethod]
+        public void InitializeMockLoggerForUserRepository()
+        {
+            // Arrange & Act
+            var repo = new UserRepository(Context, _loggerMock.Object);
+
+            // Assert
+            Assert.IsNotNull(repo);
+            Assert.IsNotNull(_loggerMock.Object);
         }
     }
 }

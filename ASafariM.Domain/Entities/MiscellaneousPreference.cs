@@ -20,6 +20,9 @@ namespace ASafariM.Domain.Entities
         public string DefaultDashboardView { get; set; } = "Summary"; // e.g., "Summary", "Detailed"
         public bool ShowActivityTimeline { get; set; } = true;
 
+        public string Name { get; set; } = string.Empty;
+        public string Value { get; set; } = string.Empty;
+
         // Audit fields
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime? UpdatedAt { get; set; }

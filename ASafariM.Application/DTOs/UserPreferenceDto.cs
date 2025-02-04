@@ -12,5 +12,6 @@ namespace ASafariM.Application.DTOs
         public MiscellaneousPreferenceDto? Miscellaneous { get; set; }
         public DateTime DateCreated { get; set; }
         public DateTime LastUpdated { get; set; }
+        public object DateUpdated { get; internal set; }
     }
 }
