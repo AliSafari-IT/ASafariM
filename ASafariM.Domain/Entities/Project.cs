@@ -23,7 +23,8 @@ namespace ASafariM.Domain.Entities
         // The user who created (owns) this project
         public Guid OwnerId { get; set; }
         public User Owner { get; set; }
-        public DateTime DateCreated { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime? UpdatedAt { get; set; } = null;
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
 

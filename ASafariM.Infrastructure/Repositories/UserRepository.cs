@@ -16,9 +16,14 @@ namespace ASafariM.Infrastructure.Repositories
         private readonly AppDbContext _dbContext;
 
         // logger
-        private readonly ILogger<UserRepository> _logger;
+        private readonly ILogger<UserRepository>? _logger;
 
-        public UserRepository(AppDbContext dbContext, ILogger<UserRepository> logger)
+        public UserRepository(AppDbContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
+
+        public UserRepository(AppDbContext dbContext, ILogger<UserRepository>? logger = null)
         {
             _dbContext = dbContext;
             _logger = logger;

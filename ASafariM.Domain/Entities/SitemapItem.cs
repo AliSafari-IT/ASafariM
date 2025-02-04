@@ -56,5 +56,10 @@ namespace ASafariM.Domain.Entities
         // Navigation properties
         public SitemapItem? Parent { get; set; }
         public ICollection<SitemapItem>? Children { get; set; }
+
+        public string Url { get; set; }
+        public DateTime LastModified { get; set; }
+        public string ChangeFrequency { get; set; }
+        public double Priority { get; set; }
     }
 }

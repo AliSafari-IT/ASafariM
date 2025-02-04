@@ -21,7 +21,6 @@ namespace ASafariM.Application.Mappings
                 .ForMember(dest => dest.Slug, opt => opt.MapFrom(src => src.Slug))
                 .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description));
 
-
             // Post mappings
             CreateMap<CreatePostCommand, Post>();
             CreateMap<UpdatePostCommand, Post>();
@@ -37,8 +36,13 @@ namespace ASafariM.Application.Mappings
             // Role mappings
             CreateMap<Role, RoleDto>();
 
-            // UserPreference mappings
-            CreateMap<UserPreference, UserPreferenceDto>();
+            // Preference mappings
+            CreateMap<GeographicalPreference, GeographicalPreferenceDto>();
+            CreateMap<NotificationPreference, NotificationPreferenceDto>();
+            CreateMap<LanguagePreference, LanguagePreferenceDto>();
+            CreateMap<PrivacyPreference, PrivacyPreferenceDto>();
+            CreateMap<AccessibilityPreference, AccessibilityPreferenceDto>();
+            CreateMap<MiscellaneousPreference, MiscellaneousPreferenceDto>();
         }
     }
 }

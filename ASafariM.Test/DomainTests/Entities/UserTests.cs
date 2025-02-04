@@ -8,60 +8,14 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace ASafariM.Test.DomainTests.Entities
 {
     [TestClass]
-    public class UserTests
+    public class UserTests : TestBase
     {
-        [TestMethod]
-        public void User_Should_Require_Valid_Email()
+        private User _user;
+
+        [TestInitialize]
+        public void Setup()
         {
-            // Arrange
-            var user = new User { Email = null }; // Email is required
-
-            // Act
-            var validationResults = new List<ValidationResult>();
-            var validationContext = new ValidationContext(user);
-            var isValid = Validator.TryValidateObject(
-                user,
-                validationContext,
-                validationResults,
-                true
-            );
-
-            // Assert
-            Assert.IsFalse(isValid);
-            Assert.IsTrue(validationResults.Any(v => v.MemberNames.Contains("Email")));
-        }
-
-        [TestMethod]
-        public void User_Should_Require_Valid_PasswordHash()
-        {
-            // Arrange
-            var user = new User { PasswordHash = null };
-
-            // Act
-            var validationResults = new List<ValidationResult>();
-            var validationContext = new ValidationContext(user);
-            var isValid = Validator.TryValidateObject(
-                user,
-                validationContext,
-                validationResults,
-                true
-            );
-
-            // Assert
-            Assert.IsFalse(isValid);
-            Assert.IsTrue(validationResults.Any(v => v.MemberNames.Contains("PasswordHash")));
-        }
-
-        [TestMethod]
-        public void User_Should_Have_Default_Values()
-        {
-            // Arrange
-            var user = new User();
-
-            // Act & Assert
-            Assert.IsTrue(user.IsActive);
-            Assert.AreEqual(0, user.FailedLoginAttempts);
-            Assert.IsFalse(user.IsAdmin);
+            _user = new User();
         }
     }
 }

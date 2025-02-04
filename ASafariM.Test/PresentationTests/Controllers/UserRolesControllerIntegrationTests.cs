@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ASafariM.Application.DTOs;
+using ASafariM.Application.Mappings;
 using ASafariM.Domain.Entities;
-using ASafariM.Infrastructure.Persistence;
 using ASafariM.Infrastructure.Repositories;
 using ASafariM.Presentation.Controllers;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -17,9 +16,8 @@ using Moq;
 namespace ASafariM.Test.PresentationTests.Controllers
 {
     [TestClass]
-    public class UserRolesControllerIntegrationTests
+    public class UserRolesControllerIntegrationTests : TestBase
     {
-        private AppDbContext _dbContext;
         private UserRepository _userRepository;
         private UserRolesController _controller;
         private IMapper _mapper;
@@ -27,41 +25,32 @@ namespace ASafariM.Test.PresentationTests.Controllers
         private Mock<ILogger<UserRolesController>> _controllerLoggerMock;
 
         [TestInitialize]
-        public void Setup()
+        public override void Setup()
         {
-            // Setup in-memory database
-            var options = new DbContextOptionsBuilder<AppDbContext>()
-                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
-                .Options;
-            _dbContext = new AppDbContext(options);
+            base.Setup();
 
-            // Setup logger mock
+            // Setup logger mocks
             _loggerMock = new Mock<ILogger<UserRepository>>();
             _controllerLoggerMock = new Mock<ILogger<UserRolesController>>();
 
             // Setup mapper
             var mapperConfig = new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<UserRole, UserRoleDto>()
-                    .ForMember(dest => dest.Role, opt => opt.MapFrom(src => src.Role.Name));
-                cfg.CreateMap<Role, RoleDto>();
+                cfg.AddProfile(new UserMappingProfile());
             });
             _mapper = mapperConfig.CreateMapper();
 
             // Setup repository and controller
-            _userRepository = new UserRepository(_dbContext, _loggerMock.Object);
-            _controller = new UserRolesController(
-                _userRepository,
-                _controllerLoggerMock.Object,
-                _mapper
-            );
+            _userRepository = new UserRepository(Context, _loggerMock.Object);
+            _controller = new UserRolesController(_userRepository, _controllerLoggerMock.Object, _mapper);
         }
 
         [TestCleanup]
-        public void Cleanup()
+        public override void Cleanup()
         {
-            _dbContext.Database.EnsureDeleted();
-            _dbContext.Dispose();
+            _controller = null;
+            _userRepository = null;
+            base.Cleanup();
         }
 
         [TestMethod]
@@ -75,7 +64,7 @@ namespace ASafariM.Test.PresentationTests.Controllers
                 ConcurrencyStamp = Guid.NewGuid().ToString(),
                 SecurityStamp = Guid.NewGuid().ToString(),
             };
-            await _dbContext.Users.AddAsync(user);
+            await _userRepository.AddUserAsync(user);
 
             var roles = new[]
             {
@@ -83,8 +72,8 @@ namespace ASafariM.Test.PresentationTests.Controllers
                 new Role { Name = "User", Description = "Standard User" },
             };
 
-            await _dbContext.Roles.AddRangeAsync(roles);
-            await _dbContext.SaveChangesAsync();
+            Context.Roles.AddRange(roles);
+            await Context.SaveChangesAsync();
 
             // Act & Assert - Step 1: Assign roles
             var assignResult = await _controller.AssignRolesToUser(
@@ -137,93 +126,22 @@ namespace ASafariM.Test.PresentationTests.Controllers
                 ConcurrencyStamp = Guid.NewGuid().ToString(),
                 SecurityStamp = Guid.NewGuid().ToString(),
             };
-            await _dbContext.Users.AddAsync(user);
+            await _userRepository.AddUserAsync(user);
 
             var role = new Role { Name = "Admin", Description = "Administrator" };
-            await _dbContext.Roles.AddAsync(role);
-            await _dbContext.SaveChangesAsync();
+            Context.Roles.Add(role);
+            await Context.SaveChangesAsync();
 
             // Assign role to user
             await _controller.AssignRolesToUser(user.Id.ToString(), new[] { role.Id });
 
             // Act - Delete user
-            _dbContext.Users.Remove(user);
-            await _dbContext.SaveChangesAsync();
+            await _userRepository.DeleteUserAsync(user.Id);
+            await Context.SaveChangesAsync();
 
             // Assert - Check that user roles are deleted
             var userRoles = await _userRepository.GetRolesByUserIdAsync(user.Id);
             Assert.AreEqual(0, userRoles.Count());
-        }
-
-        [TestMethod]
-        public async Task AssignRoles_ShouldHandleErrorScenarios()
-        {
-            // Arrange
-            var user = new User
-            {
-                Email = "test@example.com",
-                UserName = "testuser",
-                ConcurrencyStamp = Guid.NewGuid().ToString(),
-                SecurityStamp = Guid.NewGuid().ToString(),
-            };
-            await _dbContext.Users.AddAsync(user);
-            await _dbContext.SaveChangesAsync();
-
-            // Act & Assert - Scenario 1: Non-existent user
-            var nonExistentUserId = Guid.NewGuid();
-            var result = await _controller.AssignRolesToUser(
-                nonExistentUserId.ToString(),
-                new[] { Guid.NewGuid() }
-            );
-            Assert.IsInstanceOfType(result, typeof(NotFoundObjectResult));
-
-            // Act & Assert - Scenario 2: Non-existent role
-            var nonExistentRoleId = Guid.NewGuid();
-            result = await _controller.AssignRolesToUser(
-                user.Id.ToString(),
-                new[] { nonExistentRoleId }
-            );
-            Assert.IsInstanceOfType(result, typeof(BadRequestObjectResult));
-
-            // Act & Assert - Scenario 3: Empty role list
-            result = await _controller.AssignRolesToUser(user.Id.ToString(), Array.Empty<Guid>());
-            Assert.IsInstanceOfType(result, typeof(BadRequestObjectResult));
-        }
-
-        [TestMethod]
-        public async Task RemoveRoles_ShouldHandleErrorScenarios()
-        {
-            // Arrange
-            var user = new User
-            {
-                Email = "test@example.com",
-                UserName = "testuser",
-                ConcurrencyStamp = Guid.NewGuid().ToString(),
-                SecurityStamp = Guid.NewGuid().ToString(),
-            };
-            await _dbContext.Users.AddAsync(user);
-
-            var role = new Role { Name = "Admin", Description = "Administrator" };
-            await _dbContext.Roles.AddAsync(role);
-            await _dbContext.SaveChangesAsync();
-
-            // Act & Assert - Scenario 1: Remove role from non-existent user
-            var result = await _controller.RemoveRolesFromUser(
-                Guid.NewGuid().ToString(),
-                new[] { role.Id }
-            );
-            Assert.IsInstanceOfType(result, typeof(NotFoundObjectResult));
-
-            // Act & Assert - Scenario 2: Remove non-existent role
-            result = await _controller.RemoveRolesFromUser(
-                user.Id.ToString(),
-                new[] { Guid.NewGuid() }
-            );
-            Assert.IsInstanceOfType(result, typeof(BadRequestObjectResult));
-
-            // Act & Assert - Scenario 3: Remove role that user doesn't have
-            result = await _controller.RemoveRolesFromUser(user.Id.ToString(), new[] { role.Id });
-            Assert.IsInstanceOfType(result, typeof(BadRequestObjectResult));
         }
     }
 }

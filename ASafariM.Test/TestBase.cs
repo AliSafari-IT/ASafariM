@@ -10,28 +10,39 @@ using Moq;
 
 namespace ASafariM.Test
 {
+    [TestClass]
     public abstract class TestBase
     {
-        protected AppDbContext Context;
+        protected AppDbContext Context { get; private set; }
+        protected string DatabaseName { get; }
+
+        protected TestBase()
+        {
+            DatabaseName = $"TestDb_{Guid.NewGuid()}"; // Unique database name for each test
+        }
 
         [TestInitialize]
-        public void Setup()
+        public virtual void Setup()
         {
             var options = new DbContextOptionsBuilder<AppDbContext>()
-                .UseInMemoryDatabase("TestDb")
+                .UseInMemoryDatabase(DatabaseName)
                 .Options;
             Context = new AppDbContext(options);
         }
 
         [TestCleanup]
-        public void Cleanup()
+        public virtual void Cleanup()
         {
-            Context.Dispose();
+            Context?.Dispose();
         }
 
-        public TestBase(Mock<AppDbContext> context)
+        protected static Mock<AppDbContext> CreateMockContext()
         {
-            Context = context.Object ?? throw new ArgumentNullException(nameof(context));
+            return new Mock<AppDbContext>(
+                new DbContextOptionsBuilder<AppDbContext>()
+                    .UseInMemoryDatabase($"MockDb_{Guid.NewGuid()}")
+                    .Options
+            );
         }
     }
 }

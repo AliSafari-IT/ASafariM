@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using ASafariM.Application.DTOs;
+using ASafariM.Domain.Entities;
 
 namespace ASafariM.Application.CommandModels
 {
@@ -35,6 +36,13 @@ namespace ASafariM.Application.CommandModels
 
         public string? Password { get; set; }
         public DateTime? DateOfBirth { get; set; }
+        public ThemePreference? ThemePreference { get; set; }
+        public GeographicalPreference? GeographicalPreference { get; set; }
+        public NotificationPreference? NotificationPreference { get; set; }
+        public LanguagePreference? LanguagePreference { get; set; }
+        public PrivacyPreference? PrivacyPreference { get; set; }
+        public AccessibilityPreference? AccessibilityPreference { get; set; }
+        public MiscellaneousPreference? MiscellaneousPreference { get; set; }
         public IEnumerable<UserRoleDto>? Roles { get; set; }
     }
 }

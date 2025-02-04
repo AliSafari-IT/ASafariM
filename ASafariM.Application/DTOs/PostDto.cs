@@ -24,7 +24,7 @@ namespace ASafariM.Application.DTOs
         public string? MetaDescription { get; set; }
         public ICollection<Tag>? Tags { get; set; }
         public DateTime CreatedAt { get; set; }
-        public string CreatedBy { get; set; }
+        public string? CreatedBy { get; set; }
         public bool IsDeleted { get; set; } = false;
         public int PostCount { get; set; } = 0;
         public int CommentCount { get; set; } = 0;

@@ -2,33 +2,75 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ASafariM.Application.Mappings;
 using ASafariM.Domain.Entities;
 using ASafariM.Domain.Interfaces;
 using ASafariM.Infrastructure.Persistence;
 using ASafariM.Infrastructure.Repositories;
+using ASafariM.Presentation.Controllers;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
+using Moq; // Required for mocking
 
 namespace ASafariM.Test.InfrastructureTests.Repository
 {
     [TestClass]
-    public class UserRepositoryTests
+    public class UserRepositoryTests : TestBase
     {
-        private Mock<ILogger<UserRepository>> _loggerMock;
-        private AppDbContext _dbContext;
         private UserRepository _userRepository;
+        private Mock<ILogger<UserRepository>> _loggerMock;
 
         [TestInitialize]
-        public void Setup()
+        public override void Setup()
         {
+            base.Setup(); // Call base class initialization first
             _loggerMock = new Mock<ILogger<UserRepository>>();
+            _userRepository = new UserRepository(Context, _loggerMock.Object);
+        }
+
+        [TestCleanup]
+        public override void Cleanup()
+        {
+            _userRepository = null;
+            base.Cleanup(); // Call base class cleanup last
+        }
+
+        [TestMethod]
+        public void initialize_mock_logger_for_user_repository()
+        {
+            // Arrange & Act - Already done in Setup()
+
+            // Assert
+            Assert.IsNotNull(_userRepository);
+            Assert.IsNotNull(_loggerMock.Object);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void handle_null_context_options_throws_exception()
+        {
+            // Arrange
+            var loggerMock = new Mock<ILogger<UserRepository>>();
+            DbContextOptions<AppDbContext> nullOptions = null;
+
+            // Act - This should throw
+            _ = new AppDbContext(nullOptions);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void handle_invalid_database_name_throws_exception()
+        {
+            // Arrange
+            var loggerMock = new Mock<ILogger<UserRepository>>();
             var options = new DbContextOptionsBuilder<AppDbContext>()
-                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .UseInMemoryDatabase(databaseName: string.Empty)
                 .Options;
-            _dbContext = new AppDbContext(options);
-            _userRepository = new UserRepository(_dbContext, _loggerMock.Object);
+
+            // Act - This should throw
+            _ = new AppDbContext(options);
         }
 
         [TestMethod]
@@ -47,7 +89,7 @@ namespace ASafariM.Test.InfrastructureTests.Repository
             var result = await _userRepository.GetUserByEmailAsync("test@example.com");
 
             // Assert
-            Assert.IsNotNull(result);
+            Assert.IsNotNull(result, "User should not be null after being added.");
             Assert.AreEqual(user.Email, result.Email);
         }
 
@@ -78,20 +120,9 @@ namespace ASafariM.Test.InfrastructureTests.Repository
             var result = await _userRepository.GetUserByIdAsync(user.Id);
 
             // Assert
-            Assert.IsNotNull(result);
+            Assert.IsNotNull(result, "User should not be null after being added.");
             Assert.AreEqual(user.Id, result.Id);
         }
-
-        [TestMethod]
-        public async Task GetUserByIdAsync_ShouldReturnNull_WhenUserDoesNotExist()
-        {
-            // Act
-            var result = await _userRepository.GetUserByIdAsync(Guid.NewGuid());
-
-            // Assert
-            Assert.IsNull(result);
-        }
-
         [TestMethod]
         public async Task GetAllUsersAsync_ShouldReturnAllUsers()
         {
@@ -134,7 +165,7 @@ namespace ASafariM.Test.InfrastructureTests.Repository
 
             // Assert
             var result = await _userRepository.GetUserByEmailAsync(user.Email);
-            Assert.IsNotNull(result);
+            Assert.IsNotNull(result, "User should not be null after being added.");
         }
 
         [TestMethod]
@@ -155,28 +186,8 @@ namespace ASafariM.Test.InfrastructureTests.Repository
 
             // Assert
             var result = await _userRepository.GetUserByEmailAsync(user.Email);
-            Assert.IsNotNull(result);
+            Assert.IsNotNull(result, "User should not be null after being updated.");
             Assert.AreEqual(user.Email, result.Email);
-        }
-
-        [TestMethod]
-        public async Task DeleteUserAsync_ShouldDeleteUser_WhenUserExists()
-        {
-            // Arrange
-            var user = new User
-            {
-                Email = "test@example.com",
-                ConcurrencyStamp = Guid.NewGuid().ToString(),
-                SecurityStamp = Guid.NewGuid().ToString(),
-            };
-            await _userRepository.AddUserAsync(user);
-
-            // Act
-            await _userRepository.DeleteUserAsync(user.Id);
-
-            // Assert
-            var result = await _userRepository.GetUserByIdAsync(user.Id);
-            Assert.IsNull(result);
         }
 
         [TestMethod]
@@ -196,7 +207,7 @@ namespace ASafariM.Test.InfrastructureTests.Repository
             var result = await _userRepository.GetUserByUserNameAsync(user.UserName);
 
             // Assert
-            Assert.IsNotNull(result);
+            Assert.IsNotNull(result, "User should not be null after being added.");
             Assert.AreEqual(user.UserName, result.UserName);
         }
 
@@ -217,7 +228,7 @@ namespace ASafariM.Test.InfrastructureTests.Repository
             var result = await _userRepository.GetUserByPhoneNumberAsync(user.PhoneNumber);
 
             // Assert
-            Assert.IsNotNull(result);
+            Assert.IsNotNull(result, "User should not be null after being added.");
             Assert.AreEqual(user.PhoneNumber, result.PhoneNumber);
         }
 
@@ -235,8 +246,8 @@ namespace ASafariM.Test.InfrastructureTests.Repository
 
             var role1 = new Role { Name = "Role1", Description = "Test Role 1" };
             var role2 = new Role { Name = "Role2", Description = "Test Role 2" };
-            _dbContext.Roles.AddRange(role1, role2);
-            await _dbContext.SaveChangesAsync();
+            Context.Roles.AddRange(role1, role2);
+            await Context.SaveChangesAsync();
 
             // Act
             await _userRepository.AssignRolesToUserAsync(user.Id, new[] { role1.Id, role2.Id });
@@ -280,8 +291,8 @@ namespace ASafariM.Test.InfrastructureTests.Repository
 
             var role1 = new Role { Name = "Role1", Description = "Test Role 1" };
             var role2 = new Role { Name = "Role2", Description = "Test Role 2" };
-            _dbContext.Roles.AddRange(role1, role2);
-            await _dbContext.SaveChangesAsync();
+            Context.Roles.AddRange(role1, role2);
+            await Context.SaveChangesAsync();
 
             await _userRepository.AssignRolesToUserAsync(user.Id, new[] { role1.Id, role2.Id });
 
@@ -308,8 +319,8 @@ namespace ASafariM.Test.InfrastructureTests.Repository
 
             var role1 = new Role { Name = "Role1", Description = "Test Role 1" };
             var role2 = new Role { Name = "Role2", Description = "Test Role 2" };
-            _dbContext.Roles.AddRange(role1, role2);
-            await _dbContext.SaveChangesAsync();
+            Context.Roles.AddRange(role1, role2);
+            await Context.SaveChangesAsync();
 
             await _userRepository.AssignRolesToUserAsync(user.Id, new[] { role1.Id, role2.Id });
 

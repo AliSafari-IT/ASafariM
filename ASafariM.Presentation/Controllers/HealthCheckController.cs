@@ -44,7 +44,7 @@ namespace ASafariM.Presentation.Controllers
                     status = "healthy",
                     version = "1.0.0",
                     buildDate = GetBuildDate(),
-                    buildCommit = GetGitCommitHash(),
+                    buildCommit = GetGitCommitHash()?.Substring(0, 8),
                     buildBranch = GetGitBranchName(),
                     buildAuthor = "A. Safari M.",
                     timestamp = DateTime.UtcNow,
@@ -277,7 +277,7 @@ namespace ASafariM.Presentation.Controllers
                 }
                     .Where(p => !string.IsNullOrEmpty(p))
                     .Select(p => Path.Combine(p, ".git", "HEAD"))
-                    .Where(p => File.Exists(p));
+                    .Where(p => System.IO.File.Exists(p));
 
                 _logger.LogInformation(
                     $"Searching for git info in: {string.Join(", ", possiblePaths)}"
@@ -286,28 +286,41 @@ namespace ASafariM.Presentation.Controllers
                 foreach (var gitHeadPath in possiblePaths)
                 {
                     _logger.LogInformation($"Checking git path: {gitHeadPath}");
-                    var refPath = File.ReadAllText(gitHeadPath).Trim();
+                    var refPath = System.IO.File.ReadAllText(gitHeadPath).Trim();
 
                     if (refPath.StartsWith("ref: "))
                     {
                         // It's a reference, follow it
                         var gitDir = Path.GetDirectoryName(gitHeadPath); // Path to .git directory
+                        if (gitDir == null)
+                        {
+                            _logger.LogWarning(
+                                "Could not determine git directory from path: {gitHeadPath}"
+                            );
+                            continue;
+                        }
+
                         var branchRef = refPath.Substring(5).Trim(); // Remove "ref: "
+                        if (string.IsNullOrEmpty(branchRef))
+                        {
+                            _logger.LogWarning("Branch reference is empty");
+                            continue;
+                        }
 
                         // Try in .git directory
                         var commitPath = Path.Combine(gitDir, branchRef);
-                        if (File.Exists(commitPath))
+                        if (System.IO.File.Exists(commitPath))
                         {
-                            var hash = File.ReadAllText(commitPath).Trim();
+                            var hash = System.IO.File.ReadAllText(commitPath).Trim();
                             _logger.LogInformation($"Found commit hash in {commitPath}: {hash}");
                             return hash;
                         }
 
                         // Try in .git/refs directory
                         commitPath = Path.Combine(gitDir, "refs", branchRef);
-                        if (File.Exists(commitPath))
+                        if (System.IO.File.Exists(commitPath))
                         {
-                            var hash = File.ReadAllText(commitPath).Trim();
+                            var hash = System.IO.File.ReadAllText(commitPath).Trim();
                             _logger.LogInformation($"Found commit hash in refs: {hash}");
                             return hash;
                         }

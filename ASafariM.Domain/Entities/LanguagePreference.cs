@@ -9,5 +9,7 @@ namespace ASafariM.Domain.Entities
         public Guid Id { get; set; }
 
         public LanguageEnum Language { get; set; } = LanguageEnum.en_US;
+        public string Name { get; set; } = string.Empty;
+        public string Value { get; set; } = string.Empty;
     }
 }

@@ -60,7 +60,6 @@ namespace ASafariM.Domain.Entities
         public string? Remark { get; set; }
 
         // Navigation properties for preferences
-        public ICollection<UserPreference> Preferences { get; set; } = [];
 
         // Author-specific properties
         [MaxLength(50)]
