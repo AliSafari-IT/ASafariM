@@ -19,7 +19,6 @@ namespace ASafariM.Api
 
             // Register repositories
             services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IUserPreferenceRepository, UserPreferenceRepository>();
             services.AddScoped<IGenericRepository<Role>, GenericRepository<Role>>();
             services.AddScoped<IGenericRepository<MarkdownFile>, GenericRepository<MarkdownFile>>();
             // Register new blog-related repositories
@@ -31,7 +30,6 @@ namespace ASafariM.Api
             // Register services
             services.AddScoped<RoleService>();
             services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IUserPreferenceService, UserPreferenceService>();
             services.AddScoped<IMarkdownFilesService, MarkdownFilesService>();
             services.AddScoped<JwtTokenService>();
 

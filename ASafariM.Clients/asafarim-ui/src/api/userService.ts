@@ -207,19 +207,29 @@ export const addUserByAdmin = async (user: IUserModelUpdate): Promise<IUserModel
 // Update an existing user by admin
 export const updateUserByAdmin = async (user: IUserModelUpdate): Promise<IUserModelUpdate> => {
   console.log("updateUserByAdmin - User data:", user);
+  
+  // Validate user data
+  const validation = validateUserUpdate(user);
+  if (!validation.isValid) {
+    console.error("Validation failed:", validation.errors);
+    throw new Error(`Validation failed: ${validation.errors.join(', ')}`);
+  }
+
   const targetUserUrl = `${USERS_URL}/admin/${user.id}`;
   console.log("targetUserUrl for updateUserByAdmin:", targetUserUrl);
+  
   try {
     const response = await api.put(targetUserUrl, user);
     console.log("userService => updateUserByAdmin with success: response.data", response.data);
-
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
       console.error('Error updating user:', error.response.data);
       throw new Error(error.response.data?.message || 'Failed to update user.');
+    } else {
+      console.error('Unexpected error updating user:', error);
+      throw new Error('An unexpected error occurred while updating the user.');
     }
-    throw error;
   }
 };
 

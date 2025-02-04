@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ASafariM.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250203171958_UpdatedUserPref")]
-    partial class UpdatedUserPref
+    [Migration("20250204205124_CUserSeedUpdated")]
+    partial class CUserSeedUpdated
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,8 +37,16 @@ namespace ASafariM.Infrastructure.Migrations
                     b.Property<bool>("EnableScreenReaderSupport")
                         .HasColumnType("tinyint(1)");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<int>("TextScalingFactor")
                         .HasColumnType("int");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
@@ -228,9 +236,9 @@ namespace ASafariM.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("58a8ecd1-36b0-4393-a71b-c9b56ee7173b"),
+                            Id = new Guid("0de4f439-979e-402b-9268-fecd4754fadf"),
                             Capital = "Brussels",
-                            CreatedAt = new DateTime(2025, 2, 3, 17, 19, 56, 271, DateTimeKind.Utc).AddTicks(9262),
+                            CreatedAt = new DateTime(2025, 2, 4, 20, 51, 23, 674, DateTimeKind.Utc).AddTicks(9369),
                             IsActive = true,
                             IsoCode = "BE",
                             IsoCode3 = "BEL",
@@ -240,9 +248,9 @@ namespace ASafariM.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("4c322622-eef6-44db-8f76-e9867e4dc2af"),
-                            Capital = "Brussels",
-                            CreatedAt = new DateTime(2025, 2, 3, 17, 19, 56, 271, DateTimeKind.Utc).AddTicks(9265),
+                            Id = new Guid("65ebbf27-7aed-46ed-94a0-f4c55365316d"),
+                            Capital = "Paris",
+                            CreatedAt = new DateTime(2025, 2, 4, 20, 51, 23, 674, DateTimeKind.Utc).AddTicks(9373),
                             IsActive = true,
                             IsoCode = "FR",
                             IsoCode3 = "FRA",
@@ -252,9 +260,9 @@ namespace ASafariM.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("526d7a61-19a0-4c47-afb5-556192d20486"),
-                            Capital = "Brussels",
-                            CreatedAt = new DateTime(2025, 2, 3, 17, 19, 56, 271, DateTimeKind.Utc).AddTicks(9270),
+                            Id = new Guid("e1fd46a1-b1ca-45e1-b305-884d7f37e1e3"),
+                            Capital = "Berlin",
+                            CreatedAt = new DateTime(2025, 2, 4, 20, 51, 23, 674, DateTimeKind.Utc).AddTicks(9377),
                             IsActive = true,
                             IsoCode = "DE",
                             IsoCode3 = "DEU",
@@ -264,9 +272,9 @@ namespace ASafariM.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("25f230c8-7ddc-4759-964a-671a3d44faec"),
-                            Capital = "Brussels",
-                            CreatedAt = new DateTime(2025, 2, 3, 17, 19, 56, 271, DateTimeKind.Utc).AddTicks(9272),
+                            Id = new Guid("1c1ef08b-a205-4f1c-837f-74a7f2f3851f"),
+                            Capital = "Amsterdam",
+                            CreatedAt = new DateTime(2025, 2, 4, 20, 51, 23, 674, DateTimeKind.Utc).AddTicks(9380),
                             IsActive = true,
                             IsoCode = "NL",
                             IsoCode3 = "NLD",
@@ -276,9 +284,9 @@ namespace ASafariM.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("01bfde86-dfae-4af4-add6-d13dc692300c"),
-                            Capital = "Brussels",
-                            CreatedAt = new DateTime(2025, 2, 3, 17, 19, 56, 271, DateTimeKind.Utc).AddTicks(9277),
+                            Id = new Guid("edce7c92-07ba-40b2-944b-fb94786a6246"),
+                            Capital = "London",
+                            CreatedAt = new DateTime(2025, 2, 4, 20, 51, 23, 674, DateTimeKind.Utc).AddTicks(9383),
                             IsActive = true,
                             IsoCode = "GB",
                             IsoCode3 = "GBR",
@@ -288,9 +296,9 @@ namespace ASafariM.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("fd94ae17-9a34-400b-ae95-84f325855431"),
-                            Capital = "Brussels",
-                            CreatedAt = new DateTime(2025, 2, 3, 17, 19, 56, 271, DateTimeKind.Utc).AddTicks(9279),
+                            Id = new Guid("c992cb25-7238-4356-964c-5e3882273cb5"),
+                            Capital = "Rome",
+                            CreatedAt = new DateTime(2025, 2, 4, 20, 51, 23, 674, DateTimeKind.Utc).AddTicks(9390),
                             IsActive = true,
                             IsoCode = "IT",
                             IsoCode3 = "ITA",
@@ -300,9 +308,9 @@ namespace ASafariM.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("b4128e6b-540b-4f2a-bd3d-d4fd53931724"),
-                            Capital = "Brussels",
-                            CreatedAt = new DateTime(2025, 2, 3, 17, 19, 56, 271, DateTimeKind.Utc).AddTicks(9281),
+                            Id = new Guid("7582243a-f8fc-4d2d-ac50-f41161d25605"),
+                            Capital = "Madrid",
+                            CreatedAt = new DateTime(2025, 2, 4, 20, 51, 23, 674, DateTimeKind.Utc).AddTicks(9393),
                             IsActive = true,
                             IsoCode = "ES",
                             IsoCode3 = "ESP",
@@ -312,9 +320,9 @@ namespace ASafariM.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("b38bd193-f19e-4c8d-9b1a-fb0962545151"),
-                            Capital = "Brussels",
-                            CreatedAt = new DateTime(2025, 2, 3, 17, 19, 56, 271, DateTimeKind.Utc).AddTicks(9283),
+                            Id = new Guid("35b32066-404c-4b57-aad4-b3d761c61154"),
+                            Capital = "Bern",
+                            CreatedAt = new DateTime(2025, 2, 4, 20, 51, 23, 674, DateTimeKind.Utc).AddTicks(9396),
                             IsActive = true,
                             IsoCode = "CH",
                             IsoCode3 = "CHE",
@@ -324,9 +332,9 @@ namespace ASafariM.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("231b7a88-ff8a-4c8d-b5ac-fa377cd2ba75"),
-                            Capital = "Brussels",
-                            CreatedAt = new DateTime(2025, 2, 3, 17, 19, 56, 271, DateTimeKind.Utc).AddTicks(9285),
+                            Id = new Guid("c7111a3f-d217-4263-8590-afff5cd1be86"),
+                            Capital = "Vienna",
+                            CreatedAt = new DateTime(2025, 2, 4, 20, 51, 23, 674, DateTimeKind.Utc).AddTicks(9400),
                             IsActive = true,
                             IsoCode = "AT",
                             IsoCode3 = "AUT",
@@ -336,9 +344,9 @@ namespace ASafariM.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("c8ed0934-0159-45e0-a59c-efb0a765e110"),
-                            Capital = "Brussels",
-                            CreatedAt = new DateTime(2025, 2, 3, 17, 19, 56, 271, DateTimeKind.Utc).AddTicks(9288),
+                            Id = new Guid("6333f0b7-13ed-4426-93ed-2f10de909e96"),
+                            Capital = "Luxembourg",
+                            CreatedAt = new DateTime(2025, 2, 4, 20, 51, 23, 674, DateTimeKind.Utc).AddTicks(9403),
                             IsActive = true,
                             IsoCode = "LU",
                             IsoCode3 = "LUX",
@@ -391,9 +399,9 @@ namespace ASafariM.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("a0fcfb5e-3d50-46a9-a00a-db618f26cfb2"),
+                            Id = new Guid("a6d9c439-bb50-4073-83ce-35240c6e39cf"),
                             Code = "EUR",
-                            CreatedAt = new DateTime(2025, 2, 3, 17, 19, 56, 271, DateTimeKind.Utc).AddTicks(9170),
+                            CreatedAt = new DateTime(2025, 2, 4, 20, 51, 23, 674, DateTimeKind.Utc).AddTicks(9260),
                             DecimalPlaces = 2,
                             IsActive = true,
                             Name = "Euro",
@@ -401,9 +409,9 @@ namespace ASafariM.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("cb3b2d0a-97eb-414d-b0c2-32606209b76a"),
+                            Id = new Guid("4edc14ff-8b7f-4622-b612-69c62e11ea28"),
                             Code = "USD",
-                            CreatedAt = new DateTime(2025, 2, 3, 17, 19, 56, 271, DateTimeKind.Utc).AddTicks(9180),
+                            CreatedAt = new DateTime(2025, 2, 4, 20, 51, 23, 674, DateTimeKind.Utc).AddTicks(9264),
                             DecimalPlaces = 2,
                             IsActive = true,
                             Name = "US Dollar",
@@ -411,9 +419,9 @@ namespace ASafariM.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("44ba01dc-675a-429e-9639-0722c78e8cc2"),
+                            Id = new Guid("00ceed27-80af-4037-afc0-d214f27a39d9"),
                             Code = "GBP",
-                            CreatedAt = new DateTime(2025, 2, 3, 17, 19, 56, 271, DateTimeKind.Utc).AddTicks(9183),
+                            CreatedAt = new DateTime(2025, 2, 4, 20, 51, 23, 674, DateTimeKind.Utc).AddTicks(9266),
                             DecimalPlaces = 2,
                             IsActive = true,
                             Name = "British Pound",
@@ -421,9 +429,9 @@ namespace ASafariM.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("58330ed2-30fd-4471-ad87-f040a927ee9b"),
+                            Id = new Guid("c1069751-4fc4-448b-845b-0a9034e3a493"),
                             Code = "CHF",
-                            CreatedAt = new DateTime(2025, 2, 3, 17, 19, 56, 271, DateTimeKind.Utc).AddTicks(9188),
+                            CreatedAt = new DateTime(2025, 2, 4, 20, 51, 23, 674, DateTimeKind.Utc).AddTicks(9268),
                             DecimalPlaces = 2,
                             IsActive = true,
                             Name = "Swiss Franc",
@@ -474,8 +482,8 @@ namespace ASafariM.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("dbc41107-7655-4191-ab70-2432a5cc5d39"),
-                            CreatedAt = new DateTime(2025, 2, 3, 17, 19, 56, 271, DateTimeKind.Utc).AddTicks(9132),
+                            Id = new Guid("27fa6c96-9e83-4dd3-9639-1f57f1a0f9f5"),
+                            CreatedAt = new DateTime(2025, 2, 4, 20, 51, 23, 674, DateTimeKind.Utc).AddTicks(9219),
                             DisplayName = "Belgian/European Date Format",
                             Example = "31/12/2024",
                             Format = "dd/MM/yyyy",
@@ -484,8 +492,8 @@ namespace ASafariM.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("70b26f2f-c096-43f5-8e5d-4b60185aa7f9"),
-                            CreatedAt = new DateTime(2025, 2, 3, 17, 19, 56, 271, DateTimeKind.Utc).AddTicks(9136),
+                            Id = new Guid("ef3b600b-1201-4701-a8ee-967a34b6b9f2"),
+                            CreatedAt = new DateTime(2025, 2, 4, 20, 51, 23, 674, DateTimeKind.Utc).AddTicks(9223),
                             DisplayName = "Belgian Date Format (Dot)",
                             Example = "31.12.2024",
                             Format = "dd.MM.yyyy",
@@ -494,8 +502,8 @@ namespace ASafariM.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("3d9726de-0026-40bd-af75-6e7952136010"),
-                            CreatedAt = new DateTime(2025, 2, 3, 17, 19, 56, 271, DateTimeKind.Utc).AddTicks(9138),
+                            Id = new Guid("9613b2b9-580c-4cd2-9f0a-5344db91c9b6"),
+                            CreatedAt = new DateTime(2025, 2, 4, 20, 51, 23, 674, DateTimeKind.Utc).AddTicks(9225),
                             DisplayName = "US Date Format",
                             Example = "12/31/2024",
                             Format = "MM/dd/yyyy",
@@ -504,8 +512,8 @@ namespace ASafariM.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("30e5ed59-96fe-4ce7-a530-be6ba88a49db"),
-                            CreatedAt = new DateTime(2025, 2, 3, 17, 19, 56, 271, DateTimeKind.Utc).AddTicks(9142),
+                            Id = new Guid("882bdb45-1ea7-4edb-8cb6-c1f8d4aa6fda"),
+                            CreatedAt = new DateTime(2025, 2, 4, 20, 51, 23, 674, DateTimeKind.Utc).AddTicks(9230),
                             DisplayName = "ISO Date Format",
                             Example = "2024-12-31",
                             Format = "yyyy-MM-dd",
@@ -573,8 +581,8 @@ namespace ASafariM.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("d7e54b5e-5f76-40e9-a043-8c2c8c72eb34"),
-                            CreatedAt = new DateTime(2025, 2, 3, 17, 19, 56, 271, DateTimeKind.Utc).AddTicks(9058),
+                            Id = new Guid("0139362a-1e92-4a91-8c3c-3e606ded8f4a"),
+                            CreatedAt = new DateTime(2025, 2, 4, 20, 51, 23, 674, DateTimeKind.Utc).AddTicks(9134),
                             Description = "Simple text document format",
                             Extension = ".txt",
                             IsActive = true,
@@ -587,8 +595,8 @@ namespace ASafariM.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("628f5842-81c8-4bba-aad5-69423d84aae5"),
-                            CreatedAt = new DateTime(2025, 2, 3, 17, 19, 56, 271, DateTimeKind.Utc).AddTicks(9061),
+                            Id = new Guid("386e9ef4-e72d-4864-87ad-b29af84d66c4"),
+                            CreatedAt = new DateTime(2025, 2, 4, 20, 51, 23, 674, DateTimeKind.Utc).AddTicks(9139),
                             Description = "TypeScript source code file",
                             Extension = ".ts",
                             IsActive = true,
@@ -601,8 +609,8 @@ namespace ASafariM.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("d0ad0b6f-8fb6-401b-b1df-1b5f258cb63c"),
-                            CreatedAt = new DateTime(2025, 2, 3, 17, 19, 56, 271, DateTimeKind.Utc).AddTicks(9064),
+                            Id = new Guid("50775f87-2e52-486e-9170-0faa2f0ec426"),
+                            CreatedAt = new DateTime(2025, 2, 4, 20, 51, 23, 674, DateTimeKind.Utc).AddTicks(9146),
                             Description = "TypeScript React component file",
                             Extension = ".tsx",
                             IsActive = true,
@@ -615,8 +623,8 @@ namespace ASafariM.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("2fa36df2-9933-4d88-b607-cce7b35e9575"),
-                            CreatedAt = new DateTime(2025, 2, 3, 17, 19, 56, 271, DateTimeKind.Utc).AddTicks(9066),
+                            Id = new Guid("680e7f03-93c8-4e69-8f1c-f587713d6c2a"),
+                            CreatedAt = new DateTime(2025, 2, 4, 20, 51, 23, 674, DateTimeKind.Utc).AddTicks(9149),
                             Description = "JavaScript source code file",
                             Extension = ".js",
                             IsActive = true,
@@ -629,8 +637,8 @@ namespace ASafariM.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("5d842911-63c6-4fa6-9251-5e72596573bf"),
-                            CreatedAt = new DateTime(2025, 2, 3, 17, 19, 56, 271, DateTimeKind.Utc).AddTicks(9068),
+                            Id = new Guid("c2d6e251-cc31-470a-a62b-c6ee4e77f125"),
+                            CreatedAt = new DateTime(2025, 2, 4, 20, 51, 23, 674, DateTimeKind.Utc).AddTicks(9152),
                             Description = "JavaScript Object Notation data file",
                             Extension = ".json",
                             IsActive = true,
@@ -643,8 +651,8 @@ namespace ASafariM.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("9cc9085d-c30f-410d-9497-440a0aec9a7f"),
-                            CreatedAt = new DateTime(2025, 2, 3, 17, 19, 56, 271, DateTimeKind.Utc).AddTicks(9070),
+                            Id = new Guid("c61bb831-72ed-4124-a752-30354ee43a51"),
+                            CreatedAt = new DateTime(2025, 2, 4, 20, 51, 23, 674, DateTimeKind.Utc).AddTicks(9155),
                             Description = "Markdown text format",
                             Extension = ".md",
                             IsActive = true,
@@ -675,11 +683,19 @@ namespace ASafariM.Infrastructure.Migrations
                     b.Property<Guid>("DateFormatId")
                         .HasColumnType("char(36)");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<Guid>("TimeZoneId")
                         .HasColumnType("char(36)");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
@@ -702,6 +718,14 @@ namespace ASafariM.Infrastructure.Migrations
 
                     b.Property<int>("Language")
                         .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
@@ -782,6 +806,10 @@ namespace ASafariM.Infrastructure.Migrations
 
                     b.Property<Guid?>("ParentMdFileId")
                         .HasColumnType("char(36)");
+
+                    b.Property<string>("Path")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<Guid?>("ProjectId")
                         .HasColumnType("char(36)");
@@ -884,6 +912,10 @@ namespace ASafariM.Infrastructure.Migrations
                     b.Property<Guid>("FileFormatId")
                         .HasColumnType("char(36)");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<Guid>("PaginationSettingsId")
                         .HasColumnType("char(36)");
 
@@ -892,6 +924,10 @@ namespace ASafariM.Infrastructure.Migrations
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
@@ -911,8 +947,15 @@ namespace ASafariM.Infrastructure.Migrations
                     b.Property<bool>("AllowMarketingEmails")
                         .HasColumnType("tinyint(1)");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
                     b.Property<bool>("IsSubscribedToNewsletter")
                         .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<int>("NotificationFrequencyInHours")
                         .HasColumnType("int");
@@ -922,6 +965,13 @@ namespace ASafariM.Infrastructure.Migrations
 
                     b.Property<bool>("ReceiveSmsNotifications")
                         .HasColumnType("tinyint(1)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
@@ -979,8 +1029,8 @@ namespace ASafariM.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("ccd6d22a-facf-4e02-93fa-07c578ccfcc9"),
-                            CreatedAt = new DateTime(2025, 2, 3, 17, 19, 56, 271, DateTimeKind.Utc).AddTicks(9107),
+                            Id = new Guid("ca626e32-bbc1-40a7-af8d-bd4b12fb4770"),
+                            CreatedAt = new DateTime(2025, 2, 4, 20, 51, 23, 674, DateTimeKind.Utc).AddTicks(9191),
                             EnableInfiniteScroll = false,
                             IsActive = true,
                             IsDefault = false,
@@ -1114,79 +1164,6 @@ namespace ASafariM.Infrastructure.Migrations
                     b.ToTable("PostTags");
                 });
 
-            modelBuilder.Entity("ASafariM.Domain.Entities.Preference", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<Guid?>("AccessibilityId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<Guid?>("CreatedBy")
-                        .HasColumnType("char(36)");
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(500)
-                        .HasColumnType("varchar(500)");
-
-                    b.Property<Guid?>("GeographyId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<bool>("IsDefault")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<Guid?>("LanguageId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<Guid?>("MiscellaneousId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)");
-
-                    b.Property<Guid?>("NotificationId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<Guid?>("PrivacyId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<Guid?>("ThemeId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<Guid?>("UpdatedBy")
-                        .HasColumnType("char(36)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AccessibilityId");
-
-                    b.HasIndex("GeographyId");
-
-                    b.HasIndex("LanguageId");
-
-                    b.HasIndex("MiscellaneousId");
-
-                    b.HasIndex("NotificationId");
-
-                    b.HasIndex("PrivacyId");
-
-                    b.HasIndex("ThemeId");
-
-                    b.ToTable("Preferences");
-                });
-
             modelBuilder.Entity("ASafariM.Domain.Entities.PrivacyPreference", b =>
                 {
                     b.Property<Guid>("Id")
@@ -1317,7 +1294,7 @@ namespace ASafariM.Infrastructure.Migrations
                     b.Property<double?>("Budget")
                         .HasColumnType("double");
 
-                    b.Property<DateTime>("DateCreated")
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Description")
@@ -1378,6 +1355,9 @@ namespace ASafariM.Infrastructure.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime(6)");
+
                     b.Property<Guid?>("UserId")
                         .HasColumnType("char(36)");
 
@@ -1426,6 +1406,12 @@ namespace ASafariM.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("char(36)");
+
                     b.Property<string>("Description")
                         .HasMaxLength(200)
                         .HasColumnType("varchar(200)");
@@ -1435,6 +1421,12 @@ namespace ASafariM.Infrastructure.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
 
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<Guid?>("UpdatedBy")
+                        .HasColumnType("char(36)");
+
                     b.HasKey("Id");
 
                     b.ToTable("Roles");
@@ -1442,37 +1434,49 @@ namespace ASafariM.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("65070418-3d45-4f68-8cef-59028d235b71"),
+                            Id = new Guid("61927e6f-8b38-4b24-9390-c654ffb0c9a3"),
+                            CreatedAt = new DateTime(2025, 2, 4, 20, 51, 23, 674, DateTimeKind.Utc).AddTicks(9083),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             Description = "Admin role has full administrative privileges, except for application management.",
                             Name = "Admin"
                         },
                         new
                         {
-                            Id = new Guid("8fd530d3-4398-4b62-9fa4-6ce188b8feaa"),
+                            Id = new Guid("383fce43-3d4c-4301-a292-5777e81b855a"),
+                            CreatedAt = new DateTime(2025, 2, 4, 20, 51, 23, 674, DateTimeKind.Utc).AddTicks(9087),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             Description = "Manages user interactions and content moderation. They can create and manage their own tasks, projects, and content, and can edit other public articles than their own.",
                             Name = "Moderator"
                         },
                         new
                         {
-                            Id = new Guid("9868d1e4-0030-4d45-a8bd-cb1e017f298c"),
+                            Id = new Guid("baf65ac9-b71b-4669-b3b3-39c3773dd6f1"),
+                            CreatedAt = new DateTime(2025, 2, 4, 20, 51, 23, 674, DateTimeKind.Utc).AddTicks(9090),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             Description = "User role with limited privileges. A user can create and manage their own tasks, projects, and content, and cannot edit other public articles than their own.",
                             Name = "User"
                         },
                         new
                         {
-                            Id = new Guid("65f37be7-def9-4315-aaf7-5573932ed7e3"),
+                            Id = new Guid("0ddf0088-da73-43bd-8810-a716534b84b6"),
+                            CreatedAt = new DateTime(2025, 2, 4, 20, 51, 23, 674, DateTimeKind.Utc).AddTicks(9092),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             Description = "Guest role is the least privileged role. They can only view public articles.",
                             Name = "Guest"
                         },
                         new
                         {
-                            Id = new Guid("30cf3ebb-37a0-47ce-9c0b-16ac1d351e42"),
+                            Id = new Guid("54541634-c02f-46ad-a2e6-619c1bd3ed8d"),
+                            CreatedAt = new DateTime(2025, 2, 4, 20, 51, 23, 674, DateTimeKind.Utc).AddTicks(9094),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             Description = "Focuses on content creation and management without full administrative privileges. They can create and manage their own articles, but cannot edit other public articles than their own.",
                             Name = "Editor"
                         },
                         new
                         {
-                            Id = new Guid("b3b8cdf6-7028-4271-a3f5-3630c64d50dc"),
+                            Id = new Guid("37d1d28f-0734-41b7-9233-4544f3a9e33a"),
+                            CreatedAt = new DateTime(2025, 2, 4, 20, 51, 23, 674, DateTimeKind.Utc).AddTicks(9096),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             Description = "Has full control over the application and can manage all aspects.",
                             Name = "SuperAdmin"
                         });
@@ -1493,6 +1497,10 @@ namespace ASafariM.Infrastructure.Migrations
 
                     b.Property<DateTime?>("ArchivedDate")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<string>("ChangeFrequency")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
@@ -1547,6 +1555,9 @@ namespace ASafariM.Infrastructure.Migrations
                     b.Property<bool>("IsUnpublished")
                         .HasColumnType("tinyint(1)");
 
+                    b.Property<DateTime>("LastModified")
+                        .HasColumnType("datetime(6)");
+
                     b.Property<int>("Order")
                         .HasColumnType("int");
 
@@ -1559,6 +1570,9 @@ namespace ASafariM.Infrastructure.Migrations
 
                     b.Property<Guid?>("ParentItemId")
                         .HasColumnType("char(36)");
+
+                    b.Property<double>("Priority")
+                        .HasColumnType("double");
 
                     b.Property<string>("PublishedBy")
                         .IsRequired()
@@ -1588,6 +1602,10 @@ namespace ASafariM.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<string>("Version")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -1607,6 +1625,9 @@ namespace ASafariM.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
                     b.Property<string>("Description")
                         .HasColumnType("longtext");
 
@@ -1621,6 +1642,9 @@ namespace ASafariM.Infrastructure.Migrations
                     b.Property<string>("Slug")
                         .HasColumnType("varchar(255)");
 
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime(6)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("PostId");
@@ -1633,28 +1657,32 @@ namespace ASafariM.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("a9748df9-2714-453c-ae30-b740a88a82c9"),
+                            Id = new Guid("bef41693-fae7-4923-8b96-9370ecb16879"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Test Tag description",
                             Name = "Test Tag name",
                             Slug = "test-tag-slug"
                         },
                         new
                         {
-                            Id = new Guid("58982553-d6af-4178-818f-4e7b8549e019"),
+                            Id = new Guid("96a6be48-6111-496e-b9a1-44bc35fe810e"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Test Tag description 2",
                             Name = "Test Tag name 2",
                             Slug = "test-tag-slug-2"
                         },
                         new
                         {
-                            Id = new Guid("5278be27-69dc-4688-81e9-5efd88304044"),
+                            Id = new Guid("db292f30-7adc-4516-89e9-49ee910d86dc"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Test Tag description 3",
                             Name = "Test Tag name 3",
                             Slug = "test-tag-slug-3"
                         },
                         new
                         {
-                            Id = new Guid("7edd55fb-0d30-4c90-9f45-c33b67cb89e9"),
+                            Id = new Guid("dc70e15e-4c28-421c-a954-b314a78ee68b"),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Test Tag description 4",
                             Name = "Test Tag name 4",
                             Slug = "test-tag-slug-4"
@@ -1671,14 +1699,75 @@ namespace ASafariM.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<string>("BackgroundColor")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("DarkModeBackgroundColor")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("DarkModePrimaryColor")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("DarkModeTextColor")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<string>("FontSize")
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<bool>("IsDarkModeEnabled")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<bool>("IsDarkTheme")
                         .HasColumnType("tinyint(1)");
 
+                    b.Property<bool>("IsHighContrastModeEnabled")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<bool>("IsReducedMotionEnabled")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<Guid>("LanguageId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("LightModeBackgroundColor")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("LightModePrimaryColor")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("LightModeTextColor")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("PrimaryColor")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("SecondaryColor")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("TertiaryColor")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<Guid?>("UpdatedBy")
                         .HasColumnType("char(36)");
 
                     b.HasKey("Id");
@@ -1735,8 +1824,8 @@ namespace ASafariM.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("413a2ba4-f9f9-48a2-bc9c-c889bd0e19ee"),
-                            CreatedAt = new DateTime(2025, 2, 3, 17, 19, 56, 271, DateTimeKind.Utc).AddTicks(9222),
+                            Id = new Guid("63df4ade-9ac1-448c-ae54-8acb51816722"),
+                            CreatedAt = new DateTime(2025, 2, 4, 20, 51, 23, 674, DateTimeKind.Utc).AddTicks(9294),
                             DstOffset = "+02:00",
                             IsActive = true,
                             Name = "CET",
@@ -1746,8 +1835,8 @@ namespace ASafariM.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("3e815934-7e81-41e0-aeb0-070bad29faf1"),
-                            CreatedAt = new DateTime(2025, 2, 3, 17, 19, 56, 271, DateTimeKind.Utc).AddTicks(9227),
+                            Id = new Guid("02687e1a-fc7a-4a49-97ec-caeed0dac4d6"),
+                            CreatedAt = new DateTime(2025, 2, 4, 20, 51, 23, 674, DateTimeKind.Utc).AddTicks(9298),
                             DstOffset = "+02:00",
                             IsActive = true,
                             Name = "CEST",
@@ -1757,8 +1846,8 @@ namespace ASafariM.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("9a70ca49-ce5f-4b0e-9d65-fc04cc3bdebc"),
-                            CreatedAt = new DateTime(2025, 2, 3, 17, 19, 56, 271, DateTimeKind.Utc).AddTicks(9229),
+                            Id = new Guid("9722795b-f79c-4f8c-8150-b3c4240ad0bc"),
+                            CreatedAt = new DateTime(2025, 2, 4, 20, 51, 23, 674, DateTimeKind.Utc).AddTicks(9300),
                             DstOffset = "+02:00",
                             IsActive = true,
                             Name = "UTC",
@@ -1768,8 +1857,8 @@ namespace ASafariM.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("17833bc8-3498-40f7-b969-476339c2d979"),
-                            CreatedAt = new DateTime(2025, 2, 3, 17, 19, 56, 271, DateTimeKind.Utc).AddTicks(9231),
+                            Id = new Guid("93ac40f0-589b-4703-87d4-a243d175fafb"),
+                            CreatedAt = new DateTime(2025, 2, 4, 20, 51, 23, 674, DateTimeKind.Utc).AddTicks(9322),
                             DstOffset = "+01:00",
                             IsActive = true,
                             Name = "WET",
@@ -1779,8 +1868,8 @@ namespace ASafariM.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("b1110a38-6076-4f9b-99ef-ed205745d109"),
-                            CreatedAt = new DateTime(2025, 2, 3, 17, 19, 56, 271, DateTimeKind.Utc).AddTicks(9233),
+                            Id = new Guid("ea6b48df-52c0-4303-8ccb-b8368d0fb0bc"),
+                            CreatedAt = new DateTime(2025, 2, 4, 20, 51, 23, 674, DateTimeKind.Utc).AddTicks(9324),
                             DstOffset = "+03:00",
                             IsActive = true,
                             Name = "EET",
@@ -1794,6 +1883,12 @@ namespace ASafariM.Infrastructure.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<Guid>("CreatedBy")
                         .HasColumnType("char(36)");
 
                     b.Property<string>("Description")
@@ -1810,6 +1905,12 @@ namespace ASafariM.Infrastructure.Migrations
                     b.Property<string>("Slug")
                         .HasColumnType("varchar(255)");
 
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<Guid?>("UpdatedBy")
+                        .HasColumnType("char(36)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ParentTopicId");
@@ -1823,13 +1924,17 @@ namespace ASafariM.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("3fa85f64-5717-4562-b3fc-2c963f66afa6"),
+                            CreatedAt = new DateTime(2025, 2, 4, 20, 51, 23, 674, DateTimeKind.Utc).AddTicks(9483),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             Description = "Test Topic description",
                             Name = "Test Topic name",
                             Slug = "test-topic-slug"
                         },
                         new
                         {
-                            Id = new Guid("5e511121-05ef-4363-b1b7-7882759d1957"),
+                            Id = new Guid("b16e847b-7078-4e54-8e20-5ee788cb2ef0"),
+                            CreatedAt = new DateTime(2025, 2, 4, 20, 51, 23, 674, DateTimeKind.Utc).AddTicks(9497),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             Description = "Test Topic description 2",
                             Name = "Test Topic name 2",
                             ParentTopicId = new Guid("3fa85f64-5717-4562-b3fc-2c963f66afa6"),
@@ -1837,14 +1942,18 @@ namespace ASafariM.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("00658012-54f6-4e7d-98fe-e0c2bcaf99f8"),
+                            Id = new Guid("fe8c9573-5c2c-411d-bd6b-16c65733c4a3"),
+                            CreatedAt = new DateTime(2025, 2, 4, 20, 51, 23, 674, DateTimeKind.Utc).AddTicks(9502),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             Description = "Test Topic description 3",
                             Name = "Test Topic name 3",
                             Slug = "test-topic-slug-3"
                         },
                         new
                         {
-                            Id = new Guid("046f6f19-12b3-4c3b-a151-bb91c85900f0"),
+                            Id = new Guid("b3d1d767-cf60-4931-bfe7-8f83a71122d8"),
+                            CreatedAt = new DateTime(2025, 2, 4, 20, 51, 23, 674, DateTimeKind.Utc).AddTicks(9504),
+                            CreatedBy = new Guid("00000000-0000-0000-0000-000000000000"),
                             Description = "Test Topic description 4",
                             Name = "Test Topic name 4",
                             ParentTopicId = new Guid("3fa85f64-5717-4562-b3fc-2c963f66afa6"),
@@ -1986,67 +2095,122 @@ namespace ASafariM.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("7bf8a5d8-7e3f-4304-8c01-c12cbaebbb80"),
+                            Id = new Guid("523d99c4-d37b-46d2-88c4-0381681f0087"),
                             ConcurrencyStamp = "ali@asafarim.com",
-                            CreatedAt = new DateTime(2025, 2, 3, 17, 19, 56, 271, DateTimeKind.Utc).AddTicks(8605),
-                            CreatedBy = new Guid("13fb277d-50a9-4e62-bc3b-72a3fe6516cd"),
+                            CreatedAt = new DateTime(2025, 2, 4, 20, 51, 23, 674, DateTimeKind.Utc).AddTicks(8830),
+                            CreatedBy = new Guid("00bbf3f0-79b2-4e29-9ec5-996b2556b6a9"),
                             DateOfBirth = new DateTime(1975, 7, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "ali@asafarim.com",
                             EmailConfirmed = false,
                             FailedLoginAttempts = 0,
-                            FirstName = "Ali",
+                            FirstName = "Ali R.",
                             IsActive = true,
                             IsAdmin = true,
                             IsDeleted = false,
                             IsLockedOut = false,
-                            LastLogin = new DateTime(2025, 2, 3, 17, 19, 56, 271, DateTimeKind.Utc).AddTicks(8597),
+                            LastLogin = new DateTime(2025, 2, 4, 20, 51, 23, 674, DateTimeKind.Utc).AddTicks(8822),
                             LastName = "Safari",
-                            NormalizedEmail = "",
-                            NormalizedUserName = "ali@asafarim.com",
+                            NormalizedEmail = "ALI@ASAFARIM.COM",
+                            NormalizedUserName = "ALIRZA",
                             PasswordHash = "m7ihFmnrEpIIJEgVEX+SM7YxcMXf0hbpciQjhE53ZplNJQw8CT/JufmeUV+AQk3G",
-                            PhoneNumberConfirmed = false,
-                            ProfilePicture = "https://example.com/profile.jpg",
+                            PhoneNumber = "+123456789",
+                            PhoneNumberConfirmed = true,
+                            ProfilePicture = "https://asafarim.com/logoT.svg",
                             SecurityStamp = "ali@asafarim.com",
-                            UpdatedAt = new DateTime(2025, 2, 3, 17, 19, 56, 271, DateTimeKind.Utc).AddTicks(8606),
-                            UpdatedBy = new Guid("5751a65c-8d9e-4922-acad-6e7a1642b780")
+                            UpdatedAt = new DateTime(2025, 2, 4, 20, 51, 23, 674, DateTimeKind.Utc).AddTicks(8842),
+                            UpdatedBy = new Guid("9b6ee805-0200-467c-9901-9cbe452a8dfd"),
+                            UserName = "alireza"
                         });
                 });
 
-            modelBuilder.Entity("ASafariM.Domain.Entities.UserPreference", b =>
+            modelBuilder.Entity("ASafariM.Domain.Entities.UserAccessibilityPreference", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<Guid>("PreferenceId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime(6)");
-
                     b.Property<Guid>("UserId")
                         .HasColumnType("char(36)");
 
-                    b.Property<Guid?>("UserId1")
+                    b.Property<Guid>("AccessibilityPreferenceId")
                         .HasColumnType("char(36)");
 
-                    b.HasKey("Id");
+                    b.HasKey("UserId", "AccessibilityPreferenceId");
 
-                    b.HasIndex("PreferenceId");
+                    b.HasIndex("AccessibilityPreferenceId");
 
-                    b.HasIndex("UserId1")
-                        .IsUnique();
+                    b.ToTable("UserAccessibilityPreferences");
+                });
 
-                    b.HasIndex("UserId", "PreferenceId")
-                        .IsUnique();
+            modelBuilder.Entity("ASafariM.Domain.Entities.UserGeographicalPreference", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("char(36)");
 
-                    b.ToTable("UserPreferences");
+                    b.Property<Guid>("GeographicalPreferenceId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("UserId", "GeographicalPreferenceId");
+
+                    b.HasIndex("GeographicalPreferenceId");
+
+                    b.ToTable("UserGeographicalPreferences");
+                });
+
+            modelBuilder.Entity("ASafariM.Domain.Entities.UserLanguagePreference", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("LanguagePreferenceId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("UserId", "LanguagePreferenceId");
+
+                    b.HasIndex("LanguagePreferenceId");
+
+                    b.ToTable("UserLanguagePreferences");
+                });
+
+            modelBuilder.Entity("ASafariM.Domain.Entities.UserMiscellaneousPreference", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("MiscellaneousPreferenceId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("UserId", "MiscellaneousPreferenceId");
+
+                    b.HasIndex("MiscellaneousPreferenceId");
+
+                    b.ToTable("UserMiscellaneousPreferences");
+                });
+
+            modelBuilder.Entity("ASafariM.Domain.Entities.UserNotificationPreference", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("NotificationPreferenceId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("UserId", "NotificationPreferenceId");
+
+                    b.HasIndex("NotificationPreferenceId");
+
+                    b.ToTable("UserNotificationPreferences");
+                });
+
+            modelBuilder.Entity("ASafariM.Domain.Entities.UserPrivacyPreference", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("PrivacyPreferenceId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("UserId", "PrivacyPreferenceId");
+
+                    b.HasIndex("PrivacyPreferenceId");
+
+                    b.ToTable("UserPrivacyPreferences");
                 });
 
             modelBuilder.Entity("ASafariM.Domain.Entities.UserRole", b =>
@@ -2062,6 +2226,21 @@ namespace ASafariM.Infrastructure.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("UserRoles");
+                });
+
+            modelBuilder.Entity("ASafariM.Domain.Entities.UserThemePreference", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("ThemePreferenceId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("UserId", "ThemePreferenceId");
+
+                    b.HasIndex("ThemePreferenceId");
+
+                    b.ToTable("UserThemePreferences");
                 });
 
             modelBuilder.Entity("SitemapItemTopic", b =>
@@ -2240,51 +2419,6 @@ namespace ASafariM.Infrastructure.Migrations
                     b.Navigation("Tag");
                 });
 
-            modelBuilder.Entity("ASafariM.Domain.Entities.Preference", b =>
-                {
-                    b.HasOne("ASafariM.Domain.Entities.AccessibilityPreference", "Accessibility")
-                        .WithMany()
-                        .HasForeignKey("AccessibilityId");
-
-                    b.HasOne("ASafariM.Domain.Entities.GeographicalPreference", "Geography")
-                        .WithMany()
-                        .HasForeignKey("GeographyId");
-
-                    b.HasOne("ASafariM.Domain.Entities.LanguagePreference", "Language")
-                        .WithMany()
-                        .HasForeignKey("LanguageId");
-
-                    b.HasOne("ASafariM.Domain.Entities.MiscellaneousPreference", "Miscellaneous")
-                        .WithMany()
-                        .HasForeignKey("MiscellaneousId");
-
-                    b.HasOne("ASafariM.Domain.Entities.NotificationPreference", "Notification")
-                        .WithMany()
-                        .HasForeignKey("NotificationId");
-
-                    b.HasOne("ASafariM.Domain.Entities.PrivacyPreference", "Privacy")
-                        .WithMany()
-                        .HasForeignKey("PrivacyId");
-
-                    b.HasOne("ASafariM.Domain.Entities.ThemePreference", "Theme")
-                        .WithMany()
-                        .HasForeignKey("ThemeId");
-
-                    b.Navigation("Accessibility");
-
-                    b.Navigation("Geography");
-
-                    b.Navigation("Language");
-
-                    b.Navigation("Miscellaneous");
-
-                    b.Navigation("Notification");
-
-                    b.Navigation("Privacy");
-
-                    b.Navigation("Theme");
-                });
-
             modelBuilder.Entity("ASafariM.Domain.Entities.ProgressHistory", b =>
                 {
                     b.HasOne("ASafariM.Domain.Entities.Project", "Project")
@@ -2386,25 +2520,116 @@ namespace ASafariM.Infrastructure.Migrations
                         .HasForeignKey("PostId1");
                 });
 
-            modelBuilder.Entity("ASafariM.Domain.Entities.UserPreference", b =>
+            modelBuilder.Entity("ASafariM.Domain.Entities.UserAccessibilityPreference", b =>
                 {
-                    b.HasOne("ASafariM.Domain.Entities.Preference", "Preference")
-                        .WithMany("UserPreferences")
-                        .HasForeignKey("PreferenceId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                    b.HasOne("ASafariM.Domain.Entities.AccessibilityPreference", "AccessibilityPreference")
+                        .WithMany()
+                        .HasForeignKey("AccessibilityPreferenceId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("ASafariM.Domain.Entities.User", "User")
-                        .WithMany("Preferences")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ASafariM.Domain.Entities.User", null)
-                        .WithOne("Preference")
-                        .HasForeignKey("ASafariM.Domain.Entities.UserPreference", "UserId1");
+                    b.Navigation("AccessibilityPreference");
 
-                    b.Navigation("Preference");
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("ASafariM.Domain.Entities.UserGeographicalPreference", b =>
+                {
+                    b.HasOne("ASafariM.Domain.Entities.GeographicalPreference", "GeographicalPreference")
+                        .WithMany()
+                        .HasForeignKey("GeographicalPreferenceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ASafariM.Domain.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("GeographicalPreference");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("ASafariM.Domain.Entities.UserLanguagePreference", b =>
+                {
+                    b.HasOne("ASafariM.Domain.Entities.LanguagePreference", "LanguagePreference")
+                        .WithMany()
+                        .HasForeignKey("LanguagePreferenceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ASafariM.Domain.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("LanguagePreference");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("ASafariM.Domain.Entities.UserMiscellaneousPreference", b =>
+                {
+                    b.HasOne("ASafariM.Domain.Entities.MiscellaneousPreference", "MiscellaneousPreference")
+                        .WithMany()
+                        .HasForeignKey("MiscellaneousPreferenceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ASafariM.Domain.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MiscellaneousPreference");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("ASafariM.Domain.Entities.UserNotificationPreference", b =>
+                {
+                    b.HasOne("ASafariM.Domain.Entities.NotificationPreference", "NotificationPreference")
+                        .WithMany()
+                        .HasForeignKey("NotificationPreferenceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ASafariM.Domain.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("NotificationPreference");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("ASafariM.Domain.Entities.UserPrivacyPreference", b =>
+                {
+                    b.HasOne("ASafariM.Domain.Entities.PrivacyPreference", "PrivacyPreference")
+                        .WithMany()
+                        .HasForeignKey("PrivacyPreferenceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ASafariM.Domain.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PrivacyPreference");
 
                     b.Navigation("User");
                 });
@@ -2424,6 +2649,25 @@ namespace ASafariM.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Role");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("ASafariM.Domain.Entities.UserThemePreference", b =>
+                {
+                    b.HasOne("ASafariM.Domain.Entities.ThemePreference", "ThemePreference")
+                        .WithMany()
+                        .HasForeignKey("ThemePreferenceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ASafariM.Domain.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ThemePreference");
 
                     b.Navigation("User");
                 });
@@ -2491,11 +2735,6 @@ namespace ASafariM.Infrastructure.Migrations
                     b.Navigation("Tags");
                 });
 
-            modelBuilder.Entity("ASafariM.Domain.Entities.Preference", b =>
-                {
-                    b.Navigation("UserPreferences");
-                });
-
             modelBuilder.Entity("ASafariM.Domain.Entities.Project", b =>
                 {
                     b.Navigation("MarkdownFiles");
@@ -2531,11 +2770,6 @@ namespace ASafariM.Infrastructure.Migrations
                     b.Navigation("MarkdownFileUsers");
 
                     b.Navigation("OwnedProjects");
-
-                    b.Navigation("Preference")
-                        .IsRequired();
-
-                    b.Navigation("Preferences");
 
                     b.Navigation("ProjectMemberships");
 

@@ -15,7 +15,6 @@ namespace ASafariM.Application.Mappings
             CreateMap<PrivacyPreference, PrivacyPreferenceDto>();
             CreateMap<AccessibilityPreference, AccessibilityPreferenceDto>();
             CreateMap<MiscellaneousPreference, MiscellaneousPreferenceDto>();
-            CreateMap<Preference, PreferenceDto>();
         }
     }
 }

@@ -36,12 +36,13 @@ namespace ASafariM.Application.Mappings
             // Role mappings
             CreateMap<Role, RoleDto>();
 
-            // UserPreference mappings
-            CreateMap<UserPreference, UserPreferenceDto>();
-
-            // GeographicalPreference mappings
+            // Preference mappings
             CreateMap<GeographicalPreference, GeographicalPreferenceDto>();
-            CreateMap<GeographicalPreferenceDto, GeographicalPreference>();
+            CreateMap<NotificationPreference, NotificationPreferenceDto>();
+            CreateMap<LanguagePreference, LanguagePreferenceDto>();
+            CreateMap<PrivacyPreference, PrivacyPreferenceDto>();
+            CreateMap<AccessibilityPreference, AccessibilityPreferenceDto>();
+            CreateMap<MiscellaneousPreference, MiscellaneousPreferenceDto>();
         }
     }
 }

@@ -15,8 +15,6 @@ public class AppDbContext : DbContext
     public DbSet<UserRole> UserRoles { get; set; }
 
     // Preference sets
-    public DbSet<Preference> Preferences { get; set; }
-    public DbSet<UserPreference> UserPreferences { get; set; }
     public DbSet<AccessibilityPreference> AccessibilityPreferences { get; set; }
     public DbSet<GeographicalPreference> GeographicalPreferences { get; set; }
     public DbSet<NotificationPreference> NotificationPreferences { get; set; }
@@ -49,6 +47,16 @@ public class AppDbContext : DbContext
     public DbSet<Post> Posts { get; set; }
     public DbSet<PostTag> PostTags { get; set; }
     public DbSet<SitemapItem> SitemapItems { get; set; }
+
+    // preferences
+    public DbSet<UserAccessibilityPreference> UserAccessibilityPreferences { get; set; }
+    public DbSet<UserGeographicalPreference> UserGeographicalPreferences { get; set; }
+    public DbSet<UserLanguagePreference> UserLanguagePreferences { get; set; }
+    public DbSet<UserMiscellaneousPreference> UserMiscellaneousPreferences { get; set; }
+    public DbSet<UserNotificationPreference> UserNotificationPreferences { get; set; }
+    public DbSet<UserPrivacyPreference> UserPrivacyPreferences { get; set; }
+    public DbSet<UserThemePreference> UserThemePreferences { get; set; }
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -131,44 +139,14 @@ public class AppDbContext : DbContext
                 .OnDelete(DeleteBehavior.Cascade);
         });
 
-        // Configure Preference entity
-        modelBuilder.Entity<Preference>(entity =>
-        {
-            entity.HasKey(p => p.Id);
-            entity.Property(p => p.Name).HasMaxLength(100).IsRequired();
-            entity.Property(p => p.Description).HasMaxLength(500);
-
-            // Configure one-to-one relationships with preference types
-            entity.HasOne(p => p.Theme);
-            entity.HasOne(p => p.Geography);
-            entity.HasOne(p => p.Notification);
-            entity.HasOne(p => p.Language);
-            entity.HasOne(p => p.Privacy);
-            entity.HasOne(p => p.Accessibility);
-            entity.HasOne(p => p.Miscellaneous);
-        });
-
-        // Configure UserPreference entity (junction table)
-        modelBuilder.Entity<UserPreference>(entity =>
-        {
-            entity.HasKey(up => up.Id);
-
-            entity
-                .HasOne(up => up.User)
-                .WithMany(u => u.Preferences)
-                .HasForeignKey(up => up.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            entity
-                .HasOne(up => up.Preference)
-                .WithMany(p => p.UserPreferences)
-                .HasForeignKey(up => up.PreferenceId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            entity.Property(up => up.CreatedAt).HasColumnType("datetime(6)").IsRequired();
-            entity.Property(up => up.UpdatedAt).HasColumnType("datetime(6)").IsRequired(false);
-            entity.HasIndex(up => new { up.UserId, up.PreferenceId }).IsUnique();
-        });
+        // Configure User Preference entities
+        modelBuilder.Entity<UserAccessibilityPreference>().HasKey(ap => new { ap.UserId, ap.AccessibilityPreferenceId });
+        modelBuilder.Entity<UserGeographicalPreference>().HasKey(ugp => new { ugp.UserId, ugp.GeographicalPreferenceId });
+        modelBuilder.Entity<UserLanguagePreference>().HasKey(ulp => new { ulp.UserId, ulp.LanguagePreferenceId });
+        modelBuilder.Entity<UserMiscellaneousPreference>().HasKey(ump => new { ump.UserId, ump.MiscellaneousPreferenceId });
+        modelBuilder.Entity<UserNotificationPreference>().HasKey(unp => new { unp.UserId, unp.NotificationPreferenceId });
+        modelBuilder.Entity<UserPrivacyPreference>().HasKey(upp => new { upp.UserId, upp.PrivacyPreferenceId });
+        modelBuilder.Entity<UserThemePreference>().HasKey(utt => new { utt.UserId, utt.ThemePreferenceId });
 
         // Configure Project entity
         modelBuilder.Entity<Project>(entity =>
@@ -399,17 +377,21 @@ public class AppDbContext : DbContext
                 new User
                 {
                     Id = Guid.NewGuid(),
-                    FirstName = "Ali",
+                    FirstName = "Ali R.",
                     LastName = "Safari",
                     Email = "ali@asafarim.com",
+                    NormalizedEmail = "ALI@ASAFARIM.COM",
                     PasswordHash =
                         "m7ihFmnrEpIIJEgVEX+SM7YxcMXf0hbpciQjhE53ZplNJQw8CT/JufmeUV+AQk3G",
                     LastLogin = DateTime.UtcNow,
-                    NormalizedUserName = "ali@asafarim.com",
+                    PhoneNumber = "+123456789",
+                    PhoneNumberConfirmed = true,
+                    UserName = "alireza",
+                    NormalizedUserName = "ALIRZA",
                     SecurityStamp = "ali@asafarim.com",
                     ConcurrencyStamp = "ali@asafarim.com",
                     IsActive = true,
-                    ProfilePicture = "https://example.com/profile.jpg",
+                    ProfilePicture = "https://asafarim.com/logoT.svg",
                     CreatedBy = Guid.NewGuid(),
                     CreatedAt = DateTime.UtcNow,
                     UpdatedBy = Guid.NewGuid(),
@@ -654,6 +636,9 @@ public class AppDbContext : DbContext
                     Name = "Belgium",
                     NativeName = "België",
                     PhoneCode = "+32",
+                    Capital = "Brussels",
+                    CreatedAt = DateTime.UtcNow,
+                    IsActive = true,
                 },
                 new Country
                 {
@@ -663,6 +648,9 @@ public class AppDbContext : DbContext
                     Name = "France",
                     NativeName = "France",
                     PhoneCode = "+33",
+                    Capital = "Paris",
+                    CreatedAt = DateTime.UtcNow,
+                    IsActive = true,
                 },
                 new Country
                 {
@@ -672,6 +660,9 @@ public class AppDbContext : DbContext
                     Name = "Germany",
                     NativeName = "Deutschland",
                     PhoneCode = "+49",
+                    Capital = "Berlin",
+                    CreatedAt = DateTime.UtcNow,
+                    IsActive = true,
                 },
                 new Country
                 {
@@ -681,6 +672,9 @@ public class AppDbContext : DbContext
                     Name = "Netherlands",
                     NativeName = "Nederland",
                     PhoneCode = "+31",
+                    Capital = "Amsterdam",
+                    CreatedAt = DateTime.UtcNow,
+                    IsActive = true,
                 },
                 new Country
                 {
@@ -690,6 +684,9 @@ public class AppDbContext : DbContext
                     Name = "United Kingdom",
                     NativeName = "United Kingdom",
                     PhoneCode = "+44",
+                    Capital = "London",
+                    CreatedAt = DateTime.UtcNow,
+                    IsActive = true,
                 },
                 new Country
                 {
@@ -699,6 +696,9 @@ public class AppDbContext : DbContext
                     Name = "Italy",
                     NativeName = "Italia",
                     PhoneCode = "+39",
+                    Capital = "Rome",
+                    CreatedAt = DateTime.UtcNow,
+                    IsActive = true,
                 },
                 new Country
                 {
@@ -708,6 +708,9 @@ public class AppDbContext : DbContext
                     Name = "Spain",
                     NativeName = "España",
                     PhoneCode = "+34",
+                    Capital = "Madrid",
+                    CreatedAt = DateTime.UtcNow,
+                    IsActive = true,
                 },
                 new Country
                 {
@@ -717,6 +720,9 @@ public class AppDbContext : DbContext
                     Name = "Switzerland",
                     NativeName = "Schweiz",
                     PhoneCode = "+41",
+                    Capital = "Bern",
+                    CreatedAt = DateTime.UtcNow,
+                    IsActive = true,
                 },
                 new Country
                 {
@@ -726,6 +732,9 @@ public class AppDbContext : DbContext
                     Name = "Austria",
                     NativeName = "Österreich",
                     PhoneCode = "+43",
+                    Capital = "Vienna",
+                    CreatedAt = DateTime.UtcNow,
+                    IsActive = true,
                 },
                 new Country
                 {
@@ -735,6 +744,9 @@ public class AppDbContext : DbContext
                     Name = "Luxembourg",
                     NativeName = "Luxembourg",
                     PhoneCode = "+352",
+                    Capital = "Luxembourg",
+                    CreatedAt = DateTime.UtcNow,
+                    IsActive = true,
                 }
             );
 

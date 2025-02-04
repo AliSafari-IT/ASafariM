@@ -23,7 +23,11 @@ namespace ASafariM.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     EnableHighContrastMode = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     EnableScreenReaderSupport = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    TextScalingFactor = table.Column<int>(type: "int", nullable: false)
+                    TextScalingFactor = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Value = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
@@ -134,7 +138,11 @@ namespace ASafariM.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    Language = table.Column<int>(type: "int", nullable: false)
+                    Language = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Value = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
@@ -151,7 +159,13 @@ namespace ASafariM.Infrastructure.Migrations
                     ReceiveSmsNotifications = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     IsSubscribedToNewsletter = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     NotificationFrequencyInHours = table.Column<int>(type: "int", nullable: false),
-                    AllowMarketingEmails = table.Column<bool>(type: "tinyint(1)", nullable: false)
+                    AllowMarketingEmails = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    Name = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Value = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -274,7 +288,11 @@ namespace ASafariM.Infrastructure.Migrations
                     Name = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Description = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4")
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    CreatedBy = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    UpdatedBy = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci")
                 },
                 constraints: table =>
                 {
@@ -330,6 +348,12 @@ namespace ASafariM.Infrastructure.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ArchivedDate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     ParentItemId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    Url = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    LastModified = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    ChangeFrequency = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Priority = table.Column<double>(type: "double", nullable: false),
                     SitemapItemId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci")
                 },
                 constraints: table =>
@@ -384,7 +408,11 @@ namespace ASafariM.Infrastructure.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Slug = table.Column<string>(type: "varchar(255)", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    ParentTopicId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci")
+                    ParentTopicId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    CreatedBy = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    UpdatedBy = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci")
                 },
                 constraints: table =>
                 {
@@ -407,7 +435,34 @@ namespace ASafariM.Infrastructure.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     LanguageId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     AccentColor = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4")
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    BackgroundColor = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    PrimaryColor = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    SecondaryColor = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    TertiaryColor = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    DarkModeTextColor = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    LightModeTextColor = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    DarkModeBackgroundColor = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    LightModeBackgroundColor = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    DarkModePrimaryColor = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    LightModePrimaryColor = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    CreatedBy = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    UpdatedBy = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    IsDarkModeEnabled = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    IsHighContrastModeEnabled = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    IsReducedMotionEnabled = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -433,6 +488,10 @@ namespace ASafariM.Infrastructure.Migrations
                     DefaultDashboardView = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ShowActivityTimeline = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    Name = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Value = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: true)
                 },
@@ -592,6 +651,8 @@ namespace ASafariM.Infrastructure.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Slug = table.Column<string>(type: "varchar(255)", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
+                    CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     PostId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci")
                 },
                 constraints: table =>
@@ -686,7 +747,11 @@ namespace ASafariM.Infrastructure.Migrations
                     TimeZoneId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     DateFormatId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                    UpdatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    Name = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Value = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
@@ -794,99 +859,6 @@ namespace ASafariM.Infrastructure.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Preferences",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    Name = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Description = table.Column<string>(type: "varchar(500)", maxLength: 500, nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    ThemeId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    GeographyId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    NotificationId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    LanguageId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    PrivacyId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    AccessibilityId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    MiscellaneousId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    IsDefault = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    IsActive = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    CreatedBy = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    UpdatedBy = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Preferences", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Preferences_AccessibilityPreferences_AccessibilityId",
-                        column: x => x.AccessibilityId,
-                        principalTable: "AccessibilityPreferences",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Preferences_GeographicalPreferences_GeographyId",
-                        column: x => x.GeographyId,
-                        principalTable: "GeographicalPreferences",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Preferences_LanguagePreferences_LanguageId",
-                        column: x => x.LanguageId,
-                        principalTable: "LanguagePreferences",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Preferences_MiscellaneousPreferences_MiscellaneousId",
-                        column: x => x.MiscellaneousId,
-                        principalTable: "MiscellaneousPreferences",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Preferences_NotificationPreferences_NotificationId",
-                        column: x => x.NotificationId,
-                        principalTable: "NotificationPreferences",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Preferences_PrivacyPreferences_PrivacyId",
-                        column: x => x.PrivacyId,
-                        principalTable: "PrivacyPreferences",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Preferences_ThemePreferences_ThemeId",
-                        column: x => x.ThemeId,
-                        principalTable: "ThemePreferences",
-                        principalColumn: "Id");
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "UserPreferences",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    UserId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    PreferenceId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    IsActive = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserPreferences", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_UserPreferences_Preferences_PreferenceId",
-                        column: x => x.PreferenceId,
-                        principalTable: "Preferences",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_UserPreferences_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
                 name: "MarkdownFileHistories",
                 columns: table => new
                 {
@@ -920,7 +892,9 @@ namespace ASafariM.Infrastructure.Migrations
                     ProjectId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
                     ParentMdFileId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
                     CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                    UpdatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    Path = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
@@ -977,7 +951,8 @@ namespace ASafariM.Infrastructure.Migrations
                     Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     Visibility = table.Column<string>(type: "nvarchar(50)", nullable: false),
                     OwnerId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    DateCreated = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     StartDate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     EndDate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     Status = table.Column<int>(type: "int", nullable: false),
@@ -1098,16 +1073,16 @@ namespace ASafariM.Infrastructure.Migrations
                 columns: new[] { "Id", "Capital", "CreatedAt", "IsActive", "IsoCode", "IsoCode3", "Name", "NativeName", "PhoneCode", "UpdatedAt" },
                 values: new object[,]
                 {
-                    { new Guid("0614b917-16d8-4fb4-a3ee-fffc48755323"), "Brussels", new DateTime(2025, 2, 1, 17, 48, 30, 345, DateTimeKind.Utc).AddTicks(9221), true, "LU", "LUX", "Luxembourg", "Luxembourg", "+352", null },
-                    { new Guid("16032238-ccc5-4d1a-ad70-5293e97af4fa"), "Brussels", new DateTime(2025, 2, 1, 17, 48, 30, 345, DateTimeKind.Utc).AddTicks(9214), true, "AT", "AUT", "Austria", "Österreich", "+43", null },
-                    { new Guid("218beb0d-a067-41e4-bc0f-01615cfe888f"), "Brussels", new DateTime(2025, 2, 1, 17, 48, 30, 345, DateTimeKind.Utc).AddTicks(9207), true, "IT", "ITA", "Italy", "Italia", "+39", null },
-                    { new Guid("5378504d-1d3e-4191-af87-b64917aa7c2e"), "Brussels", new DateTime(2025, 2, 1, 17, 48, 30, 345, DateTimeKind.Utc).AddTicks(9195), true, "NL", "NLD", "Netherlands", "Nederland", "+31", null },
-                    { new Guid("625520bd-7f1b-4d33-8b3c-97797f47747e"), "Brussels", new DateTime(2025, 2, 1, 17, 48, 30, 345, DateTimeKind.Utc).AddTicks(9185), true, "FR", "FRA", "France", "France", "+33", null },
-                    { new Guid("82c231d1-2252-4852-85b1-30affd8eda76"), "Brussels", new DateTime(2025, 2, 1, 17, 48, 30, 345, DateTimeKind.Utc).AddTicks(9189), true, "DE", "DEU", "Germany", "Deutschland", "+49", null },
-                    { new Guid("9360a8b2-aca9-486b-afec-50745443aab0"), "Brussels", new DateTime(2025, 2, 1, 17, 48, 30, 345, DateTimeKind.Utc).AddTicks(9209), true, "ES", "ESP", "Spain", "España", "+34", null },
-                    { new Guid("b75c00e6-d678-4a75-91ee-9c7deb95079a"), "Brussels", new DateTime(2025, 2, 1, 17, 48, 30, 345, DateTimeKind.Utc).AddTicks(9212), true, "CH", "CHE", "Switzerland", "Schweiz", "+41", null },
-                    { new Guid("bbf61c4f-ed35-4661-9017-e48124d0da0d"), "Brussels", new DateTime(2025, 2, 1, 17, 48, 30, 345, DateTimeKind.Utc).AddTicks(9177), true, "BE", "BEL", "Belgium", "België", "+32", null },
-                    { new Guid("fdd3ce3b-454f-4a84-bcf4-86f9fb6e1a4b"), "Brussels", new DateTime(2025, 2, 1, 17, 48, 30, 345, DateTimeKind.Utc).AddTicks(9204), true, "GB", "GBR", "United Kingdom", "United Kingdom", "+44", null }
+                    { new Guid("250ec265-ea45-40fe-943d-9e4b07906d32"), "Brussels", new DateTime(2025, 2, 4, 20, 5, 57, 666, DateTimeKind.Utc).AddTicks(7472), true, "CH", "CHE", "Switzerland", "Schweiz", "+41", null },
+                    { new Guid("3a97db4a-68b1-4ba0-8301-85e847fb571f"), "Brussels", new DateTime(2025, 2, 4, 20, 5, 57, 666, DateTimeKind.Utc).AddTicks(7453), true, "BE", "BEL", "Belgium", "België", "+32", null },
+                    { new Guid("4a6ed093-54e6-48ad-88e1-a165440039a6"), "Brussels", new DateTime(2025, 2, 4, 20, 5, 57, 666, DateTimeKind.Utc).AddTicks(7479), true, "LU", "LUX", "Luxembourg", "Luxembourg", "+352", null },
+                    { new Guid("563d0668-4202-488c-8656-860211c4f438"), "Brussels", new DateTime(2025, 2, 4, 20, 5, 57, 666, DateTimeKind.Utc).AddTicks(7469), true, "ES", "ESP", "Spain", "España", "+34", null },
+                    { new Guid("60f3378c-3552-4333-b1f0-379fec6d65f1"), "Brussels", new DateTime(2025, 2, 4, 20, 5, 57, 666, DateTimeKind.Utc).AddTicks(7465), true, "GB", "GBR", "United Kingdom", "United Kingdom", "+44", null },
+                    { new Guid("8022066e-dfcb-4d38-a66d-ca82d97e3d63"), "Brussels", new DateTime(2025, 2, 4, 20, 5, 57, 666, DateTimeKind.Utc).AddTicks(7467), true, "IT", "ITA", "Italy", "Italia", "+39", null },
+                    { new Guid("939be5db-8e6f-45c9-b933-b1fc7b74f2d8"), "Brussels", new DateTime(2025, 2, 4, 20, 5, 57, 666, DateTimeKind.Utc).AddTicks(7460), true, "DE", "DEU", "Germany", "Deutschland", "+49", null },
+                    { new Guid("a26f32e3-7a36-47f1-bf7f-132ec6d1ad9b"), "Brussels", new DateTime(2025, 2, 4, 20, 5, 57, 666, DateTimeKind.Utc).AddTicks(7477), true, "AT", "AUT", "Austria", "Österreich", "+43", null },
+                    { new Guid("b174e420-b2e3-4be9-9329-34db2a1db916"), "Brussels", new DateTime(2025, 2, 4, 20, 5, 57, 666, DateTimeKind.Utc).AddTicks(7458), true, "FR", "FRA", "France", "France", "+33", null },
+                    { new Guid("b9d1be13-a4d2-4240-9494-255b07a77fcf"), "Brussels", new DateTime(2025, 2, 4, 20, 5, 57, 666, DateTimeKind.Utc).AddTicks(7463), true, "NL", "NLD", "Netherlands", "Nederland", "+31", null }
                 });
 
             migrationBuilder.InsertData(
@@ -1115,10 +1090,10 @@ namespace ASafariM.Infrastructure.Migrations
                 columns: new[] { "Id", "Code", "CreatedAt", "DecimalPlaces", "IsActive", "Name", "Symbol", "UpdatedAt" },
                 values: new object[,]
                 {
-                    { new Guid("1489cab6-b1b2-4105-8388-e179f9b6a985"), "USD", new DateTime(2025, 2, 1, 17, 48, 30, 345, DateTimeKind.Utc).AddTicks(9049), 2, true, "US Dollar", "$", null },
-                    { new Guid("5b1c2dbd-6335-496b-8cd1-8f6b1e870c08"), "CHF", new DateTime(2025, 2, 1, 17, 48, 30, 345, DateTimeKind.Utc).AddTicks(9056), 2, true, "Swiss Franc", "Fr.", null },
-                    { new Guid("707c64fd-332c-4fcd-b6b8-c09a1cec7631"), "GBP", new DateTime(2025, 2, 1, 17, 48, 30, 345, DateTimeKind.Utc).AddTicks(9053), 2, true, "British Pound", "£", null },
-                    { new Guid("c5b749d5-b7fd-4a64-a028-4b806288b0bb"), "EUR", new DateTime(2025, 2, 1, 17, 48, 30, 345, DateTimeKind.Utc).AddTicks(9043), 2, true, "Euro", "€", null }
+                    { new Guid("1ac07e2d-83da-41bc-931a-808adc9912d9"), "GBP", new DateTime(2025, 2, 4, 20, 5, 57, 666, DateTimeKind.Utc).AddTicks(7374), 2, true, "British Pound", "£", null },
+                    { new Guid("33baac0f-8c4d-47c9-a0d1-9fe295afeeb0"), "USD", new DateTime(2025, 2, 4, 20, 5, 57, 666, DateTimeKind.Utc).AddTicks(7371), 2, true, "US Dollar", "$", null },
+                    { new Guid("6e6342ef-9c76-4e98-8877-d37d184e0110"), "CHF", new DateTime(2025, 2, 4, 20, 5, 57, 666, DateTimeKind.Utc).AddTicks(7377), 2, true, "Swiss Franc", "Fr.", null },
+                    { new Guid("d255e337-2db7-4238-b40c-179311d7592f"), "EUR", new DateTime(2025, 2, 4, 20, 5, 57, 666, DateTimeKind.Utc).AddTicks(7365), 2, true, "Euro", "€", null }
                 });
 
             migrationBuilder.InsertData(
@@ -1126,10 +1101,10 @@ namespace ASafariM.Infrastructure.Migrations
                 columns: new[] { "Id", "CreatedAt", "DisplayName", "Example", "Format", "IsActive", "IsDefault", "UpdatedAt" },
                 values: new object[,]
                 {
-                    { new Guid("480d519a-c773-4e74-97e8-80a7b7a24ed3"), new DateTime(2025, 2, 1, 17, 48, 30, 345, DateTimeKind.Utc).AddTicks(8982), "ISO Date Format", "2024-12-31", "yyyy-MM-dd", true, false, null },
-                    { new Guid("8aee26d5-f204-4586-89aa-df79b8cb7d9c"), new DateTime(2025, 2, 1, 17, 48, 30, 345, DateTimeKind.Utc).AddTicks(8972), "Belgian Date Format (Dot)", "31.12.2024", "dd.MM.yyyy", true, false, null },
-                    { new Guid("9ed1d3cc-dd95-4756-81e6-a5cafe541bb5"), new DateTime(2025, 2, 1, 17, 48, 30, 345, DateTimeKind.Utc).AddTicks(8979), "US Date Format", "12/31/2024", "MM/dd/yyyy", true, false, null },
-                    { new Guid("b93208d5-e3f9-4d7b-bbb2-c91806ae18fc"), new DateTime(2025, 2, 1, 17, 48, 30, 345, DateTimeKind.Utc).AddTicks(8953), "Belgian/European Date Format", "31/12/2024", "dd/MM/yyyy", true, false, null }
+                    { new Guid("5b26d283-805b-414c-8fbc-24d8e68199a8"), new DateTime(2025, 2, 4, 20, 5, 57, 666, DateTimeKind.Utc).AddTicks(7323), "ISO Date Format", "2024-12-31", "yyyy-MM-dd", true, false, null },
+                    { new Guid("621b649f-85a4-4ecb-8387-dd9a519134a9"), new DateTime(2025, 2, 4, 20, 5, 57, 666, DateTimeKind.Utc).AddTicks(7264), "Belgian/European Date Format", "31/12/2024", "dd/MM/yyyy", true, false, null },
+                    { new Guid("78831b46-548b-4581-b4a5-e24fc0757a15"), new DateTime(2025, 2, 4, 20, 5, 57, 666, DateTimeKind.Utc).AddTicks(7270), "US Date Format", "12/31/2024", "MM/dd/yyyy", true, false, null },
+                    { new Guid("8abdd52d-9b8c-4364-b202-19a140dbe39d"), new DateTime(2025, 2, 4, 20, 5, 57, 666, DateTimeKind.Utc).AddTicks(7267), "Belgian Date Format (Dot)", "31.12.2024", "dd.MM.yyyy", true, false, null }
                 });
 
             migrationBuilder.InsertData(
@@ -1137,47 +1112,76 @@ namespace ASafariM.Infrastructure.Migrations
                 columns: new[] { "Id", "CreatedAt", "Description", "Extension", "IsActive", "IsDefault", "MaxSizeInMB", "MimeType", "Name", "SupportsAnnotations", "SupportsEditing", "UpdatedAt" },
                 values: new object[,]
                 {
-                    { new Guid("095ec5d8-581b-48fb-b444-fb84b4ba10e2"), new DateTime(2025, 2, 1, 17, 48, 30, 345, DateTimeKind.Utc).AddTicks(8824), "Markdown text format", ".md", true, false, 10, "text/markdown", "Markdown", true, false, null },
-                    { new Guid("38077468-9446-4e69-9f4d-ef59ae4041eb"), new DateTime(2025, 2, 1, 17, 48, 30, 345, DateTimeKind.Utc).AddTicks(8821), "JavaScript Object Notation data file", ".json", true, false, 10, "application/json", "JSON", true, false, null },
-                    { new Guid("3b18c810-d159-4ebe-af61-66f892a3f50a"), new DateTime(2025, 2, 1, 17, 48, 30, 345, DateTimeKind.Utc).AddTicks(8817), "JavaScript source code file", ".js", true, false, 10, "application/javascript", "JavaScript", true, false, null },
-                    { new Guid("4d618819-ce9e-40ac-be5a-dd2326319f27"), new DateTime(2025, 2, 1, 17, 48, 30, 345, DateTimeKind.Utc).AddTicks(8795), "Simple text document format", ".txt", true, false, 10, "text/plain", "Plain Text", true, false, null },
-                    { new Guid("a17b81f4-384f-4037-96f6-5a7fd4fe3293"), new DateTime(2025, 2, 1, 17, 48, 30, 345, DateTimeKind.Utc).AddTicks(8810), "TypeScript source code file", ".ts", true, false, 10, "application/typescript", "TypeScript", true, false, null },
-                    { new Guid("f16b127c-b4d1-4938-b0f8-a5cb30994d75"), new DateTime(2025, 2, 1, 17, 48, 30, 345, DateTimeKind.Utc).AddTicks(8814), "TypeScript React component file", ".tsx", true, false, 10, "application/typescript+react", "TypeScript React", true, false, null }
+                    { new Guid("21a6b01c-6479-4275-a0ec-e7332704e59c"), new DateTime(2025, 2, 4, 20, 5, 57, 666, DateTimeKind.Utc).AddTicks(7192), "TypeScript React component file", ".tsx", true, false, 10, "application/typescript+react", "TypeScript React", true, false, null },
+                    { new Guid("35d52f56-8b91-45ef-9d34-1ee2e824d82b"), new DateTime(2025, 2, 4, 20, 5, 57, 666, DateTimeKind.Utc).AddTicks(7189), "TypeScript source code file", ".ts", true, false, 10, "application/typescript", "TypeScript", true, false, null },
+                    { new Guid("4906bdda-5f28-40ff-a620-d0eeb373dfcf"), new DateTime(2025, 2, 4, 20, 5, 57, 666, DateTimeKind.Utc).AddTicks(7199), "JavaScript Object Notation data file", ".json", true, false, 10, "application/json", "JSON", true, false, null },
+                    { new Guid("55b56323-4952-4c5a-ad55-840d6b487e07"), new DateTime(2025, 2, 4, 20, 5, 57, 666, DateTimeKind.Utc).AddTicks(7194), "JavaScript source code file", ".js", true, false, 10, "application/javascript", "JavaScript", true, false, null },
+                    { new Guid("87c16888-030f-44ed-a5f8-1aa76f0181f9"), new DateTime(2025, 2, 4, 20, 5, 57, 666, DateTimeKind.Utc).AddTicks(7183), "Simple text document format", ".txt", true, false, 10, "text/plain", "Plain Text", true, false, null },
+                    { new Guid("f53f6c0a-35b8-402c-be00-5bfd2107c826"), new DateTime(2025, 2, 4, 20, 5, 57, 666, DateTimeKind.Utc).AddTicks(7202), "Markdown text format", ".md", true, false, 10, "text/markdown", "Markdown", true, false, null }
                 });
 
             migrationBuilder.InsertData(
                 table: "PaginationSettings",
                 columns: new[] { "Id", "CreatedAt", "EnableInfiniteScroll", "IsActive", "IsDefault", "ItemsPerPage", "PageSizeOptions", "ShowFirstLastButtons", "ShowItemsCount", "ShowPageNumbers", "ShowPageSizeSelector", "UpdatedAt", "VisiblePageRange" },
-                values: new object[] { new Guid("b47cbac8-55f2-47e4-b14e-e0a7451ac858"), new DateTime(2025, 2, 1, 17, 48, 30, 345, DateTimeKind.Utc).AddTicks(8900), false, true, false, 10, "[10,20,50,100]", true, true, true, true, null, 5 });
+                values: new object[] { new Guid("40bdef81-9230-4cc6-900b-b16a7d8f44fd"), new DateTime(2025, 2, 4, 20, 5, 57, 666, DateTimeKind.Utc).AddTicks(7237), false, true, false, 10, "[10,20,50,100]", true, true, true, true, null, 5 });
 
             migrationBuilder.InsertData(
                 table: "Roles",
-                columns: new[] { "Id", "Description", "Name" },
+                columns: new[] { "Id", "CreatedAt", "CreatedBy", "Description", "Name", "UpdatedAt", "UpdatedBy" },
                 values: new object[,]
                 {
-                    { new Guid("287aa247-0789-49e0-953f-58d6484a6dd0"), "Admin role has full administrative privileges, except for application management.", "Admin" },
-                    { new Guid("75d5a158-b0ff-4640-91d8-0ba1e582d980"), "Guest role is the least privileged role. They can only view public articles.", "Guest" },
-                    { new Guid("b708454e-4758-413f-8908-8ccd1d715f31"), "User role with limited privileges. A user can create and manage their own tasks, projects, and content, and cannot edit other public articles than their own.", "User" },
-                    { new Guid("ca182bdc-3792-431c-a52d-150c43c345a4"), "Manages user interactions and content moderation. They can create and manage their own tasks, projects, and content, and can edit other public articles than their own.", "Moderator" },
-                    { new Guid("da9c4948-f48c-4429-b987-dada354ef2f1"), "Focuses on content creation and management without full administrative privileges. They can create and manage their own articles, but cannot edit other public articles than their own.", "Editor" },
-                    { new Guid("ecdb0854-30e8-45db-a3bf-3019dd1760ae"), "Has full control over the application and can manage all aspects.", "SuperAdmin" }
+                    { new Guid("1fe46922-c109-4bf2-b000-0921272598a4"), new DateTime(2025, 2, 4, 20, 5, 57, 666, DateTimeKind.Utc).AddTicks(7145), new Guid("00000000-0000-0000-0000-000000000000"), "Focuses on content creation and management without full administrative privileges. They can create and manage their own articles, but cannot edit other public articles than their own.", "Editor", null, null },
+                    { new Guid("8f7127e6-b35f-400f-81e3-3acc7951174f"), new DateTime(2025, 2, 4, 20, 5, 57, 666, DateTimeKind.Utc).AddTicks(7141), new Guid("00000000-0000-0000-0000-000000000000"), "User role with limited privileges. A user can create and manage their own tasks, projects, and content, and cannot edit other public articles than their own.", "User", null, null },
+                    { new Guid("9f4cb41d-9558-4d9e-a2a6-fa720848aac5"), new DateTime(2025, 2, 4, 20, 5, 57, 666, DateTimeKind.Utc).AddTicks(7143), new Guid("00000000-0000-0000-0000-000000000000"), "Guest role is the least privileged role. They can only view public articles.", "Guest", null, null },
+                    { new Guid("a4863714-4de7-496b-92c1-b965cdb7f171"), new DateTime(2025, 2, 4, 20, 5, 57, 666, DateTimeKind.Utc).AddTicks(7124), new Guid("00000000-0000-0000-0000-000000000000"), "Admin role has full administrative privileges, except for application management.", "Admin", null, null },
+                    { new Guid("ddcf50e9-1f56-41fa-9c08-98c588b797d0"), new DateTime(2025, 2, 4, 20, 5, 57, 666, DateTimeKind.Utc).AddTicks(7128), new Guid("00000000-0000-0000-0000-000000000000"), "Manages user interactions and content moderation. They can create and manage their own tasks, projects, and content, and can edit other public articles than their own.", "Moderator", null, null },
+                    { new Guid("fb09d102-7d1d-4b89-a369-0efb28c36907"), new DateTime(2025, 2, 4, 20, 5, 57, 666, DateTimeKind.Utc).AddTicks(7147), new Guid("00000000-0000-0000-0000-000000000000"), "Has full control over the application and can manage all aspects.", "SuperAdmin", null, null }
                 });
 
             migrationBuilder.InsertData(
                 table: "Tags",
-                columns: new[] { "Id", "Description", "Name", "PostId", "Slug" },
-                values: new object[] { new Guid("1c35b931-8441-499f-a899-5add6c54ecf7"), "Test Tag description", "Test Tag name", null, "test-tag-slug" });
+                columns: new[] { "Id", "CreatedAt", "Description", "Name", "PostId", "Slug", "UpdatedAt" },
+                values: new object[,]
+                {
+                    { new Guid("2236583b-17fe-4be6-a352-4c08b452b230"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Test Tag description", "Test Tag name", null, "test-tag-slug", null },
+                    { new Guid("b7606524-61a5-4f7e-83ba-1e161f80c1b3"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Test Tag description 2", "Test Tag name 2", null, "test-tag-slug-2", null },
+                    { new Guid("cfab2ef3-3aaf-42b6-a7f6-b0060da8e5a4"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Test Tag description 4", "Test Tag name 4", null, "test-tag-slug-4", null },
+                    { new Guid("d634ea1d-7bd9-41bc-9878-2dd191a0f11a"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Test Tag description 3", "Test Tag name 3", null, "test-tag-slug-3", null }
+                });
 
             migrationBuilder.InsertData(
                 table: "TimeZones",
                 columns: new[] { "Id", "CreatedAt", "DstOffset", "IsActive", "Name", "StandardName", "UpdatedAt", "UsesDaylightSaving", "UtcOffset" },
                 values: new object[,]
                 {
-                    { new Guid("2bbb02c3-450c-403e-8c09-c30d1d42b6d7"), new DateTime(2025, 2, 1, 17, 48, 30, 345, DateTimeKind.Utc).AddTicks(9126), "+01:00", true, "WET", "Western European Time", null, true, "+00:00" },
-                    { new Guid("78b75327-0cdc-4375-b3cd-fbf12e386f9d"), new DateTime(2025, 2, 1, 17, 48, 30, 345, DateTimeKind.Utc).AddTicks(9113), "+02:00", true, "CET", "Central European Time (Belgium)", null, true, "+01:00" },
-                    { new Guid("8e3fe821-c8a1-4582-b7c5-d853d51284ca"), new DateTime(2025, 2, 1, 17, 48, 30, 345, DateTimeKind.Utc).AddTicks(9129), "+03:00", true, "EET", "Eastern European Time", null, true, "+02:00" },
-                    { new Guid("c22a3ead-0d91-4bc7-a269-f4b25cb21793"), new DateTime(2025, 2, 1, 17, 48, 30, 345, DateTimeKind.Utc).AddTicks(9120), "+02:00", true, "CEST", "Central European Summer Time", null, true, "+02:00" },
-                    { new Guid("dad259aa-f545-4f25-a544-0153aeb79e1d"), new DateTime(2025, 2, 1, 17, 48, 30, 345, DateTimeKind.Utc).AddTicks(9123), "+02:00", true, "UTC", "Coordinated Universal Time", null, true, "+00:00" }
+                    { new Guid("4b888a63-8eb7-4600-8210-962cfa214e02"), new DateTime(2025, 2, 4, 20, 5, 57, 666, DateTimeKind.Utc).AddTicks(7419), "+03:00", true, "EET", "Eastern European Time", null, true, "+02:00" },
+                    { new Guid("64e76fbe-8524-420d-bafc-3f3db1c3bffd"), new DateTime(2025, 2, 4, 20, 5, 57, 666, DateTimeKind.Utc).AddTicks(7417), "+01:00", true, "WET", "Western European Time", null, true, "+00:00" },
+                    { new Guid("9fc93f4e-778a-418f-8dea-096da6e81b43"), new DateTime(2025, 2, 4, 20, 5, 57, 666, DateTimeKind.Utc).AddTicks(7409), "+02:00", true, "CET", "Central European Time (Belgium)", null, true, "+01:00" },
+                    { new Guid("c3ec7f8d-d928-48e5-81f8-c30bff3b0ae6"), new DateTime(2025, 2, 4, 20, 5, 57, 666, DateTimeKind.Utc).AddTicks(7413), "+02:00", true, "CEST", "Central European Summer Time", null, true, "+02:00" },
+                    { new Guid("e81d43c0-605f-4299-8fdf-1ae63ea0383d"), new DateTime(2025, 2, 4, 20, 5, 57, 666, DateTimeKind.Utc).AddTicks(7415), "+02:00", true, "UTC", "Coordinated Universal Time", null, true, "+00:00" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Topics",
+                columns: new[] { "Id", "CreatedAt", "CreatedBy", "Description", "Name", "ParentTopicId", "Slug", "UpdatedAt", "UpdatedBy" },
+                values: new object[,]
+                {
+                    { new Guid("21a49242-f262-44f4-b343-2561b24317ea"), new DateTime(2025, 2, 4, 20, 5, 57, 666, DateTimeKind.Utc).AddTicks(7575), new Guid("00000000-0000-0000-0000-000000000000"), "Test Topic description 3", "Test Topic name 3", null, "test-topic-slug-3", null, null },
+                    { new Guid("3fa85f64-5717-4562-b3fc-2c963f66afa6"), new DateTime(2025, 2, 4, 20, 5, 57, 666, DateTimeKind.Utc).AddTicks(7561), new Guid("00000000-0000-0000-0000-000000000000"), "Test Topic description", "Test Topic name", null, "test-topic-slug", null, null }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Id", "Biography", "ConcurrencyStamp", "CreatedAt", "CreatedBy", "DateOfBirth", "DeletedAt", "DeletedBy", "Email", "EmailConfirmed", "FailedLoginAttempts", "FirstName", "IsActive", "IsAdmin", "IsDeleted", "IsLockedOut", "LastLogin", "LastName", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PenName", "PhoneNumber", "PhoneNumberConfirmed", "PostId", "PostId1", "ProfilePicture", "Remark", "SecurityStamp", "UpdatedAt", "UpdatedBy", "UserId", "UserName", "Website" },
+                values: new object[] { new Guid("0de748a4-9c15-4d2f-bda5-7566c31da3c4"), null, "ali@asafarim.com", new DateTime(2025, 2, 4, 20, 5, 57, 666, DateTimeKind.Utc).AddTicks(6851), new Guid("fe69cd68-dff4-4213-aac5-c13fa06859e6"), new DateTime(1975, 7, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, "ali@asafarim.com", false, 0, "Ali", true, true, false, false, new DateTime(2025, 2, 4, 20, 5, 57, 666, DateTimeKind.Utc).AddTicks(6845), "Safari", null, "", "ali@asafarim.com", "m7ihFmnrEpIIJEgVEX+SM7YxcMXf0hbpciQjhE53ZplNJQw8CT/JufmeUV+AQk3G", null, null, false, null, null, "https://example.com/profile.jpg", null, "ali@asafarim.com", new DateTime(2025, 2, 4, 20, 5, 57, 666, DateTimeKind.Utc).AddTicks(6853), new Guid("790c88fd-9fc1-4a86-91a9-e3f37ce57822"), null, null, null });
+
+            migrationBuilder.InsertData(
+                table: "Topics",
+                columns: new[] { "Id", "CreatedAt", "CreatedBy", "Description", "Name", "ParentTopicId", "Slug", "UpdatedAt", "UpdatedBy" },
+                values: new object[,]
+                {
+                    { new Guid("11904e37-4d3b-4516-a1cd-849df20ce6b7"), new DateTime(2025, 2, 4, 20, 5, 57, 666, DateTimeKind.Utc).AddTicks(7579), new Guid("00000000-0000-0000-0000-000000000000"), "Test Topic description 4", "Test Topic name 4", new Guid("3fa85f64-5717-4562-b3fc-2c963f66afa6"), "test-topic-slug-4", null, null },
+                    { new Guid("cb73ed73-8488-4d4f-a5c7-063b71d09987"), new DateTime(2025, 2, 4, 20, 5, 57, 666, DateTimeKind.Utc).AddTicks(7571), new Guid("00000000-0000-0000-0000-000000000000"), "Test Topic description 2", "Test Topic name 2", new Guid("3fa85f64-5717-4562-b3fc-2c963f66afa6"), "test-topic-slug-2", null, null }
                 });
 
             migrationBuilder.CreateIndex(
@@ -1302,41 +1306,6 @@ namespace ASafariM.Infrastructure.Migrations
                 column: "TagId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Preferences_AccessibilityId",
-                table: "Preferences",
-                column: "AccessibilityId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Preferences_GeographyId",
-                table: "Preferences",
-                column: "GeographyId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Preferences_LanguageId",
-                table: "Preferences",
-                column: "LanguageId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Preferences_MiscellaneousId",
-                table: "Preferences",
-                column: "MiscellaneousId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Preferences_NotificationId",
-                table: "Preferences",
-                column: "NotificationId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Preferences_PrivacyId",
-                table: "Preferences",
-                column: "PrivacyId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Preferences_ThemeId",
-                table: "Preferences",
-                column: "ThemeId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_ProgressHistories_ProjectId",
                 table: "ProgressHistories",
                 column: "ProjectId",
@@ -1416,17 +1385,6 @@ namespace ASafariM.Infrastructure.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserPreferences_PreferenceId",
-                table: "UserPreferences",
-                column: "PreferenceId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserPreferences_UserId_PreferenceId",
-                table: "UserPreferences",
-                columns: new[] { "UserId", "PreferenceId" },
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_UserRoles_RoleId",
                 table: "UserRoles",
                 column: "RoleId");
@@ -1474,6 +1432,9 @@ namespace ASafariM.Infrastructure.Migrations
                 table: "Projects");
 
             migrationBuilder.DropTable(
+                name: "AccessibilityPreferences");
+
+            migrationBuilder.DropTable(
                 name: "Attachment");
 
             migrationBuilder.DropTable(
@@ -1481,6 +1442,9 @@ namespace ASafariM.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "Comment");
+
+            migrationBuilder.DropTable(
+                name: "GeographicalPreferences");
 
             migrationBuilder.DropTable(
                 name: "Link");
@@ -1492,7 +1456,16 @@ namespace ASafariM.Infrastructure.Migrations
                 name: "MarkdownFileUsers");
 
             migrationBuilder.DropTable(
+                name: "MiscellaneousPreferences");
+
+            migrationBuilder.DropTable(
+                name: "NotificationPreferences");
+
+            migrationBuilder.DropTable(
                 name: "PostTags");
+
+            migrationBuilder.DropTable(
+                name: "PrivacyPreferences");
 
             migrationBuilder.DropTable(
                 name: "ProgressHistories");
@@ -1504,43 +1477,10 @@ namespace ASafariM.Infrastructure.Migrations
                 name: "SitemapItemTopic");
 
             migrationBuilder.DropTable(
-                name: "UserPreferences");
+                name: "ThemePreferences");
 
             migrationBuilder.DropTable(
                 name: "UserRoles");
-
-            migrationBuilder.DropTable(
-                name: "Tags");
-
-            migrationBuilder.DropTable(
-                name: "SitemapItems");
-
-            migrationBuilder.DropTable(
-                name: "Topics");
-
-            migrationBuilder.DropTable(
-                name: "Preferences");
-
-            migrationBuilder.DropTable(
-                name: "Roles");
-
-            migrationBuilder.DropTable(
-                name: "AccessibilityPreferences");
-
-            migrationBuilder.DropTable(
-                name: "GeographicalPreferences");
-
-            migrationBuilder.DropTable(
-                name: "MiscellaneousPreferences");
-
-            migrationBuilder.DropTable(
-                name: "NotificationPreferences");
-
-            migrationBuilder.DropTable(
-                name: "PrivacyPreferences");
-
-            migrationBuilder.DropTable(
-                name: "ThemePreferences");
 
             migrationBuilder.DropTable(
                 name: "Countries");
@@ -1561,7 +1501,19 @@ namespace ASafariM.Infrastructure.Migrations
                 name: "PaginationSettings");
 
             migrationBuilder.DropTable(
+                name: "Tags");
+
+            migrationBuilder.DropTable(
+                name: "SitemapItems");
+
+            migrationBuilder.DropTable(
+                name: "Topics");
+
+            migrationBuilder.DropTable(
                 name: "LanguagePreferences");
+
+            migrationBuilder.DropTable(
+                name: "Roles");
 
             migrationBuilder.DropTable(
                 name: "Posts");

@@ -16,7 +16,6 @@ namespace ASafariM.Application.Mappings
             CreateMap<PrivacyPreference, PrivacyPreferenceDto>();
             CreateMap<AccessibilityPreference, AccessibilityPreferenceDto>();
             CreateMap<MiscellaneousPreference, MiscellaneousPreferenceDto>();
-            CreateMap<Preference, PreferenceDto>();
 
             CreateMap<User, UserInfoDto>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
@@ -58,8 +57,7 @@ namespace ASafariM.Application.Mappings
                 )
                 .ForMember(dest => dest.DateOfBirth, opt => opt.MapFrom(src => src.DateOfBirth))
                 .ForMember(dest => dest.Remark, opt => opt.MapFrom(src => src.Remark))
-                .ForMember(dest => dest.Preferences, opt => opt.MapFrom(src => src.Preferences))
-                .ReverseMap();
+               .ReverseMap();
 
             CreateMap<UserInfoDto, UserDto>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
@@ -79,58 +77,6 @@ namespace ASafariM.Application.Mappings
                     opt => opt.MapFrom(src => src.ProfilePicture)
                 )
                 .ForMember(dest => dest.DateOfBirth, opt => opt.MapFrom(src => src.DateOfBirth))
-                .ReverseMap();
-
-            CreateMap<UserPreference, UserPreferenceDto>()
-                .ForMember(
-                    dest => dest.Id,
-                    opt =>
-                        opt.MapFrom(src => src.Preference != null ? src.Preference.Id : Guid.Empty)
-                )
-                .ForMember(
-                    dest => dest.Theme,
-                    opt => opt.MapFrom(src => src.Preference != null ? src.Preference.Theme : null)
-                )
-                .ForMember(
-                    dest => dest.Geography,
-                    opt =>
-                        opt.MapFrom(src => src.Preference != null ? src.Preference.Geography : null)
-                )
-                .ForMember(
-                    dest => dest.Notification,
-                    opt =>
-                        opt.MapFrom(src =>
-                            src.Preference != null ? src.Preference.Notification : null
-                        )
-                )
-                .ForMember(
-                    dest => dest.Language,
-                    opt =>
-                        opt.MapFrom(src => src.Preference != null ? src.Preference.Language : null)
-                )
-                .ForMember(
-                    dest => dest.Privacy,
-                    opt =>
-                        opt.MapFrom(src => src.Preference != null ? src.Preference.Privacy : null)
-                )
-                .ForMember(
-                    dest => dest.Accessibility,
-                    opt =>
-                        opt.MapFrom(src =>
-                            src.Preference != null ? src.Preference.Accessibility : null
-                        )
-                )
-                .ForMember(
-                    dest => dest.Miscellaneous,
-                    opt =>
-                        opt.MapFrom(src =>
-                            src.Preference != null ? src.Preference.Miscellaneous : null
-                        )
-                )
-                .ForMember(
-                    dest => dest.DateCreated,
-                    opt => opt.MapFrom(src => src.Preference.CreatedAt)
-                )
                 .ReverseMap();
 
             CreateMap<Role, UserRoleDto>()
