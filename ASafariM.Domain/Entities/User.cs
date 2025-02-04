@@ -61,6 +61,7 @@ namespace ASafariM.Domain.Entities
 
         // Navigation properties for preferences
         public ICollection<UserPreference> Preferences { get; set; } = [];
+        public UserPreference Preference { get; set; } = null; // Navigation property for the user's preference
 
         // Author-specific properties
         [MaxLength(50)]

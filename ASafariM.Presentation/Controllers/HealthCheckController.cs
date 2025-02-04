@@ -294,7 +294,9 @@ namespace ASafariM.Presentation.Controllers
                         var gitDir = Path.GetDirectoryName(gitHeadPath); // Path to .git directory
                         if (gitDir == null)
                         {
-                            _logger.LogWarning("Could not determine git directory from path: {gitHeadPath}");
+                            _logger.LogWarning(
+                                "Could not determine git directory from path: {gitHeadPath}"
+                            );
                             continue;
                         }
 

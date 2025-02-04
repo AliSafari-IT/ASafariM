@@ -43,11 +43,13 @@ namespace ASafariM.Test.InfrastructureTests.Repository
             };
             await _userRepository.AddUserAsync(user);
 
+            Console.WriteLine($"User Email: {user.Email}, User ID: {user.Id}");
+
             // Act
             var result = await _userRepository.GetUserByEmailAsync("test@example.com");
 
             // Assert
-            Assert.IsNotNull(result);
+            Assert.IsNotNull(result, "User should not be null after being added.");
             Assert.AreEqual(user.Email, result.Email);
         }
 
@@ -74,11 +76,13 @@ namespace ASafariM.Test.InfrastructureTests.Repository
             };
             await _userRepository.AddUserAsync(user);
 
+            Console.WriteLine($"User Email: {user.Email}, User ID: {user.Id}");
+
             // Act
             var result = await _userRepository.GetUserByIdAsync(user.Id);
 
             // Assert
-            Assert.IsNotNull(result);
+            Assert.IsNotNull(result, "User should not be null after being added.");
             Assert.AreEqual(user.Id, result.Id);
         }
 
@@ -111,6 +115,9 @@ namespace ASafariM.Test.InfrastructureTests.Repository
             await _userRepository.AddUserAsync(user1);
             await _userRepository.AddUserAsync(user2);
 
+            Console.WriteLine($"User1 Email: {user1.Email}, User1 ID: {user1.Id}");
+            Console.WriteLine($"User2 Email: {user2.Email}, User2 ID: {user2.Id}");
+
             // Act
             var result = await _userRepository.GetAllUsersAsync();
 
@@ -129,12 +136,14 @@ namespace ASafariM.Test.InfrastructureTests.Repository
                 SecurityStamp = Guid.NewGuid().ToString(),
             };
 
+            Console.WriteLine($"User Email: {user.Email}, User ID: {user.Id}");
+
             // Act
             await _userRepository.AddUserAsync(user);
 
             // Assert
             var result = await _userRepository.GetUserByEmailAsync(user.Email);
-            Assert.IsNotNull(result);
+            Assert.IsNotNull(result, "User should not be null after being added.");
         }
 
         [TestMethod]
@@ -150,12 +159,14 @@ namespace ASafariM.Test.InfrastructureTests.Repository
             await _userRepository.AddUserAsync(user);
             user.Email = "updated@example.com";
 
+            Console.WriteLine($"User Email: {user.Email}, User ID: {user.Id}");
+
             // Act
             await _userRepository.UpdateUserAsync(user);
 
             // Assert
             var result = await _userRepository.GetUserByEmailAsync(user.Email);
-            Assert.IsNotNull(result);
+            Assert.IsNotNull(result, "User should not be null after being updated.");
             Assert.AreEqual(user.Email, result.Email);
         }
 
@@ -170,6 +181,8 @@ namespace ASafariM.Test.InfrastructureTests.Repository
                 SecurityStamp = Guid.NewGuid().ToString(),
             };
             await _userRepository.AddUserAsync(user);
+
+            Console.WriteLine($"User Email: {user.Email}, User ID: {user.Id}");
 
             // Act
             await _userRepository.DeleteUserAsync(user.Id);
@@ -192,11 +205,13 @@ namespace ASafariM.Test.InfrastructureTests.Repository
             };
             await _userRepository.AddUserAsync(user);
 
+            Console.WriteLine($"User Email: {user.Email}, User ID: {user.Id}");
+
             // Act
             var result = await _userRepository.GetUserByUserNameAsync(user.UserName);
 
             // Assert
-            Assert.IsNotNull(result);
+            Assert.IsNotNull(result, "User should not be null after being added.");
             Assert.AreEqual(user.UserName, result.UserName);
         }
 
@@ -213,11 +228,13 @@ namespace ASafariM.Test.InfrastructureTests.Repository
             };
             await _userRepository.AddUserAsync(user);
 
+            Console.WriteLine($"User Email: {user.Email}, User ID: {user.Id}");
+
             // Act
             var result = await _userRepository.GetUserByPhoneNumberAsync(user.PhoneNumber);
 
             // Assert
-            Assert.IsNotNull(result);
+            Assert.IsNotNull(result, "User should not be null after being added.");
             Assert.AreEqual(user.PhoneNumber, result.PhoneNumber);
         }
 
@@ -237,6 +254,8 @@ namespace ASafariM.Test.InfrastructureTests.Repository
             var role2 = new Role { Name = "Role2", Description = "Test Role 2" };
             _dbContext.Roles.AddRange(role1, role2);
             await _dbContext.SaveChangesAsync();
+
+            Console.WriteLine($"User Email: {user.Email}, User ID: {user.Id}");
 
             // Act
             await _userRepository.AssignRolesToUserAsync(user.Id, new[] { role1.Id, role2.Id });
@@ -259,6 +278,8 @@ namespace ASafariM.Test.InfrastructureTests.Repository
                 SecurityStamp = Guid.NewGuid().ToString(),
             };
             await _userRepository.AddUserAsync(user);
+
+            Console.WriteLine($"User Email: {user.Email}, User ID: {user.Id}");
 
             // Act
             await _userRepository.AssignRolesToUserAsync(user.Id, new[] { Guid.NewGuid() });
@@ -284,6 +305,8 @@ namespace ASafariM.Test.InfrastructureTests.Repository
             await _dbContext.SaveChangesAsync();
 
             await _userRepository.AssignRolesToUserAsync(user.Id, new[] { role1.Id, role2.Id });
+
+            Console.WriteLine($"User Email: {user.Email}, User ID: {user.Id}");
 
             // Act
             await _userRepository.RemoveRolesFromUserAsync(user.Id, new[] { role1.Id });
@@ -313,6 +336,8 @@ namespace ASafariM.Test.InfrastructureTests.Repository
 
             await _userRepository.AssignRolesToUserAsync(user.Id, new[] { role1.Id, role2.Id });
 
+            Console.WriteLine($"User Email: {user.Email}, User ID: {user.Id}");
+
             // Act
             var userRoles = await _userRepository.GetRolesByUserIdAsync(user.Id);
 
@@ -333,6 +358,8 @@ namespace ASafariM.Test.InfrastructureTests.Repository
                 SecurityStamp = Guid.NewGuid().ToString(),
             };
             await _userRepository.AddUserAsync(user);
+
+            Console.WriteLine($"User Email: {user.Email}, User ID: {user.Id}");
 
             // Act
             var userRoles = await _userRepository.GetRolesByUserIdAsync(user.Id);

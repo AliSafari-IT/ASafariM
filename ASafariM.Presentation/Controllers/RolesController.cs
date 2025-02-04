@@ -11,7 +11,7 @@ namespace ASafariM.Presentation.Controllers
     [ApiController]
     public class RolesController : ControllerBase
     {
-        private readonly RoleService _roleService;
+        private readonly RoleService? _roleService = null;
 
         public RolesController(RoleService roleService)
         {
