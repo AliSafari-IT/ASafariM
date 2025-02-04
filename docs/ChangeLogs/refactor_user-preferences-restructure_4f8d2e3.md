@@ -1,6 +1,6 @@
 # Refactor: Restructure User Preferences System
 
-**Date**: 04-02-2025
+Date: 04-02-2025
 
 ## Description of Changes
 
