@@ -6,8 +6,8 @@ using System.Linq;
 using System.Threading;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using MySql.Data.MySqlClient;
+using Serilog;
 
 namespace ASafariM.Presentation.Controllers
 {
@@ -22,15 +22,10 @@ namespace ASafariM.Presentation.Controllers
     [Route("api/health")]
     public class HealthCheckController : ControllerBase
     {
-        private readonly ILogger<HealthCheckController> _logger;
         private readonly string _connectionString;
 
-        public HealthCheckController(
-            ILogger<HealthCheckController> logger,
-            IConfiguration configuration
-        )
+        public HealthCheckController(IConfiguration configuration)
         {
-            _logger = logger;
             _connectionString = configuration.GetConnectionString("DefaultConnection");
         }
 
@@ -39,6 +34,7 @@ namespace ASafariM.Presentation.Controllers
         {
             try
             {
+                Log.Information("Starting health check");
                 var healthStatus = new
                 {
                     status = "healthy",
@@ -63,12 +59,12 @@ namespace ASafariM.Presentation.Controllers
                     activeThreads = GetActiveThreads(),
                 };
 
-                _logger.LogInformation("Health check successful.");
+                Log.Information("Health check completed successfully");
                 return Ok(healthStatus);
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Health check failed: {ex.Message}");
+                Log.Error(ex, "Health check failed");
                 return StatusCode(500, new { status = "unhealthy", error = ex.Message });
             }
         }
@@ -77,13 +73,14 @@ namespace ASafariM.Presentation.Controllers
         {
             try
             {
-                var uptime =
-                    DateTime.UtcNow - Process.GetCurrentProcess().StartTime.ToUniversalTime();
-                return uptime.ToString(@"dd\.hh\:mm\:ss");
+                var uptime = DateTime.UtcNow - Process.GetCurrentProcess().StartTime.ToUniversalTime();
+                var uptimeStr = uptime.ToString(@"dd\.hh\:mm\:ss");
+                Log.Debug("System uptime: {Uptime}", uptimeStr);
+                return uptimeStr;
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Failed to retrieve uptime: {ex.Message}");
+                Log.Error(ex, "Failed to retrieve uptime");
                 return "Unknown";
             }
         }
@@ -93,17 +90,20 @@ namespace ASafariM.Presentation.Controllers
             try
             {
                 var process = Process.GetCurrentProcess();
-                return new
+                var memoryInfo = new
                 {
                     totalAllocated = $"{GC.GetTotalMemory(false) / 1024 / 1024} MB",
                     used = $"{process.PrivateMemorySize64 / 1024 / 1024} MB",
                     workingSet = $"{process.WorkingSet64 / 1024 / 1024} MB",
                     peakPagedMemory = $"{process.PeakPagedMemorySize64 / 1024 / 1024} MB",
                 };
+
+                Log.Debug("Memory usage: {@MemoryInfo}", memoryInfo);
+                return memoryInfo;
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Failed to retrieve memory usage: {ex.Message}");
+                Log.Error(ex, "Failed to retrieve memory usage");
                 return new { error = "Memory usage could not be retrieved" };
             }
         }
@@ -122,13 +122,14 @@ namespace ASafariM.Presentation.Controllers
                 var endTime = DateTime.UtcNow;
                 var cpuUsedMs = (endCpuUsage - startCpuUsage).TotalMilliseconds;
                 var elapsedMs = (endTime - startTime).TotalMilliseconds;
-                var cpuUsage = (cpuUsedMs / elapsedMs) * 100;
+                var cpuUsage = Math.Round((cpuUsedMs / elapsedMs) * 100, 2);
 
-                return $"{Math.Round(cpuUsage, 2)} %";
+                Log.Debug("CPU usage: {CpuUsage}%", cpuUsage);
+                return $"{cpuUsage} %";
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Failed to retrieve CPU usage: {ex.Message}");
+                Log.Error(ex, "Failed to retrieve CPU usage");
                 return "Unknown";
             }
         }
@@ -138,18 +139,24 @@ namespace ASafariM.Presentation.Controllers
             try
             {
                 var drive = DriveInfo.GetDrives().FirstOrDefault(d => d.IsReady);
-                return drive != null
-                    ? new
+                if (drive != null)
+                {
+                    var diskInfo = new
                     {
                         drive.Name,
                         totalSpace = $"{drive.TotalSize / 1024 / 1024 / 1024} GB",
                         freeSpace = $"{drive.TotalFreeSpace / 1024 / 1024 / 1024} GB",
-                    }
-                    : "Drive not available";
+                    };
+                    Log.Debug("Disk space info: {@DiskInfo}", diskInfo);
+                    return diskInfo;
+                }
+                
+                Log.Warning("No ready drives found");
+                return "Drive not available";
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Failed to retrieve disk space: {ex.Message}");
+                Log.Error(ex, "Failed to retrieve disk space");
                 return "Unknown";
             }
         }
@@ -158,26 +165,24 @@ namespace ASafariM.Presentation.Controllers
         {
             try
             {
-                return new
+                var envDetails = new
                 {
                     machineName = Environment.MachineName,
                     osVersion = Environment.OSVersion.ToString(),
-                    frameworkVersion = System
-                        .Runtime
-                        .InteropServices
-                        .RuntimeInformation
-                        .FrameworkDescription,
+                    frameworkVersion = System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription,
                     processArchitecture = System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture.ToString(),
-                    environmentVariables = Environment
-                        .GetEnvironmentVariables()
+                    environmentVariables = Environment.GetEnvironmentVariables()
                         .Keys.Cast<string>()
                         .Take(5)
                         .ToDictionary(k => k, k => Environment.GetEnvironmentVariable(k)),
                 };
+
+                Log.Debug("Environment details: {@EnvDetails}", envDetails);
+                return envDetails;
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Failed to retrieve environment details: {ex.Message}");
+                Log.Error(ex, "Failed to retrieve environment details");
                 return "Unknown";
             }
         }
@@ -186,11 +191,13 @@ namespace ASafariM.Presentation.Controllers
         {
             try
             {
-                return new { threadCount = Process.GetCurrentProcess().Threads.Count };
+                var threadCount = Process.GetCurrentProcess().Threads.Count;
+                Log.Debug("Active threads: {ThreadCount}", threadCount);
+                return new { threadCount };
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Failed to retrieve thread count: {ex.Message}");
+                Log.Error(ex, "Failed to retrieve thread count");
                 return "Unknown";
             }
         }
@@ -199,9 +206,7 @@ namespace ASafariM.Presentation.Controllers
         {
             if (string.IsNullOrEmpty(_connectionString))
             {
-                _logger.LogError(
-                    "Database health check failed: Connection string is not configured"
-                );
+                Log.Error("Database health check failed: Connection string is not configured");
                 return "unhealthy (no connection string)";
             }
 
@@ -212,11 +217,12 @@ namespace ASafariM.Presentation.Controllers
                     // First try to connect
                     try
                     {
+                        Log.Debug("Attempting to open database connection");
                         connection.Open();
                     }
                     catch (Exception ex)
                     {
-                        _logger.LogError($"Database connection failed: {ex.Message}");
+                        Log.Error(ex, "Database connection failed");
                         return $"unhealthy (connection failed)";
                     }
 
@@ -229,38 +235,40 @@ namespace ASafariM.Presentation.Controllers
                             command.CommandTimeout = 5; // 5 seconds timeout
                             command.ExecuteScalar();
                         }
-                        _logger.LogInformation("Database health check successful");
+                        Log.Information("Database health check successful");
                         return "healthy";
                     }
                     catch (Exception ex)
                     {
-                        _logger.LogError($"Database query failed: {ex.Message}");
+                        Log.Error(ex, "Database query failed");
                         return $"unhealthy (query failed)";
                     }
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Database health check failed: {ex.Message}");
+                Log.Error(ex, "Database health check failed with general error");
                 return $"unhealthy (general error)";
             }
         }
 
         private string CheckCacheHealth()
         {
-            // Placeholder: Implement real cache connection check
+            Log.Debug("Cache health check not implemented");
             return "healthy";
         }
 
         private string CheckSessionHealth()
         {
-            // Placeholder: Implement session store check
+            Log.Debug("Session health check not implemented");
             return "healthy";
         }
 
         private string GetBuildDate()
         {
-            return DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            var date = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            Log.Debug("Build date: {BuildDate}", date);
+            return date;
         }
 
         private string GetGitCommitHash()
@@ -279,13 +287,11 @@ namespace ASafariM.Presentation.Controllers
                     .Select(p => Path.Combine(p, ".git", "HEAD"))
                     .Where(p => System.IO.File.Exists(p));
 
-                _logger.LogInformation(
-                    $"Searching for git info in: {string.Join(", ", possiblePaths)}"
-                );
+                Log.Debug("Searching for git info in: {Paths}", string.Join(", ", possiblePaths));
 
                 foreach (var gitHeadPath in possiblePaths)
                 {
-                    _logger.LogInformation($"Checking git path: {gitHeadPath}");
+                    Log.Debug("Checking git path: {GitPath}", gitHeadPath);
                     var refPath = System.IO.File.ReadAllText(gitHeadPath).Trim();
 
                     if (refPath.StartsWith("ref: "))
@@ -294,16 +300,14 @@ namespace ASafariM.Presentation.Controllers
                         var gitDir = Path.GetDirectoryName(gitHeadPath); // Path to .git directory
                         if (gitDir == null)
                         {
-                            _logger.LogWarning(
-                                "Could not determine git directory from path: {gitHeadPath}"
-                            );
+                            Log.Warning("Could not determine git directory from path: {GitPath}", gitHeadPath);
                             continue;
                         }
 
                         var branchRef = refPath.Substring(5).Trim(); // Remove "ref: "
                         if (string.IsNullOrEmpty(branchRef))
                         {
-                            _logger.LogWarning("Branch reference is empty");
+                            Log.Warning("Branch reference is empty");
                             continue;
                         }
 
@@ -312,7 +316,7 @@ namespace ASafariM.Presentation.Controllers
                         if (System.IO.File.Exists(commitPath))
                         {
                             var hash = System.IO.File.ReadAllText(commitPath).Trim();
-                            _logger.LogInformation($"Found commit hash in {commitPath}: {hash}");
+                            Log.Debug("Found commit hash in {Path}: {Hash}", commitPath, hash);
                             return hash;
                         }
 
@@ -321,16 +325,16 @@ namespace ASafariM.Presentation.Controllers
                         if (System.IO.File.Exists(commitPath))
                         {
                             var hash = System.IO.File.ReadAllText(commitPath).Trim();
-                            _logger.LogInformation($"Found commit hash in refs: {hash}");
+                            Log.Debug("Found commit hash in refs: {Hash}", hash);
                             return hash;
                         }
 
-                        _logger.LogWarning($"Could not find commit file at {commitPath}");
+                        Log.Warning("Could not find commit file at {Path}", commitPath);
                     }
                     else
                     {
                         // It's a direct commit hash
-                        _logger.LogInformation($"Found direct commit hash: {refPath}");
+                        Log.Debug("Found direct commit hash: {Hash}", refPath);
                         return refPath;
                     }
                 }
@@ -339,22 +343,23 @@ namespace ASafariM.Presentation.Controllers
                 var envCommit = Environment.GetEnvironmentVariable("GIT_COMMIT");
                 if (!string.IsNullOrEmpty(envCommit))
                 {
-                    _logger.LogInformation($"Found commit hash from environment: {envCommit}");
+                    Log.Debug("Found commit hash from environment: {Hash}", envCommit);
                     return envCommit;
                 }
 
-                _logger.LogWarning("Could not find git commit hash in any location");
+                Log.Warning("Could not find git commit hash in any location");
                 return "Unknown";
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Failed to retrieve Git commit hash: {ex.Message}");
+                Log.Error(ex, "Failed to retrieve Git commit hash");
                 return "Unknown";
             }
         }
 
         private string GetGitBranchName()
         {
+            Log.Debug("Using hardcoded branch name: main");
             return "main"; // Change this dynamically if needed
         }
     }

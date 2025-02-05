@@ -5,7 +5,8 @@ using ASafariM.Domain.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using Serilog;
 
 namespace ASafariM.Presentation.Controllers
 {
@@ -14,35 +15,26 @@ namespace ASafariM.Presentation.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IUserService _userService;
-        private readonly ILogger<UsersController> _logger;
-
-        // mapper
         private readonly IMapper _mapper;
 
-        public UsersController(
-            IUserService userService,
-            ILogger<UsersController> logger,
-            IMapper mapper
-        )
+        public UsersController(IUserService userService, IMapper mapper)
         {
             _userService = userService;
-            _logger = logger;
             _mapper = mapper;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAllUsers()
         {
-            _logger.LogInformation("Getting all users");
             try
             {
                 var users = await _userService.GetAllUsersAsync();
-                _logger.LogInformation($"Successfully retrieved {users.Count()} users");
+                Log.Information("Total users successfully retrieved: {Total}", users.Count());
                 return Ok(users);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error getting all users");
+                Log.Error(ex, "Error getting all users");
                 return StatusCode(500, "An error occurred while retrieving users");
             }
         }
@@ -50,28 +42,32 @@ namespace ASafariM.Presentation.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateUser([FromBody] CreateUserCommand command)
         {
+            Log.Information("Attempting to create user");
+
             if (!ModelState.IsValid)
             {
+                Log.Warning("Invalid model state for user creation");
                 return BadRequest(ModelState);
             }
 
             try
             {
                 await _userService.CreateUserAsync(command);
+                Log.Information("User successfully created");
                 return CreatedAtAction(nameof(GetAllUsers), null);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error creating user");
+                Log.Error(ex, "Error creating user");
                 return StatusCode(500, "Internal server error");
             }
         }
 
         [HttpPost("admin")]
-        public async Task<IActionResult> CreateUserByAdmin(
-            [FromBody] CreateUserByAdminCommand command
-        )
+        public async Task<IActionResult> CreateUserByAdmin([FromBody] CreateUserByAdminCommand command)
         {
+            Log.Information("Attempting to create user by admin: {@Command}", command);
+            
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -84,112 +80,170 @@ namespace ASafariM.Presentation.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error creating user by admin");
+                Log.Error(ex, "Error creating user by admin");
                 return StatusCode(500, "Internal server error");
             }
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateUser(
-            [FromRoute] Guid id,
-            [FromBody] UpdateUserCommand command
-        )
+        public async Task<IActionResult> UpdateUser([FromRoute] Guid id, [FromBody] UpdateUserCommand command)
         {
+            Log.Information("Attempting to update user with ID: {UserId}", id);
+
             if (!ModelState.IsValid)
             {
-                // Return 400 with the validation errors
+                Log.Warning("Invalid model state for user update. ID: {UserId}", id);
                 return BadRequest(ModelState);
             }
 
-            // Ensure the ID in the route matches the command
             if (id != command.Id)
             {
+                Log.Warning(
+                    "ID mismatch between route ({RouteId}) and command ({CommandId})",
+                    id,
+                    command.Id
+                );
                 return BadRequest("ID mismatch between route and command");
             }
 
-            var userUpdated = await _userService.UpdateUserAsync(command);
-            if (userUpdated == null)
-                return NotFound();
+            try
+            {
+                var userUpdated = await _userService.UpdateUserAsync(command);
+                if (userUpdated == null)
+                {
+                    Log.Warning("User not found for update. ID: {UserId}", id);
+                    return NotFound();
+                }
 
-            return Ok(userUpdated);
+                Log.Information("User successfully updated. ID: {UserId}", id);
+                return Ok(userUpdated);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Error updating user. ID: {UserId}", id);
+                return StatusCode(500, "An error occurred while updating the user");
+            }
         }
 
         [HttpPut("admin/{id}")]
-        public async Task<IActionResult> UpdateUserByAdmin(
-            [FromRoute] Guid id,
-            [FromBody] UpdateUserByAdminCommand command
-        )
+        public async Task<IActionResult> UpdateUserByAdmin([FromRoute] Guid id, [FromBody] UpdateUserByAdminCommand command)
         {
+            Log.Information("Attempting to update user by admin. User ID: {UserId}", id);
+
             if (id != command.Id)
+            {
+                Log.Warning(
+                    "ID mismatch between route ({RouteId}) and command ({CommandId})",
+                    id,
+                    command.Id
+                );
                 return BadRequest("ID mismatch between route and command");
+            }
 
-            var userUpdated = await _userService.UpdateUserByAdminAsync(command);
-            if (userUpdated == null)
-                return NotFound();
+            try
+            {
+                var userUpdated = await _userService.UpdateUserByAdminAsync(command);
+                if (userUpdated == null)
+                {
+                    Log.Warning("User not found for admin update. ID: {UserId}", id);
+                    return NotFound();
+                }
 
-            return Ok(userUpdated);
+                Log.Information("User successfully updated by admin. ID: {UserId}", id);
+                return Ok(userUpdated);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Error updating user by admin. ID: {UserId}", id);
+                return StatusCode(500, "An error occurred while updating the user");
+            }
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser(
-            [FromRoute] Guid id,
-            [FromBody] DeleteUserCommand command
-        )
+        public async Task<IActionResult> DeleteUser([FromRoute] Guid id, [FromBody] DeleteUserCommand command)
         {
-            _logger.LogInformation("Attempting to delete user with ID: {UserId}", id);
+            Log.Information("Attempting to delete user with ID: {UserId}", id);
 
             if (command == null || string.IsNullOrEmpty(command.Password))
             {
+                Log.Warning("Password is required for user deletion. ID: {UserId}", id);
                 return BadRequest(new { message = "Password is required" });
             }
 
-            var isDeleted = await _userService.DeleteUserAsync(id, command.Password);
-            if (!isDeleted)
+            try
             {
-                _logger.LogWarning("User with ID {UserId} not found or deletion failed", id);
-                return NotFound(new { message = "User delete failed" });
-            }
+                var isDeleted = await _userService.DeleteUserAsync(id, command.Password);
+                if (!isDeleted)
+                {
+                    Log.Warning("User not found for deletion or deletion failed. ID: {UserId}", id);
+                    return NotFound(new { message = "User delete failed" });
+                }
 
-            _logger.LogInformation("User with ID {UserId} deleted successfully", id);
-            return NoContent();
+                Log.Information("User successfully deleted. ID: {UserId}", id);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Error deleting user. ID: {UserId}", id);
+                return StatusCode(500, "An error occurred while deleting the user");
+            }
         }
 
         [HttpDelete("admin/{id}")]
-        public async Task<IActionResult> DeleteUserByAdmin(
-            [FromRoute] Guid id,
-            [FromBody] DeleteUserByAdminCommand command
-        )
+        public async Task<IActionResult> DeleteUserByAdmin([FromRoute] Guid id, [FromBody] DeleteUserByAdminCommand command)
         {
-            _logger.LogInformation("Attempting to delete user with ID: {UserId}", id);
+            Log.Information("Attempting to delete user by admin with ID: {UserId}", id);
 
             if (command == null || command.IsAdmin == false)
             {
+                Log.Warning("Access denied for user deletion by admin. ID: {UserId}", id);
                 return Forbid("Access Denied: You do not have permission to delete this user.");
             }
 
-            var isDeleted = await _userService.DeleteUserByAdminAsync(id, command.IsAdmin);
-            if (!isDeleted)
+            try
             {
-                _logger.LogWarning("User with ID {UserId} not found or deletion failed", id);
-                return NotFound(new { message = "User delete failed" });
-            }
+                var isDeleted = await _userService.DeleteUserByAdminAsync(id, command.IsAdmin);
+                if (!isDeleted)
+                {
+                    Log.Warning(
+                        "User not found for admin deletion or deletion failed. ID: {UserId}",
+                        id
+                    );
+                    return NotFound(new { message = "User delete failed" });
+                }
 
-            _logger.LogInformation("User with ID {UserId} deleted successfully", id);
-            return NoContent();
+                Log.Information("User successfully deleted by admin. ID: {UserId}", id);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Error deleting user by admin. ID: {UserId}", id);
+                return StatusCode(500, "An error occurred while deleting the user");
+            }
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<UserDto>> GetUserById([FromRoute] Guid id)
         {
-            var user = await _userService.GetUserByIdAsync(id);
-            if (user == null)
-            {
-                _logger.LogWarning("User with ID {UserId} not found", id);
-                return NotFound();
-            }
-            _logger.LogInformation("User with ID {UserId} found", id);
+            Log.Information("Attempting to get user by ID: {UserId}", id);
 
-            return Ok(user);
+            try
+            {
+                var user = await _userService.GetUserByIdAsync(id);
+                if (user == null)
+                {
+                    Log.Warning("User not found. ID: {UserId}", id);
+                    return NotFound();
+                }
+
+                Log.Information("User found. ID: {UserId}", id);
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Error getting user by ID. ID: {UserId}", id);
+                return StatusCode(500, "An error occurred while getting the user");
+            }
         }
 
         [HttpGet("search")]
@@ -198,21 +252,52 @@ namespace ASafariM.Presentation.Controllers
             [FromQuery] string? email = null
         )
         {
-            var users = await _userService.SearchUsersAsync(username, email);
-            return Ok(users);
+            Log.Information(
+                "Searching users with username: {Username}, email: {Email}",
+                username,
+                email
+            );
+
+            try
+            {
+                var users = await _userService.SearchUsersAsync(username, email);
+                Log.Information("Found {Count} users matching search criteria", users.Count());
+                return Ok(users);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(
+                    ex,
+                    "Error searching users with username: {Username}, email: {Email}",
+                    username,
+                    email
+                );
+                return StatusCode(500, "An error occurred while searching users");
+            }
         }
 
-        //UserChangePasswordUpdate
         [HttpPut("change-password")]
         public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordCommand command)
         {
-            var isUpdated = await _userService.ChangePasswordAsync(command);
-            if (!isUpdated)
-            {
-                return BadRequest("Password update failed");
-            }
+            Log.Information("Attempting to change password for user ID: {UserId}", command.Id);
 
-            return NoContent();
+            try
+            {
+                var isUpdated = await _userService.ChangePasswordAsync(command);
+                if (!isUpdated)
+                {
+                    Log.Warning("Password update failed for user ID: {UserId}", command.Id);
+                    return BadRequest("Password update failed");
+                }
+
+                Log.Information("Password successfully updated for user ID: {UserId}", command.Id);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Error changing password for user ID: {UserId}", command.Id);
+                return StatusCode(500, "An error occurred while changing the password");
+            }
         }
 
         [HttpGet("check-availability/validate")]
@@ -221,7 +306,7 @@ namespace ASafariM.Presentation.Controllers
             [FromQuery] string? email = null
         )
         {
-            _logger.LogInformation(
+            Log.Information(
                 "Checking availability for username: {Username}, email: {Email}",
                 username,
                 email
@@ -229,43 +314,61 @@ namespace ASafariM.Presentation.Controllers
 
             if (username == null && email == null)
             {
+                Log.Warning("Either username or email parameter is required");
                 return BadRequest(
                     new { message = "Either username or email parameter is required" }
                 );
             }
 
-            var result = new EmailUsernameAvailabilityDto
+            try
             {
-                UsernameAvailability =
-                    username != null ? await _userService.IsUsernameNotTakenAsync(username) : null,
-                EmailAvailability =
-                    email != null ? await _userService.IsEmailNotTakenAsync(email) : null,
-            };
+                var result = new EmailUsernameAvailabilityDto
+                {
+                    UsernameAvailability =
+                        username != null
+                            ? await _userService.IsUsernameNotTakenAsync(username)
+                            : null,
+                    EmailAvailability =
+                        email != null ? await _userService.IsEmailNotTakenAsync(email) : null,
+                };
 
-            _logger.LogInformation(
-                "Availability result - Username: {UsernameAvailability}, Email: {EmailAvailability}",
-                result.UsernameAvailability?.IsTaken,
-                result.EmailAvailability?.IsTaken
-            );
+                Log.Information(
+                    "Availability result - Username: {UsernameAvailability}, Email: {EmailAvailability}",
+                    result.UsernameAvailability?.IsTaken,
+                    result.EmailAvailability?.IsTaken
+                );
 
-            // Check if either username or email is taken
-            var messages = new List<string>();
-            if (result.UsernameAvailability?.IsTaken == true)
-            {
-                messages.Add($"Username '{username}' is already taken");
+                var messages = new List<string>();
+                if (result.UsernameAvailability?.IsTaken == true)
+                {
+                    messages.Add($"Username '{username}' is already taken");
+                }
+                if (result.EmailAvailability?.IsTaken == true)
+                {
+                    messages.Add($"Email '{email}' is already registered");
+                }
+
+                var isAvailable = !messages.Any();
+
+                Log.Information("Final availability result: {IsAvailable}", isAvailable);
+                return Ok(
+                    new CheckAvailabilityResponse
+                    {
+                        IsAvailable = isAvailable,
+                        Messages = messages,
+                    }
+                );
             }
-            if (result.EmailAvailability?.IsTaken == true)
+            catch (Exception ex)
             {
-                messages.Add($"Email '{email}' is already registered");
+                Log.Error(
+                    ex,
+                    "Error checking availability for username: {Username}, email: {Email}",
+                    username,
+                    email
+                );
+                return StatusCode(500, "An error occurred while checking availability");
             }
-
-            var isAvailable = !messages.Any(); // Available only if no validation messages
-
-            _logger.LogInformation("Final availability result: {IsAvailable}", isAvailable);
-
-            return Ok(
-                new CheckAvailabilityResponse { IsAvailable = !messages.Any(), Messages = messages }
-            );
         }
     }
 }

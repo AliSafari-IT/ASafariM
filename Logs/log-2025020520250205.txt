@@ -1,0 +1,235 @@
+2025-02-05 11:14:45.354 [Information] Starting up the application...
+2025-02-05 11:14:45.501 [Information] DbContext configured successfully.
+2025-02-05 11:14:45.503 [Information] Registering services...
+2025-02-05 11:14:45.503 [Information] Registered IUserRepository with UserRepository.
+2025-02-05 11:14:45.503 [Information] Registered IGenericRepository<Role> with GenericRepository<Role>.
+2025-02-05 11:14:45.503 [Information] Registered IGenericRepository<MarkdownFile> with GenericRepository<MarkdownFile>.
+2025-02-05 11:14:45.503 [Information] Registered IPostRepository with PostRepository.
+2025-02-05 11:14:45.503 [Information] Registered ITagRepository with TagRepository.
+2025-02-05 11:14:45.503 [Information] Registered ITopicRepository with TopicRepository.
+2025-02-05 11:14:45.507 [Information] Registered ISitemapItemRepository with SitemapItemRepository.
+2025-02-05 11:14:45.508 [Information] Registered RoleService.
+2025-02-05 11:14:45.508 [Information] Registered IUserService with UserService.
+2025-02-05 11:14:45.508 [Information] Registered IMarkdownFilesService with MarkdownFilesService.
+2025-02-05 11:14:45.508 [Information] Registered JwtTokenService.
+2025-02-05 11:14:45.514 [Information] Registered AutoMapper profiles.
+2025-02-05 11:14:45.514 [Information] CORS policy configured.
+2025-02-05 11:14:45.515 [Information] AutoMapper profiles registered.
+2025-02-05 11:14:45.568 [Information] JWT authentication configured.
+2025-02-05 11:14:45.621 [Information] Application started.
+2025-02-05 11:15:30.380 [Information] Request: "GET" "/api/users/523d99c4-d37b-46d2-88c4-0381681f0087"
+2025-02-05 11:15:30.732 [Information] Attempting to get user by ID: 523d99c4-d37b-46d2-88c4-0381681f0087
+2025-02-05 11:15:30.733 [Information] Fetching user by ID: 523d99c4-d37b-46d2-88c4-0381681f0087
+2025-02-05 11:15:32.534 [Information] GetUserByIdAsync: User LastLogin value: 02/05/2025 09:08:37
+2025-02-05 11:15:32.540 [Information] GetUserByIdAsync: UserInfoDto LastLogin value: 02/05/2025 09:08:37
+2025-02-05 11:15:32.545 [Information] GetUserByIdAsync: UserDto LastLogin value: 02/05/2025 09:08:37
+2025-02-05 11:15:32.545 [Information] User found. ID: 523d99c4-d37b-46d2-88c4-0381681f0087
+2025-02-05 11:15:32.572 [Information] Request: "GET" "/api/users/523d99c4-d37b-46d2-88c4-0381681f0087"
+2025-02-05 11:15:32.577 [Information] Attempting to get user by ID: 523d99c4-d37b-46d2-88c4-0381681f0087
+2025-02-05 11:15:32.577 [Information] Fetching user by ID: 523d99c4-d37b-46d2-88c4-0381681f0087
+2025-02-05 11:15:32.694 [Information] GetUserByIdAsync: User LastLogin value: 02/05/2025 09:08:37
+2025-02-05 11:15:32.695 [Information] GetUserByIdAsync: UserInfoDto LastLogin value: 02/05/2025 09:08:37
+2025-02-05 11:15:32.695 [Information] GetUserByIdAsync: UserDto LastLogin value: 02/05/2025 09:08:37
+2025-02-05 11:15:32.695 [Information] User found. ID: 523d99c4-d37b-46d2-88c4-0381681f0087
+2025-02-05 11:15:32.701 [Information] Request: "GET" "/api/users/523d99c4-d37b-46d2-88c4-0381681f0087"
+2025-02-05 11:15:32.704 [Information] Attempting to get user by ID: 523d99c4-d37b-46d2-88c4-0381681f0087
+2025-02-05 11:15:32.704 [Information] Fetching user by ID: 523d99c4-d37b-46d2-88c4-0381681f0087
+2025-02-05 11:15:32.781 [Information] GetUserByIdAsync: User LastLogin value: 02/05/2025 09:08:37
+2025-02-05 11:15:32.781 [Information] GetUserByIdAsync: UserInfoDto LastLogin value: 02/05/2025 09:08:37
+2025-02-05 11:15:32.781 [Information] GetUserByIdAsync: UserDto LastLogin value: 02/05/2025 09:08:37
+2025-02-05 11:15:32.781 [Information] User found. ID: 523d99c4-d37b-46d2-88c4-0381681f0087
+2025-02-05 11:15:34.978 [Information] Request: "GET" "/api/health"
+2025-02-05 11:15:34.981 [Information] Starting health check
+2025-02-05 11:15:35.188 [Information] Database health check successful
+2025-02-05 11:15:35.764 [Information] Health check completed successfully
+2025-02-05 11:15:35.885 [Information] Request: "GET" "/api/health"
+2025-02-05 11:15:35.887 [Information] Starting health check
+2025-02-05 11:15:35.901 [Information] Database health check successful
+2025-02-05 11:15:36.417 [Information] Health check completed successfully
+2025-02-05 11:15:47.251 [Information] Request: "GET" "/api/tags"
+2025-02-05 11:15:47.253 [Information] Request: "GET" "/api/topics"
+2025-02-05 11:15:47.284 [Information] Fetching all tags
+2025-02-05 11:15:47.342 [Information] Successfully retrieved 4 tags
+2025-02-05 11:15:47.356 [Information] Request: "GET" "/api/tags"
+2025-02-05 11:15:47.357 [Information] Fetching all tags
+2025-02-05 11:15:47.360 [Information] Successfully retrieved 4 tags
+2025-02-05 11:15:47.363 [Information] Request: "GET" "/api/tags"
+2025-02-05 11:15:47.365 [Information] Fetching all tags
+2025-02-05 11:15:47.369 [Information] Successfully retrieved 4 tags
+2025-02-05 11:15:47.374 [Information] Request: "GET" "/api/tags"
+2025-02-05 11:15:47.375 [Information] Fetching all tags
+2025-02-05 11:15:47.378 [Information] Successfully retrieved 4 tags
+2025-02-05 11:15:47.383 [Information] Retrieved 4 topics
+2025-02-05 11:15:47.402 [Information] Request: "GET" "/api/topics"
+2025-02-05 11:15:47.407 [Information] Retrieved 4 topics
+2025-02-05 11:15:47.410 [Information] Request: "GET" "/api/topics"
+2025-02-05 11:15:47.415 [Information] Retrieved 4 topics
+2025-02-05 11:15:47.418 [Information] Request: "GET" "/api/topics"
+2025-02-05 11:15:47.421 [Information] Retrieved 4 topics
+2025-02-05 11:15:49.497 [Information] Request: "GET" "/api/users"
+2025-02-05 11:15:49.507 [Information] Fetching all users from repository
+2025-02-05 11:15:49.543 [Information] Retrieved 2 users from repository
+2025-02-05 11:15:49.543 [Information] Mapping users to UserInfoDto
+2025-02-05 11:15:49.543 [Information] Mapped 2 users to UserInfoDto
+2025-02-05 11:15:49.544 [Information] Mapping UserInfoDto to UserDto
+2025-02-05 11:15:49.544 [Information] Successfully mapped 2 users to UserDto
+2025-02-05 11:15:49.544 [Information] Total users successfully retrieved: 2
+2025-02-05 11:15:49.549 [Information] Request: "GET" "/api/users"
+2025-02-05 11:15:49.550 [Information] Fetching all users from repository
+2025-02-05 11:15:49.553 [Information] Retrieved 2 users from repository
+2025-02-05 11:15:49.553 [Information] Mapping users to UserInfoDto
+2025-02-05 11:15:49.553 [Information] Mapped 2 users to UserInfoDto
+2025-02-05 11:15:49.553 [Information] Mapping UserInfoDto to UserDto
+2025-02-05 11:15:49.553 [Information] Successfully mapped 2 users to UserDto
+2025-02-05 11:15:49.553 [Information] Total users successfully retrieved: 2
+2025-02-05 11:15:52.775 [Information] Request: "GET" "/api/users/4d790c85-0b2d-4302-afb4-8d7b364072b4"
+2025-02-05 11:15:52.775 [Information] Request: "GET" "/api/roles"
+2025-02-05 11:15:52.776 [Information] Attempting to get user by ID: 4d790c85-0b2d-4302-afb4-8d7b364072b4
+2025-02-05 11:15:52.776 [Information] Fetching user by ID: 4d790c85-0b2d-4302-afb4-8d7b364072b4
+2025-02-05 11:15:52.780 [Information] GetUserByIdAsync: User LastLogin value: 02/04/2025 22:19:21
+2025-02-05 11:15:52.780 [Information] GetUserByIdAsync: UserInfoDto LastLogin value: 02/04/2025 22:19:21
+2025-02-05 11:15:52.780 [Information] GetUserByIdAsync: UserDto LastLogin value: 02/04/2025 22:19:21
+2025-02-05 11:15:52.781 [Information] User found. ID: 4d790c85-0b2d-4302-afb4-8d7b364072b4
+2025-02-05 11:15:52.785 [Information] Request: "GET" "/api/users/4d790c85-0b2d-4302-afb4-8d7b364072b4"
+2025-02-05 11:15:52.785 [Information] Attempting to get user by ID: 4d790c85-0b2d-4302-afb4-8d7b364072b4
+2025-02-05 11:15:52.785 [Information] Fetching user by ID: 4d790c85-0b2d-4302-afb4-8d7b364072b4
+2025-02-05 11:15:52.788 [Information] Fetching all roles
+2025-02-05 11:15:52.789 [Information] GetUserByIdAsync: User LastLogin value: 02/04/2025 22:19:21
+2025-02-05 11:15:52.789 [Information] GetUserByIdAsync: UserInfoDto LastLogin value: 02/04/2025 22:19:21
+2025-02-05 11:15:52.789 [Information] GetUserByIdAsync: UserDto LastLogin value: 02/04/2025 22:19:21
+2025-02-05 11:15:52.789 [Information] User found. ID: 4d790c85-0b2d-4302-afb4-8d7b364072b4
+2025-02-05 11:15:52.855 [Information] Request: "GET" "/api/userroles/4d790c85-0b2d-4302-afb4-8d7b364072b4/roles"
+2025-02-05 11:15:52.867 [Information] Retrieving roles for user. User ID: "4d790c85-0b2d-4302-afb4-8d7b364072b4"
+2025-02-05 11:15:52.882 [Information] Successfully retrieved 6 roles
+2025-02-05 11:15:52.916 [Information] Request: "GET" "/api/roles"
+2025-02-05 11:15:52.917 [Information] Fetching all roles
+2025-02-05 11:15:52.920 [Information] Successfully retrieved 6 roles
+2025-02-05 11:15:53.036 [Information] Successfully retrieved roles for user. User ID: "4d790c85-0b2d-4302-afb4-8d7b364072b4", Roles: "54541634-c02f-46ad-a2e6-619c1bd3ed8d, baf65ac9-b71b-4669-b3b3-39c3773dd6f1"
+2025-02-05 11:15:53.048 [Information] Request: "GET" "/api/userroles/4d790c85-0b2d-4302-afb4-8d7b364072b4/roles"
+2025-02-05 11:15:53.049 [Information] Retrieving roles for user. User ID: "4d790c85-0b2d-4302-afb4-8d7b364072b4"
+2025-02-05 11:15:53.055 [Information] Successfully retrieved roles for user. User ID: "4d790c85-0b2d-4302-afb4-8d7b364072b4", Roles: "54541634-c02f-46ad-a2e6-619c1bd3ed8d, baf65ac9-b71b-4669-b3b3-39c3773dd6f1"
+2025-02-05 11:16:03.461 [Information] Request: "PUT" "/api/users/admin/4d790c85-0b2d-4302-afb4-8d7b364072b4"
+2025-02-05 11:16:03.572 [Information] Attempting to update user by admin. User ID: 4d790c85-0b2d-4302-afb4-8d7b364072b4
+2025-02-05 11:16:03.573 [Information] Admin updating user with ID: 4d790c85-0b2d-4302-afb4-8d7b364072b4
+2025-02-05 11:16:03.762 [Information] Successfully updated user by admin with ID: 4d790c85-0b2d-4302-afb4-8d7b364072b4
+2025-02-05 11:16:03.776 [Information] User successfully updated by admin. ID: 4d790c85-0b2d-4302-afb4-8d7b364072b4
+2025-02-05 11:16:03.803 [Information] Request: "GET" "/api/userroles/4d790c85-0b2d-4302-afb4-8d7b364072b4/roles"
+2025-02-05 11:16:03.806 [Information] Retrieving roles for user. User ID: "4d790c85-0b2d-4302-afb4-8d7b364072b4"
+2025-02-05 11:16:03.824 [Information] Successfully retrieved roles for user. User ID: "4d790c85-0b2d-4302-afb4-8d7b364072b4", Roles: "54541634-c02f-46ad-a2e6-619c1bd3ed8d, baf65ac9-b71b-4669-b3b3-39c3773dd6f1"
+2025-02-05 11:16:03.852 [Information] Request: "DELETE" "/api/userroles/4d790c85-0b2d-4302-afb4-8d7b364072b4/roles"
+2025-02-05 11:16:03.870 [Information] Attempting to remove roles from user. User ID: "4d790c85-0b2d-4302-afb4-8d7b364072b4", Roles: "54541634-c02f-46ad-a2e6-619c1bd3ed8d"
+2025-02-05 11:16:03.956 [Information] Successfully removed roles from user. User ID: "4d790c85-0b2d-4302-afb4-8d7b364072b4", Roles: "54541634-c02f-46ad-a2e6-619c1bd3ed8d"
+2025-02-05 11:16:04.061 [Information] Request: "GET" "/api/users"
+2025-02-05 11:16:04.062 [Information] Fetching all users from repository
+2025-02-05 11:16:04.065 [Information] Retrieved 2 users from repository
+2025-02-05 11:16:04.065 [Information] Mapping users to UserInfoDto
+2025-02-05 11:16:04.065 [Information] Mapped 2 users to UserInfoDto
+2025-02-05 11:16:04.065 [Information] Mapping UserInfoDto to UserDto
+2025-02-05 11:16:04.065 [Information] Successfully mapped 2 users to UserDto
+2025-02-05 11:16:04.065 [Information] Total users successfully retrieved: 2
+2025-02-05 11:16:04.068 [Information] Request: "GET" "/api/users"
+2025-02-05 11:16:04.068 [Information] Fetching all users from repository
+2025-02-05 11:16:04.070 [Information] Retrieved 2 users from repository
+2025-02-05 11:16:04.070 [Information] Mapping users to UserInfoDto
+2025-02-05 11:16:04.071 [Information] Mapped 2 users to UserInfoDto
+2025-02-05 11:16:04.071 [Information] Mapping UserInfoDto to UserDto
+2025-02-05 11:16:04.071 [Information] Successfully mapped 2 users to UserDto
+2025-02-05 11:16:04.071 [Information] Total users successfully retrieved: 2
+2025-02-05 11:16:36.434 [Information] Request: "GET" "/api/users/4d790c85-0b2d-4302-afb4-8d7b364072b4"
+2025-02-05 11:16:36.434 [Information] Attempting to get user by ID: 4d790c85-0b2d-4302-afb4-8d7b364072b4
+2025-02-05 11:16:36.434 [Information] Fetching user by ID: 4d790c85-0b2d-4302-afb4-8d7b364072b4
+2025-02-05 11:16:36.435 [Information] Request: "GET" "/api/roles"
+2025-02-05 11:16:36.439 [Information] Fetching all roles
+2025-02-05 11:16:36.440 [Information] GetUserByIdAsync: User LastLogin value: 02/04/2025 22:19:21
+2025-02-05 11:16:36.440 [Information] GetUserByIdAsync: UserInfoDto LastLogin value: 02/04/2025 22:19:21
+2025-02-05 11:16:36.440 [Information] GetUserByIdAsync: UserDto LastLogin value: 02/04/2025 22:19:21
+2025-02-05 11:16:36.440 [Information] User found. ID: 4d790c85-0b2d-4302-afb4-8d7b364072b4
+2025-02-05 11:16:36.443 [Information] Successfully retrieved 6 roles
+2025-02-05 11:16:36.445 [Information] Request: "GET" "/api/users/4d790c85-0b2d-4302-afb4-8d7b364072b4"
+2025-02-05 11:16:36.445 [Information] Attempting to get user by ID: 4d790c85-0b2d-4302-afb4-8d7b364072b4
+2025-02-05 11:16:36.445 [Information] Fetching user by ID: 4d790c85-0b2d-4302-afb4-8d7b364072b4
+2025-02-05 11:16:36.446 [Information] Request: "GET" "/api/roles"
+2025-02-05 11:16:36.447 [Information] Fetching all roles
+2025-02-05 11:16:36.448 [Information] GetUserByIdAsync: User LastLogin value: 02/04/2025 22:19:21
+2025-02-05 11:16:36.448 [Information] GetUserByIdAsync: UserInfoDto LastLogin value: 02/04/2025 22:19:21
+2025-02-05 11:16:36.448 [Information] GetUserByIdAsync: UserDto LastLogin value: 02/04/2025 22:19:21
+2025-02-05 11:16:36.448 [Information] User found. ID: 4d790c85-0b2d-4302-afb4-8d7b364072b4
+2025-02-05 11:16:36.449 [Information] Successfully retrieved 6 roles
+2025-02-05 11:16:36.457 [Information] Request: "GET" "/api/userroles/4d790c85-0b2d-4302-afb4-8d7b364072b4/roles"
+2025-02-05 11:16:36.458 [Information] Retrieving roles for user. User ID: "4d790c85-0b2d-4302-afb4-8d7b364072b4"
+2025-02-05 11:16:36.463 [Information] Successfully retrieved roles for user. User ID: "4d790c85-0b2d-4302-afb4-8d7b364072b4", Roles: "baf65ac9-b71b-4669-b3b3-39c3773dd6f1"
+2025-02-05 11:16:36.476 [Information] Request: "GET" "/api/userroles/4d790c85-0b2d-4302-afb4-8d7b364072b4/roles"
+2025-02-05 11:16:36.477 [Information] Retrieving roles for user. User ID: "4d790c85-0b2d-4302-afb4-8d7b364072b4"
+2025-02-05 11:16:36.480 [Information] Successfully retrieved roles for user. User ID: "4d790c85-0b2d-4302-afb4-8d7b364072b4", Roles: "baf65ac9-b71b-4669-b3b3-39c3773dd6f1"
+2025-02-05 11:19:04.716 [Information] Request: "GET" "/api/roles"
+2025-02-05 11:19:04.718 [Information] Request: "GET" "/api/users/4d790c85-0b2d-4302-afb4-8d7b364072b4"
+2025-02-05 11:19:04.722 [Information] Fetching all roles
+2025-02-05 11:19:04.725 [Information] Attempting to get user by ID: 4d790c85-0b2d-4302-afb4-8d7b364072b4
+2025-02-05 11:19:04.725 [Information] Fetching user by ID: 4d790c85-0b2d-4302-afb4-8d7b364072b4
+2025-02-05 11:19:04.728 [Information] Successfully retrieved 6 roles
+2025-02-05 11:19:04.731 [Information] GetUserByIdAsync: User LastLogin value: 02/04/2025 22:19:21
+2025-02-05 11:19:04.731 [Information] GetUserByIdAsync: UserInfoDto LastLogin value: 02/04/2025 22:19:21
+2025-02-05 11:19:04.731 [Information] GetUserByIdAsync: UserDto LastLogin value: 02/04/2025 22:19:21
+2025-02-05 11:19:04.731 [Information] User found. ID: 4d790c85-0b2d-4302-afb4-8d7b364072b4
+2025-02-05 11:19:04.746 [Information] Request: "GET" "/api/roles"
+2025-02-05 11:19:04.746 [Information] Request: "GET" "/api/users/4d790c85-0b2d-4302-afb4-8d7b364072b4"
+2025-02-05 11:19:04.747 [Information] Attempting to get user by ID: 4d790c85-0b2d-4302-afb4-8d7b364072b4
+2025-02-05 11:19:04.747 [Information] Fetching all roles
+2025-02-05 11:19:04.747 [Information] Fetching user by ID: 4d790c85-0b2d-4302-afb4-8d7b364072b4
+2025-02-05 11:19:04.749 [Information] Successfully retrieved 6 roles
+2025-02-05 11:19:04.749 [Information] GetUserByIdAsync: User LastLogin value: 02/04/2025 22:19:21
+2025-02-05 11:19:04.749 [Information] GetUserByIdAsync: UserInfoDto LastLogin value: 02/04/2025 22:19:21
+2025-02-05 11:19:04.749 [Information] GetUserByIdAsync: UserDto LastLogin value: 02/04/2025 22:19:21
+2025-02-05 11:19:04.750 [Information] User found. ID: 4d790c85-0b2d-4302-afb4-8d7b364072b4
+2025-02-05 11:19:04.845 [Information] Request: "GET" "/api/userroles/4d790c85-0b2d-4302-afb4-8d7b364072b4/roles"
+2025-02-05 11:19:04.849 [Information] Retrieving roles for user. User ID: "4d790c85-0b2d-4302-afb4-8d7b364072b4"
+2025-02-05 11:19:04.854 [Information] Successfully retrieved roles for user. User ID: "4d790c85-0b2d-4302-afb4-8d7b364072b4", Roles: "baf65ac9-b71b-4669-b3b3-39c3773dd6f1"
+2025-02-05 11:19:04.858 [Information] Request: "GET" "/api/userroles/4d790c85-0b2d-4302-afb4-8d7b364072b4/roles"
+2025-02-05 11:19:04.859 [Information] Retrieving roles for user. User ID: "4d790c85-0b2d-4302-afb4-8d7b364072b4"
+2025-02-05 11:19:04.864 [Information] Successfully retrieved roles for user. User ID: "4d790c85-0b2d-4302-afb4-8d7b364072b4", Roles: "baf65ac9-b71b-4669-b3b3-39c3773dd6f1"
+2025-02-05 11:19:30.120 [Information] Logger configured successfully. → Path: "E:/ASafariM/Logs"
+2025-02-05 11:19:30.226 [Information] Starting up the application...
+2025-02-05 11:19:30.403 [Information] DbContext configured successfully.
+2025-02-05 11:19:30.406 [Information] Registering services...
+2025-02-05 11:19:30.406 [Information] Registered IUserRepository with UserRepository.
+2025-02-05 11:19:30.406 [Information] Registered IGenericRepository<Role> with GenericRepository<Role>.
+2025-02-05 11:19:30.406 [Information] Registered IGenericRepository<MarkdownFile> with GenericRepository<MarkdownFile>.
+2025-02-05 11:19:30.406 [Information] Registered IPostRepository with PostRepository.
+2025-02-05 11:19:30.406 [Information] Registered ITagRepository with TagRepository.
+2025-02-05 11:19:30.406 [Information] Registered ITopicRepository with TopicRepository.
+2025-02-05 11:19:30.406 [Information] Registered ISitemapItemRepository with SitemapItemRepository.
+2025-02-05 11:19:30.407 [Information] Registered RoleService.
+2025-02-05 11:19:30.407 [Information] Registered IUserService with UserService.
+2025-02-05 11:19:30.407 [Information] Registered IMarkdownFilesService with MarkdownFilesService.
+2025-02-05 11:19:30.407 [Information] Registered JwtTokenService.
+2025-02-05 11:19:30.415 [Information] Registered AutoMapper profiles.
+2025-02-05 11:19:30.415 [Information] CORS policy configured.
+2025-02-05 11:19:30.415 [Information] AutoMapper profiles registered.
+2025-02-05 11:19:30.473 [Information] JWT authentication configured.
+2025-02-05 11:19:30.571 [Information] Application started.
+2025-02-05 11:19:31.424 [Information] Request: "GET" "/api/users/4d790c85-0b2d-4302-afb4-8d7b364072b4"
+2025-02-05 11:19:31.424 [Information] Request: "GET" "/api/roles"
+2025-02-05 11:19:31.684 [Information] Fetching all roles
+2025-02-05 11:19:31.902 [Information] Attempting to get user by ID: 4d790c85-0b2d-4302-afb4-8d7b364072b4
+2025-02-05 11:19:31.903 [Information] Fetching user by ID: 4d790c85-0b2d-4302-afb4-8d7b364072b4
+2025-02-05 11:19:33.741 [Information] Successfully retrieved 6 roles
+2025-02-05 11:19:33.794 [Information] GetUserByIdAsync: User LastLogin value: 02/04/2025 22:19:21
+2025-02-05 11:19:33.804 [Information] GetUserByIdAsync: UserInfoDto LastLogin value: 02/04/2025 22:19:21
+2025-02-05 11:19:33.807 [Information] Request: "GET" "/api/roles"
+2025-02-05 11:19:33.809 [Information] Fetching all roles
+2025-02-05 11:19:33.810 [Information] GetUserByIdAsync: UserDto LastLogin value: 02/04/2025 22:19:21
+2025-02-05 11:19:33.811 [Information] User found. ID: 4d790c85-0b2d-4302-afb4-8d7b364072b4
+2025-02-05 11:19:33.832 [Information] Request: "GET" "/api/users/4d790c85-0b2d-4302-afb4-8d7b364072b4"
+2025-02-05 11:19:33.836 [Information] Attempting to get user by ID: 4d790c85-0b2d-4302-afb4-8d7b364072b4
+2025-02-05 11:19:33.836 [Information] Fetching user by ID: 4d790c85-0b2d-4302-afb4-8d7b364072b4
+2025-02-05 11:19:33.838 [Information] Request: "GET" "/api/userroles/4d790c85-0b2d-4302-afb4-8d7b364072b4/roles"
+2025-02-05 11:19:33.851 [Information] Retrieving roles for user. User ID: "4d790c85-0b2d-4302-afb4-8d7b364072b4"
+2025-02-05 11:19:33.942 [Information] Successfully retrieved 6 roles
+2025-02-05 11:19:33.947 [Information] GetUserByIdAsync: User LastLogin value: 02/04/2025 22:19:21
+2025-02-05 11:19:33.949 [Information] GetUserByIdAsync: UserInfoDto LastLogin value: 02/04/2025 22:19:21
+2025-02-05 11:19:33.949 [Information] GetUserByIdAsync: UserDto LastLogin value: 02/04/2025 22:19:21
+2025-02-05 11:19:33.950 [Information] User found. ID: 4d790c85-0b2d-4302-afb4-8d7b364072b4
+2025-02-05 11:19:34.139 [Information] Successfully retrieved roles for user. User ID: "4d790c85-0b2d-4302-afb4-8d7b364072b4", Roles: "baf65ac9-b71b-4669-b3b3-39c3773dd6f1"
+2025-02-05 11:19:34.150 [Information] Request: "GET" "/api/userroles/4d790c85-0b2d-4302-afb4-8d7b364072b4/roles"
+2025-02-05 11:19:34.151 [Information] Retrieving roles for user. User ID: "4d790c85-0b2d-4302-afb4-8d7b364072b4"
+2025-02-05 11:19:34.158 [Information] Successfully retrieved roles for user. User ID: "4d790c85-0b2d-4302-afb4-8d7b364072b4", Roles: "baf65ac9-b71b-4669-b3b3-39c3773dd6f1"

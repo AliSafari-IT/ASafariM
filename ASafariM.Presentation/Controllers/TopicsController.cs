@@ -8,7 +8,7 @@ using ASafariM.Domain.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace ASafariM.Presentation.Controllers
 {
@@ -18,17 +18,14 @@ namespace ASafariM.Presentation.Controllers
     {
         private readonly ITopicRepository _topicRepository;
         private readonly IMapper _mapper;
-        private readonly ILogger<TopicsController> _logger;
 
         public TopicsController(
             ITopicRepository topicRepository,
-            IMapper mapper,
-            ILogger<TopicsController> logger
+            IMapper mapper
         )
         {
             _topicRepository = topicRepository;
             _mapper = mapper;
-            _logger = logger;
         }
 
         [HttpGet]
@@ -37,7 +34,7 @@ namespace ASafariM.Presentation.Controllers
             var topics = await _topicRepository.GetAllAsync();
             if (topics == null)
                 return NotFound();
-            _logger.LogInformation("Retrieved {count} topics", topics.Count());
+            Log.Information("Retrieved {count} topics", topics.Count());
             return Ok(_mapper.Map<IEnumerable<TopicDto>>(topics));
         }
 
@@ -47,7 +44,7 @@ namespace ASafariM.Presentation.Controllers
             var topic = await _topicRepository.GetByIdAsync(id);
             if (topic == null)
                 return NotFound();
-            _logger.LogInformation("Retrieved topic with id {id}", id);
+            Log.Information("Retrieved topic with id {id}", id);
             return Ok(_mapper.Map<TopicDto>(topic));
         }
 
@@ -57,7 +54,7 @@ namespace ASafariM.Presentation.Controllers
             var topic = await _topicRepository.GetBySlugAsync(slug);
             if (topic == null)
                 return NotFound();
-            _logger.LogInformation("Retrieved topic with slug {slug}", slug);
+            Log.Information("Retrieved topic with slug {slug}", slug);
             return Ok(_mapper.Map<TopicDto>(topic));
         }
 
@@ -67,7 +64,7 @@ namespace ASafariM.Presentation.Controllers
             var topics = await _topicRepository.GetChildTopicsAsync(id);
             if (topics == null)
                 return NotFound();
-            _logger.LogInformation("Retrieved child topics for topic with id {id}", id);
+            Log.Information("Retrieved child topics for topic with id {id}", id);
             return Ok(_mapper.Map<IEnumerable<TopicDto>>(topics));
         }
 
@@ -81,17 +78,11 @@ namespace ASafariM.Presentation.Controllers
             topic.Slug = command.Slug.ToLower();
             await _topicRepository.AddAsync(topic);
             await _topicRepository.SaveChangesAsync();
-            _logger.LogInformation("Created topic with id {id}", topic.Id);
-            _logger.LogInformation("Created topic with slug {slug}", topic.Slug);
-            _logger.LogInformation("Created topic with name {name}", topic.Name);
-            _logger.LogInformation(
-                "Created topic with description {description}",
-                topic.Description
-            );
-            _logger.LogInformation(
-                "Created topic with parent topic id {parentTopicId}",
-                topic.ParentTopicId
-            );
+            Log.Information("Created topic with id {id}", topic.Id);
+            Log.Information("Created topic with slug {slug}", topic.Slug);
+            Log.Information("Created topic with name {name}", topic.Name);
+            Log.Information("Created topic with description {description}", topic.Description);
+            Log.Information("Created topic with parent topic id {parentTopicId}", topic.ParentTopicId);
             return CreatedAtAction(
                 nameof(GetTopic),
                 new { id = topic.Id },
@@ -117,6 +108,7 @@ namespace ASafariM.Presentation.Controllers
 
             _mapper.Map(command, existingTopic);
             await _topicRepository.UpdateAsync(existingTopic);
+            Log.Information("Updated topic with id {id}", id);
             return Ok(_mapper.Map<TopicDto>(existingTopic));
         }
 
@@ -128,6 +120,7 @@ namespace ASafariM.Presentation.Controllers
             if (topic == null)
                 return NotFound();
             await _topicRepository.DeleteAsync(id);
+            Log.Information("Deleted topic with id {id}", id);
             return NoContent();
         }
     }
