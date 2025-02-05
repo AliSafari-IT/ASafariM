@@ -404,3 +404,216 @@
 2025-02-05 17:18:57.755 [Information] Request: "DELETE" "/api/topics/fe8c9573-5c2c-411d-bd6b-16c65733c4a3"
 2025-02-05 17:18:57.949 [Information] Request: "POST" "/api/log"
 2025-02-05 17:18:57.950 [Information] Request: "POST" "/api/log"
+2025-02-05 17:23:19.415 [Information] Request: "POST" "/api/log"
+2025-02-05 17:23:19.415 [Information] Request: "POST" "/api/log"
+2025-02-05 17:23:19.415 [Information] Request: "POST" "/api/log"
+2025-02-05 17:23:19.415 [Information] Request: "POST" "/api/log"
+2025-02-05 17:23:19.453 [Information] Request: "POST" "/api/log"
+2025-02-05 17:23:19.460 [Information] Request: "DELETE" "/api/topics/fe8c9573-5c2c-411d-bd6b-16c65733c4a3"
+2025-02-05 17:23:19.566 [Information] Request: "POST" "/api/log"
+2025-02-05 17:23:19.570 [Information] Request: "POST" "/api/log"
+2025-02-05 17:26:32.368 [Information] Request: "POST" "/api/log"
+2025-02-05 17:26:32.368 [Information] Request: "POST" "/api/log"
+2025-02-05 17:26:32.368 [Information] Request: "POST" "/api/log"
+2025-02-05 17:26:32.368 [Information] Request: "POST" "/api/log"
+2025-02-05 17:26:32.374 [Information] Request: "POST" "/api/log"
+2025-02-05 17:26:32.374 [Information] Request: "POST" "/api/log"
+2025-02-05 17:26:32.375 [Information] Request: "POST" "/api/log"
+2025-02-05 17:26:32.375 [Information] Request: "POST" "/api/log"
+2025-02-05 17:26:32.378 [Information] Request: "POST" "/api/log"
+2025-02-05 17:26:32.379 [Information] Request: "POST" "/api/log"
+2025-02-05 17:26:32.383 [Information] Request: "POST" "/api/log"
+2025-02-05 17:26:32.384 [Information] Request: "POST" "/api/log"
+2025-02-05 17:26:32.386 [Information] Request: "POST" "/api/log"
+2025-02-05 17:26:32.387 [Information] Request: "POST" "/api/log"
+2025-02-05 17:26:32.392 [Information] Request: "POST" "/api/log"
+2025-02-05 17:26:32.400 [Information] Request: "POST" "/api/log"
+2025-02-05 17:26:32.419 [Information] Request: "GET" "/api/tags"
+2025-02-05 17:26:32.419 [Information] Request: "GET" "/api/topics"
+2025-02-05 17:26:32.431 [Information] Fetching all tags
+2025-02-05 17:26:32.439 [Information] Retrieved 9 topics
+2025-02-05 17:26:32.501 [Information] Request: "GET" "/api/topics"
+2025-02-05 17:26:32.504 [Information] Retrieved 9 topics
+2025-02-05 17:26:32.508 [Information] Request: "GET" "/api/topics"
+2025-02-05 17:26:32.512 [Information] Retrieved 9 topics
+2025-02-05 17:26:32.513 [Information] Successfully retrieved 4 tags
+2025-02-05 17:26:32.513 [Information] Request: "POST" "/api/log"
+2025-02-05 17:26:32.519 [Information] Request: "GET" "/api/topics"
+2025-02-05 17:26:32.522 [Information] Request: "GET" "/api/tags"
+2025-02-05 17:26:32.523 [Information] Fetching all tags
+2025-02-05 17:26:32.523 [Information] Retrieved 9 topics
+2025-02-05 17:26:32.525 [Information] Successfully retrieved 4 tags
+2025-02-05 17:26:32.535 [Information] Request: "GET" "/api/tags"
+2025-02-05 17:26:32.535 [Information] Fetching all tags
+2025-02-05 17:26:32.538 [Information] Successfully retrieved 4 tags
+2025-02-05 17:26:32.541 [Information] Request: "GET" "/api/tags"
+2025-02-05 17:26:32.541 [Information] Fetching all tags
+2025-02-05 17:26:32.544 [Information] Successfully retrieved 4 tags
+2025-02-05 17:26:32.618 [Information] Request: "POST" "/api/log"
+2025-02-05 17:26:32.621 [Information] Request: "POST" "/api/log"
+2025-02-05 17:26:32.637 [Information] Request: "POST" "/api/log"
+2025-02-05 17:26:53.681 [Information] Request: "POST" "/api/log"
+2025-02-05 17:26:53.681 [Information] Request: "POST" "/api/log"
+2025-02-05 17:26:53.684 [Information] Request: "POST" "/api/log"
+2025-02-05 17:26:53.687 [Information] Request: "POST" "/api/log"
+2025-02-05 17:26:53.721 [Information] Request: "POST" "/api/log"
+2025-02-05 17:26:53.726 [Information] Request: "DELETE" "/api/topics/fe8c9573-5c2c-411d-bd6b-16c65733c4a3"
+2025-02-05 17:26:53.770 [Information] Request: "POST" "/api/log"
+2025-02-05 17:26:53.774 [Information] Request: "POST" "/api/log"
+2025-02-05 17:28:13.936 [Information] Request: "POST" "/api/log"
+2025-02-05 17:28:13.936 [Information] Request: "POST" "/api/log"
+2025-02-05 17:28:13.941 [Information] Request: "POST" "/api/log"
+2025-02-05 17:28:13.942 [Information] Request: "POST" "/api/log"
+2025-02-05 17:28:13.970 [Information] Request: "POST" "/api/log"
+2025-02-05 17:28:13.981 [Information] Request: "DELETE" "/api/topics/fe8c9573-5c2c-411d-bd6b-16c65733c4a3"
+2025-02-05 17:28:14.029 [Error] An error occurred while deleting topic with id fe8c9573-5c2c-411d-bd6b-16c65733c4a3
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> MySqlConnector.MySqlException (0x80004005): Cannot delete or update a parent row: a foreign key constraint fails (`asmdb`.`topics`, CONSTRAINT `FK_Topics_Topics_ParentTopicId` FOREIGN KEY (`ParentTopicId`) REFERENCES `topics` (`Id`))
+   at MySqlConnector.Core.ServerSession.ReceiveReplyAsync(IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/Core/ServerSession.cs:line 894
+   at MySqlConnector.Core.ResultSet.ReadResultSetHeaderAsync(IOBehavior ioBehavior) in /_/src/MySqlConnector/Core/ResultSet.cs:line 37
+   at MySqlConnector.MySqlDataReader.ActivateResultSet(CancellationToken cancellationToken) in /_/src/MySqlConnector/MySqlDataReader.cs:line 130
+   at MySqlConnector.MySqlDataReader.InitAsync(CommandListPosition commandListPosition, ICommandPayloadCreator payloadCreator, IDictionary`2 cachedProcedures, IMySqlCommand command, CommandBehavior behavior, Activity activity, IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/MySqlDataReader.cs:line 483
+   at MySqlConnector.Core.CommandExecutor.ExecuteReaderAsync(CommandListPosition commandListPosition, ICommandPayloadCreator payloadCreator, CommandBehavior behavior, Activity activity, IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/Core/CommandExecutor.cs:line 56
+   at MySqlConnector.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/MySqlCommand.cs:line 357
+   at MySqlConnector.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/MySqlCommand.cs:line 350
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at ASafariM.Infrastructure.Repositories.TopicRepository.DeleteAsync(Guid id)
+   at ASafariM.Presentation.Controllers.TopicsController.DeleteTopic(Guid id)
+2025-02-05 17:28:14.043 [Information] Request: "POST" "/api/log"
+2025-02-05 17:28:14.045 [Information] Request: "POST" "/api/log"
+2025-02-05 17:30:07.632 [Information] Request: "POST" "/api/log"
+2025-02-05 17:30:07.632 [Information] Request: "POST" "/api/log"
+2025-02-05 17:30:07.641 [Information] Request: "POST" "/api/log"
+2025-02-05 17:30:07.641 [Information] Request: "POST" "/api/log"
+2025-02-05 17:30:07.674 [Information] Request: "POST" "/api/log"
+2025-02-05 17:30:07.680 [Information] Request: "DELETE" "/api/topics/fe8c9573-5c2c-411d-bd6b-16c65733c4a3"
+2025-02-05 17:30:07.714 [Error] An error occurred while deleting topic with id fe8c9573-5c2c-411d-bd6b-16c65733c4a3
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> MySqlConnector.MySqlException (0x80004005): Cannot delete or update a parent row: a foreign key constraint fails (`asmdb`.`topics`, CONSTRAINT `FK_Topics_Topics_ParentTopicId` FOREIGN KEY (`ParentTopicId`) REFERENCES `topics` (`Id`))
+   at MySqlConnector.Core.ServerSession.ReceiveReplyAsync(IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/Core/ServerSession.cs:line 894
+   at MySqlConnector.Core.ResultSet.ReadResultSetHeaderAsync(IOBehavior ioBehavior) in /_/src/MySqlConnector/Core/ResultSet.cs:line 37
+   at MySqlConnector.MySqlDataReader.ActivateResultSet(CancellationToken cancellationToken) in /_/src/MySqlConnector/MySqlDataReader.cs:line 130
+   at MySqlConnector.MySqlDataReader.InitAsync(CommandListPosition commandListPosition, ICommandPayloadCreator payloadCreator, IDictionary`2 cachedProcedures, IMySqlCommand command, CommandBehavior behavior, Activity activity, IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/MySqlDataReader.cs:line 483
+   at MySqlConnector.Core.CommandExecutor.ExecuteReaderAsync(CommandListPosition commandListPosition, ICommandPayloadCreator payloadCreator, CommandBehavior behavior, Activity activity, IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/Core/CommandExecutor.cs:line 56
+   at MySqlConnector.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/MySqlCommand.cs:line 357
+   at MySqlConnector.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/MySqlCommand.cs:line 350
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at ASafariM.Infrastructure.Repositories.TopicRepository.DeleteAsync(Guid id)
+   at ASafariM.Presentation.Controllers.TopicsController.DeleteTopic(Guid id)
+2025-02-05 17:30:07.723 [Information] Request: "POST" "/api/log"
+2025-02-05 17:30:07.724 [Information] Request: "POST" "/api/log"
+2025-02-05 17:31:12.378 [Information] Request: "POST" "/api/log"
+2025-02-05 17:31:12.378 [Information] Request: "POST" "/api/log"
+2025-02-05 17:31:12.378 [Information] Request: "POST" "/api/log"
+2025-02-05 17:31:12.380 [Information] Request: "POST" "/api/log"
+2025-02-05 17:31:12.405 [Information] Request: "POST" "/api/log"
+2025-02-05 17:31:12.409 [Information] Request: "DELETE" "/api/topics/fe8c9573-5c2c-411d-bd6b-16c65733c4a3"
+2025-02-05 17:31:12.451 [Error] An error occurred while deleting topic with id fe8c9573-5c2c-411d-bd6b-16c65733c4a3
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> MySqlConnector.MySqlException (0x80004005): Cannot delete or update a parent row: a foreign key constraint fails (`asmdb`.`topics`, CONSTRAINT `FK_Topics_Topics_ParentTopicId` FOREIGN KEY (`ParentTopicId`) REFERENCES `topics` (`Id`))
+   at MySqlConnector.Core.ServerSession.ReceiveReplyAsync(IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/Core/ServerSession.cs:line 894
+   at MySqlConnector.Core.ResultSet.ReadResultSetHeaderAsync(IOBehavior ioBehavior) in /_/src/MySqlConnector/Core/ResultSet.cs:line 37
+   at MySqlConnector.MySqlDataReader.ActivateResultSet(CancellationToken cancellationToken) in /_/src/MySqlConnector/MySqlDataReader.cs:line 130
+   at MySqlConnector.MySqlDataReader.InitAsync(CommandListPosition commandListPosition, ICommandPayloadCreator payloadCreator, IDictionary`2 cachedProcedures, IMySqlCommand command, CommandBehavior behavior, Activity activity, IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/MySqlDataReader.cs:line 483
+   at MySqlConnector.Core.CommandExecutor.ExecuteReaderAsync(CommandListPosition commandListPosition, ICommandPayloadCreator payloadCreator, CommandBehavior behavior, Activity activity, IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/Core/CommandExecutor.cs:line 56
+   at MySqlConnector.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/MySqlCommand.cs:line 357
+   at MySqlConnector.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/MySqlCommand.cs:line 350
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at ASafariM.Infrastructure.Repositories.TopicRepository.DeleteAsync(Guid id)
+   at ASafariM.Presentation.Controllers.TopicsController.DeleteTopic(Guid id)
+2025-02-05 17:31:12.462 [Information] Request: "POST" "/api/log"
+2025-02-05 17:31:12.471 [Information] Request: "POST" "/api/log"
+2025-02-05 17:31:19.516 [Information] Request: "POST" "/api/log"
+2025-02-05 17:31:19.516 [Information] Request: "POST" "/api/log"
+2025-02-05 17:31:19.517 [Information] Request: "POST" "/api/log"
+2025-02-05 17:31:19.518 [Information] Request: "POST" "/api/log"
+2025-02-05 17:31:19.547 [Information] Request: "POST" "/api/log"
+2025-02-05 17:31:19.553 [Information] Request: "DELETE" "/api/topics/fe8c9573-5c2c-411d-bd6b-16c65733c4a3"
+2025-02-05 17:31:19.583 [Error] An error occurred while deleting topic with id fe8c9573-5c2c-411d-bd6b-16c65733c4a3
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> MySqlConnector.MySqlException (0x80004005): Cannot delete or update a parent row: a foreign key constraint fails (`asmdb`.`topics`, CONSTRAINT `FK_Topics_Topics_ParentTopicId` FOREIGN KEY (`ParentTopicId`) REFERENCES `topics` (`Id`))
+   at MySqlConnector.Core.ServerSession.ReceiveReplyAsync(IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/Core/ServerSession.cs:line 894
+   at MySqlConnector.Core.ResultSet.ReadResultSetHeaderAsync(IOBehavior ioBehavior) in /_/src/MySqlConnector/Core/ResultSet.cs:line 37
+   at MySqlConnector.MySqlDataReader.ActivateResultSet(CancellationToken cancellationToken) in /_/src/MySqlConnector/MySqlDataReader.cs:line 130
+   at MySqlConnector.MySqlDataReader.InitAsync(CommandListPosition commandListPosition, ICommandPayloadCreator payloadCreator, IDictionary`2 cachedProcedures, IMySqlCommand command, CommandBehavior behavior, Activity activity, IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/MySqlDataReader.cs:line 483
+   at MySqlConnector.Core.CommandExecutor.ExecuteReaderAsync(CommandListPosition commandListPosition, ICommandPayloadCreator payloadCreator, CommandBehavior behavior, Activity activity, IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/Core/CommandExecutor.cs:line 56
+   at MySqlConnector.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/MySqlCommand.cs:line 357
+   at MySqlConnector.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/MySqlCommand.cs:line 350
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at ASafariM.Infrastructure.Repositories.TopicRepository.DeleteAsync(Guid id)
+   at ASafariM.Presentation.Controllers.TopicsController.DeleteTopic(Guid id)
+2025-02-05 17:31:19.601 [Information] Request: "POST" "/api/log"
+2025-02-05 17:31:19.601 [Information] Request: "POST" "/api/log"
+2025-02-05 17:34:47.277 [Information] Request: "POST" "/api/log"
+2025-02-05 17:34:47.277 [Information] Request: "POST" "/api/log"
+2025-02-05 17:34:47.277 [Information] Request: "POST" "/api/log"
+2025-02-05 17:34:47.277 [Information] Request: "POST" "/api/log"
+2025-02-05 17:34:47.305 [Information] Request: "POST" "/api/log"
+2025-02-05 17:34:47.316 [Information] Request: "DELETE" "/api/topics/fe8c9573-5c2c-411d-bd6b-16c65733c4a3"
+2025-02-05 17:34:47.423 [Error] Topic with id fe8c9573-5c2c-411d-bd6b-16c65733c4a3 has children, cannot delete
+2025-02-05 17:34:47.429 [Information] Request: "POST" "/api/log"
+2025-02-05 17:34:47.429 [Information] Request: "POST" "/api/log"
