@@ -19,7 +19,10 @@ using Microsoft.OpenApi.Models;
 using Serilog;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-var logDirectory = "E:/ASafariM/Logs";
+var logDirectory =
+    (Environment.GetEnvironmentVariable("ASAFARIM_ENV") == "production")
+        ? "/var/www/asafarim/logs"
+        : "E:/ASafariM/Logs";
 if (!Directory.Exists(logDirectory))
 {
     Directory.CreateDirectory(logDirectory);
@@ -29,7 +32,7 @@ Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Information()
     .WriteTo.File(
         Path.Combine(logDirectory, $"log-{DateTime.Now:yyyyMMdd}.txt"),
-        rollingInterval: RollingInterval.Day,
+        rollingInterval: RollingInterval.Hour,
         outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff} [{Level}] {Message}{NewLine}{Exception}"
     )
     .CreateLogger();

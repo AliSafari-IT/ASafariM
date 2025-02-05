@@ -10,6 +10,7 @@
     }
   },
   "scripts": {
+    "api": "node ./server.js",
     "serve": "cross-env NODE_ENV=development concurrently \"postcss ./src/index.css -o public/build/tailwind.css --watch\"  \"live-server ./\"",
     "dev": "concurrently \"yarn workspace asafarim-api start\" \"yarn workspace asafarim-ui start\"",
     "rebuild": "yarn install && vite build",
@@ -54,6 +55,7 @@
     "html2canvas": "^1.4.1",
     "jspdf": "^2.5.2",
     "jspdf-autotable": "^3.8.4",
+    "jwt-decode": "^4.0.0",
     "live-server": "^1.2.2",
     "loadash": "^1.0.0",
     "marked": "^14.1.3",

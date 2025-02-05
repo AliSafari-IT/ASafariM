@@ -7,12 +7,16 @@ import { makeStyles } from "@fluentui/react-components";
 import { isAxiosError } from "axios";
 import { ITopic } from "@/interfaces/ITopic";
 import { apiUrls } from "@/api/getApiUrls";
+import Alert from '../Containers/Alert/Alert';
 
 const topicUrl = apiUrls(window.location.hostname) + '/topics';
 
 const useStyles = makeStyles({
+    inputField: {
+        width: '350px',
+    },
     formContainer: {
-        width: "600px",
+        width: "500px",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
@@ -28,9 +32,6 @@ const useStyles = makeStyles({
         color: "var(--text-primary)",
         fontWeight: "bold",
         fontSize: "16px",
-    },
-    inputField: {
-        width: "100%",
     },
     submitButton: {
         width: "100%",
@@ -50,9 +51,10 @@ const EditTopicForm: FC = () => {
     const [parentTopicId, setParentTopicId] = useState<string | null>(null);
     const [parentTopics, setParentTopics] = useState<ITopic[]>([]);
     const [topic, setTopic] = useState<ITopic>();
-
     const [error, setError] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(true);
+    const [showSuccessAlert, setShowSuccessAlert] = useState<boolean>(false);
+    const [showErrorAlert, setShowErrorAlert] = useState<boolean>(false);
 
     useEffect(() => {
         const fetchTopic = async () => {
@@ -96,15 +98,20 @@ const EditTopicForm: FC = () => {
 
         try {
             await axios.put(`${topicUrl}/${id}`, { ...topic, parentTopicId });
-            alert("Topic updated successfully!");
-            navigate("/dashboard");
+            setShowSuccessAlert(true);
+            setTimeout(() => {
+                setShowSuccessAlert(false);
+                navigate("/dashboard");
+            }, 3000);
         } catch (error) {
             console.error("Error updating topic:", error);
             if (isAxiosError(error)) {
                 const errorMessage = error.response?.data?.message || "Failed to update the topic. Please try again.";
                 setError(errorMessage);
+                setShowErrorAlert(true);
             } else {
                 setError("An unexpected error occurred. Please try again later.");
+                setShowErrorAlert(true);
             }
         }
     };
@@ -128,7 +135,9 @@ const EditTopicForm: FC = () => {
     }
 
     return (
-        <Wrapper header={<h1 className="text-3xl font-bold text-center mb-8">Edit Topic</h1>} error={error}>
+        <Wrapper header={<h1 className="text-3xl font-bold text-center mb-8">Edit Topic</h1>}>
+            {showSuccessAlert && <Alert variant="success">Topic updated successfully!</Alert>}
+            {showErrorAlert && <Alert variant="error" onClose={() => setShowErrorAlert(false)}>{error}</Alert>}
             <Stack tokens={{ childrenGap: 20 }} className={classes.formContainer}>
                 <form onSubmit={handleSubmit}>
                     {renderError()}

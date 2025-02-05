@@ -17,5 +17,6 @@ namespace ASafariM.Domain.Interfaces
         Task<bool> ExistsAsync(Guid id);
         Task<bool> SlugExistsAsync(string slug);
         Task SaveChangesAsync();
+        Task<bool> HasChildrenAsync(Guid id);
     }
 }

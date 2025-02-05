@@ -28,5 +28,6 @@ namespace ASafariM.Domain.Entities
         public DateTime? UpdatedAt { get; set; }
         public Guid CreatedBy { get; set; }
         public Guid? UpdatedBy { get; set; }
+        public virtual ICollection<Topic> ChildTopics { get; set; } = new List<Topic>();
     }
 }

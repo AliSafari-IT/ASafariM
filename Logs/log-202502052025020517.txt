@@ -1,0 +1,406 @@
+2025-02-05 17:04:09.750 [Information] Logger configured successfully. → Path: "E:/ASafariM/Logs"
+2025-02-05 17:04:09.802 [Information] Starting up the application...
+2025-02-05 17:04:09.891 [Information] DbContext configured successfully.
+2025-02-05 17:04:10.148 [Information] Registering services...
+2025-02-05 17:04:10.148 [Information] Registered IUserRepository with UserRepository.
+2025-02-05 17:04:10.148 [Information] Registered IGenericRepository<Role> with GenericRepository<Role>.
+2025-02-05 17:04:10.148 [Information] Registered IGenericRepository<MarkdownFile> with GenericRepository<MarkdownFile>.
+2025-02-05 17:04:10.148 [Information] Registered IPostRepository with PostRepository.
+2025-02-05 17:04:10.152 [Information] Registered ITagRepository with TagRepository.
+2025-02-05 17:04:10.152 [Information] Registered ITopicRepository with TopicRepository.
+2025-02-05 17:04:10.152 [Information] Registered ISitemapItemRepository with SitemapItemRepository.
+2025-02-05 17:04:10.152 [Information] Registered RoleService.
+2025-02-05 17:04:10.152 [Information] Registered IUserService with UserService.
+2025-02-05 17:04:10.152 [Information] Registered IMarkdownFilesService with MarkdownFilesService.
+2025-02-05 17:04:10.152 [Information] Registered JwtTokenService.
+2025-02-05 17:04:10.159 [Information] Registered AutoMapper profiles.
+2025-02-05 17:04:10.160 [Information] CORS policy configured.
+2025-02-05 17:04:10.160 [Information] AutoMapper profiles registered.
+2025-02-05 17:04:10.243 [Information] JWT authentication configured.
+2025-02-05 17:04:10.341 [Information] Application started.
+2025-02-05 17:05:17.886 [Information] Request: "PUT" "/api/topics/08dd45eb-f861-4fca-8ca8-a15ebb031699"
+2025-02-05 17:05:21.673 [Information] Updated topic with id 08dd45eb-f861-4fca-8ca8-a15ebb031699
+2025-02-05 17:05:24.989 [Information] Request: "POST" "/api/log"
+2025-02-05 17:05:24.995 [Information] Request: "POST" "/api/log"
+2025-02-05 17:05:24.995 [Information] Request: "POST" "/api/log"
+2025-02-05 17:05:25.007 [Information] Request: "POST" "/api/log"
+2025-02-05 17:05:25.007 [Information] Request: "POST" "/api/log"
+2025-02-05 17:05:25.009 [Information] Request: "POST" "/api/log"
+2025-02-05 17:05:25.010 [Information] Request: "POST" "/api/log"
+2025-02-05 17:05:25.011 [Information] Request: "POST" "/api/log"
+2025-02-05 17:05:25.012 [Information] Request: "POST" "/api/log"
+2025-02-05 17:05:25.015 [Information] Request: "POST" "/api/log"
+2025-02-05 17:05:25.015 [Information] Request: "POST" "/api/log"
+2025-02-05 17:05:25.016 [Information] Request: "POST" "/api/log"
+2025-02-05 17:05:25.017 [Information] Request: "POST" "/api/log"
+2025-02-05 17:05:25.019 [Information] Request: "POST" "/api/log"
+2025-02-05 17:05:25.020 [Information] Request: "POST" "/api/log"
+2025-02-05 17:05:25.067 [Information] Request: "POST" "/api/log"
+2025-02-05 17:05:25.104 [Information] Request: "GET" "/api/tags"
+2025-02-05 17:05:25.104 [Information] Request: "GET" "/api/topics"
+2025-02-05 17:05:25.113 [Information] Fetching all tags
+2025-02-05 17:05:25.199 [Information] Successfully retrieved 4 tags
+2025-02-05 17:05:25.223 [Information] Request: "GET" "/api/tags"
+2025-02-05 17:05:25.225 [Information] Fetching all tags
+2025-02-05 17:05:25.305 [Information] Request: "GET" "/api/topics"
+2025-02-05 17:05:25.408 [Information] Successfully retrieved 4 tags
+2025-02-05 17:05:25.500 [Information] Request: "GET" "/api/tags"
+2025-02-05 17:05:25.501 [Information] Request: "GET" "/api/topics"
+2025-02-05 17:05:25.503 [Information] Fetching all tags
+2025-02-05 17:05:25.505 [Information] Request: "POST" "/api/log"
+2025-02-05 17:05:25.507 [Information] Request: "POST" "/api/log"
+2025-02-05 17:05:25.510 [Information] Successfully retrieved 4 tags
+2025-02-05 17:05:25.579 [Information] Request: "GET" "/api/tags"
+2025-02-05 17:05:25.580 [Information] Fetching all tags
+2025-02-05 17:05:25.593 [Information] Successfully retrieved 4 tags
+2025-02-05 17:05:25.617 [Information] Request: "POST" "/api/log"
+2025-02-05 17:05:25.620 [Information] Request: "GET" "/api/topics"
+2025-02-05 17:05:25.787 [Information] Request: "POST" "/api/log"
+2025-02-05 17:05:37.067 [Information] Request: "POST" "/api/log"
+2025-02-05 17:05:37.067 [Information] Request: "POST" "/api/log"
+2025-02-05 17:05:37.069 [Information] Request: "POST" "/api/log"
+2025-02-05 17:05:37.071 [Information] Request: "POST" "/api/log"
+2025-02-05 17:05:37.073 [Information] Request: "POST" "/api/log"
+2025-02-05 17:05:37.074 [Information] Request: "POST" "/api/log"
+2025-02-05 17:05:37.078 [Information] Request: "POST" "/api/log"
+2025-02-05 17:05:37.078 [Information] Request: "POST" "/api/log"
+2025-02-05 17:05:37.093 [Information] Request: "GET" "/api/tags/dc70e15e-4c28-421c-a954-b314a78ee68b"
+2025-02-05 17:05:37.093 [Information] Request: "GET" "/api/tags"
+2025-02-05 17:05:37.095 [Information] Fetching all tags
+2025-02-05 17:05:37.100 [Information] Successfully retrieved 4 tags
+2025-02-05 17:05:37.108 [Information] Request: "GET" "/api/tags"
+2025-02-05 17:05:37.109 [Information] Fetching all tags
+2025-02-05 17:05:37.111 [Information] Fetching tag with ID: dc70e15e-4c28-421c-a954-b314a78ee68b
+2025-02-05 17:05:37.113 [Information] Successfully retrieved 4 tags
+2025-02-05 17:05:37.131 [Information] Successfully retrieved tag with ID: dc70e15e-4c28-421c-a954-b314a78ee68b
+2025-02-05 17:05:37.137 [Information] Request: "GET" "/api/tags/dc70e15e-4c28-421c-a954-b314a78ee68b"
+2025-02-05 17:05:37.138 [Information] Fetching tag with ID: dc70e15e-4c28-421c-a954-b314a78ee68b
+2025-02-05 17:05:37.140 [Information] Request: "POST" "/api/log"
+2025-02-05 17:05:37.157 [Information] Successfully retrieved tag with ID: dc70e15e-4c28-421c-a954-b314a78ee68b
+2025-02-05 17:05:37.185 [Information] Request: "POST" "/api/log"
+2025-02-05 17:05:46.350 [Information] Request: "POST" "/api/log"
+2025-02-05 17:05:46.354 [Information] Request: "POST" "/api/log"
+2025-02-05 17:05:46.354 [Information] Request: "POST" "/api/log"
+2025-02-05 17:05:46.354 [Information] Request: "POST" "/api/log"
+2025-02-05 17:05:46.358 [Information] Request: "PUT" "/api/tags/dc70e15e-4c28-421c-a954-b314a78ee68b"
+2025-02-05 17:05:46.377 [Information] Updating tag with ID: dc70e15e-4c28-421c-a954-b314a78ee68b
+2025-02-05 17:05:46.412 [Information] Successfully updated tag with ID: dc70e15e-4c28-421c-a954-b314a78ee68b
+2025-02-05 17:05:46.419 [Information] Request: "POST" "/api/log"
+2025-02-05 17:05:46.544 [Information] Request: "POST" "/api/log"
+2025-02-05 17:05:46.544 [Information] Request: "POST" "/api/log"
+2025-02-05 17:05:46.544 [Information] Request: "POST" "/api/log"
+2025-02-05 17:05:46.545 [Information] Request: "POST" "/api/log"
+2025-02-05 17:05:46.545 [Information] Request: "POST" "/api/log"
+2025-02-05 17:05:46.552 [Information] Request: "POST" "/api/log"
+2025-02-05 17:05:46.552 [Information] Request: "POST" "/api/log"
+2025-02-05 17:05:46.557 [Information] Request: "POST" "/api/log"
+2025-02-05 17:05:46.591 [Information] Request: "POST" "/api/log"
+2025-02-05 17:05:46.592 [Information] Request: "POST" "/api/log"
+2025-02-05 17:05:46.593 [Information] Request: "POST" "/api/log"
+2025-02-05 17:05:46.594 [Information] Request: "POST" "/api/log"
+2025-02-05 17:05:46.595 [Information] Request: "POST" "/api/log"
+2025-02-05 17:05:46.596 [Information] Request: "POST" "/api/log"
+2025-02-05 17:05:46.596 [Information] Request: "POST" "/api/log"
+2025-02-05 17:05:46.596 [Information] Request: "POST" "/api/log"
+2025-02-05 17:05:46.621 [Information] Request: "GET" "/api/tags"
+2025-02-05 17:05:46.622 [Information] Request: "GET" "/api/topics"
+2025-02-05 17:05:46.622 [Information] Fetching all tags
+2025-02-05 17:05:46.630 [Information] Successfully retrieved 4 tags
+2025-02-05 17:05:46.649 [Information] Request: "GET" "/api/tags"
+2025-02-05 17:05:46.651 [Information] Fetching all tags
+2025-02-05 17:05:46.663 [Information] Successfully retrieved 4 tags
+2025-02-05 17:05:46.668 [Information] Request: "GET" "/api/tags"
+2025-02-05 17:05:46.669 [Information] Fetching all tags
+2025-02-05 17:05:46.671 [Information] Request: "GET" "/api/topics"
+2025-02-05 17:05:46.676 [Information] Successfully retrieved 4 tags
+2025-02-05 17:05:46.687 [Information] Request: "GET" "/api/tags"
+2025-02-05 17:05:46.689 [Information] Fetching all tags
+2025-02-05 17:05:46.695 [Information] Successfully retrieved 4 tags
+2025-02-05 17:05:46.714 [Information] Request: "GET" "/api/topics"
+2025-02-05 17:05:46.741 [Information] Request: "GET" "/api/topics"
+2025-02-05 17:05:46.826 [Information] Request: "POST" "/api/log"
+2025-02-05 17:05:46.828 [Information] Request: "POST" "/api/log"
+2025-02-05 17:05:46.829 [Information] Request: "POST" "/api/log"
+2025-02-05 17:05:46.867 [Information] Request: "POST" "/api/log"
+2025-02-05 17:05:56.024 [Information] Request: "GET" "/api/topics"
+2025-02-05 17:05:56.042 [Information] Request: "GET" "/api/topics"
+2025-02-05 17:05:56.047 [Information] Request: "POST" "/api/log"
+2025-02-05 17:05:56.068 [Information] Request: "POST" "/api/log"
+2025-02-05 17:08:49.595 [Information] Request: "GET" "/api/topics"
+2025-02-05 17:08:49.617 [Information] Request: "POST" "/api/log"
+2025-02-05 17:09:15.070 [Information] Request: "GET" "/api/topics"
+2025-02-05 17:09:15.098 [Information] Request: "GET" "/api/topics"
+2025-02-05 17:09:15.241 [Information] Request: "POST" "/api/log"
+2025-02-05 17:09:15.256 [Information] Request: "POST" "/api/log"
+2025-02-05 17:09:42.318 [Information] Request: "GET" "/api/topics"
+2025-02-05 17:09:42.363 [Information] Request: "POST" "/api/log"
+2025-02-05 17:10:14.097 [Information] Request: "GET" "/api/topics"
+2025-02-05 17:10:14.110 [Information] Request: "GET" "/api/topics"
+2025-02-05 17:10:14.176 [Information] Request: "POST" "/api/log"
+2025-02-05 17:10:14.177 [Information] Request: "POST" "/api/log"
+2025-02-05 17:10:47.686 [Information] Request: "GET" "/api/topics"
+2025-02-05 17:10:47.704 [Information] Request: "POST" "/api/log"
+2025-02-05 17:10:50.726 [Information] Request: "GET" "/api/topics"
+2025-02-05 17:10:50.760 [Information] Request: "POST" "/api/log"
+2025-02-05 17:11:07.097 [Information] Request: "GET" "/api/topics"
+2025-02-05 17:11:07.142 [Information] Request: "GET" "/api/topics"
+2025-02-05 17:11:07.278 [Information] Request: "POST" "/api/log"
+2025-02-05 17:11:07.294 [Information] Request: "POST" "/api/log"
+2025-02-05 17:11:28.886 [Information] Logger configured successfully. → Path: "E:/ASafariM/Logs"
+2025-02-05 17:11:28.938 [Information] Starting up the application...
+2025-02-05 17:11:29.051 [Information] DbContext configured successfully.
+2025-02-05 17:11:29.054 [Information] Registering services...
+2025-02-05 17:11:29.054 [Information] Registered IUserRepository with UserRepository.
+2025-02-05 17:11:29.054 [Information] Registered IGenericRepository<Role> with GenericRepository<Role>.
+2025-02-05 17:11:29.054 [Information] Registered IGenericRepository<MarkdownFile> with GenericRepository<MarkdownFile>.
+2025-02-05 17:11:29.054 [Information] Registered IPostRepository with PostRepository.
+2025-02-05 17:11:29.055 [Information] Registered ITagRepository with TagRepository.
+2025-02-05 17:11:29.055 [Information] Registered ITopicRepository with TopicRepository.
+2025-02-05 17:11:29.055 [Information] Registered ISitemapItemRepository with SitemapItemRepository.
+2025-02-05 17:11:29.055 [Information] Registered RoleService.
+2025-02-05 17:11:29.055 [Information] Registered IUserService with UserService.
+2025-02-05 17:11:29.055 [Information] Registered IMarkdownFilesService with MarkdownFilesService.
+2025-02-05 17:11:29.055 [Information] Registered JwtTokenService.
+2025-02-05 17:11:29.063 [Information] Registered AutoMapper profiles.
+2025-02-05 17:11:29.064 [Information] CORS policy configured.
+2025-02-05 17:11:29.064 [Information] AutoMapper profiles registered.
+2025-02-05 17:11:29.140 [Information] JWT authentication configured.
+2025-02-05 17:11:29.230 [Information] Application started.
+2025-02-05 17:12:44.621 [Information] Request: "GET" "/api/topics"
+2025-02-05 17:12:47.051 [Information] Request: "POST" "/api/log"
+2025-02-05 17:12:58.417 [Information] Request: "GET" "/api/topics"
+2025-02-05 17:12:58.521 [Information] Request: "GET" "/api/topics"
+2025-02-05 17:12:58.626 [Information] Request: "POST" "/api/log"
+2025-02-05 17:12:58.792 [Information] Request: "POST" "/api/log"
+2025-02-05 17:13:16.096 [Information] Request: "GET" "/api/topics"
+2025-02-05 17:13:16.124 [Information] Request: "POST" "/api/log"
+2025-02-05 17:13:21.825 [Information] Request: "POST" "/api/log"
+2025-02-05 17:13:21.826 [Information] Request: "POST" "/api/log"
+2025-02-05 17:13:21.829 [Information] Request: "POST" "/api/log"
+2025-02-05 17:13:21.829 [Information] Request: "POST" "/api/log"
+2025-02-05 17:13:21.840 [Information] Request: "POST" "/api/log"
+2025-02-05 17:13:21.862 [Information] Request: "POST" "/api/log"
+2025-02-05 17:13:21.863 [Information] Request: "POST" "/api/log"
+2025-02-05 17:13:21.863 [Information] Request: "POST" "/api/log"
+2025-02-05 17:13:21.864 [Information] Request: "POST" "/api/log"
+2025-02-05 17:13:21.866 [Information] Request: "POST" "/api/log"
+2025-02-05 17:13:21.868 [Information] Request: "POST" "/api/log"
+2025-02-05 17:13:21.870 [Information] Request: "POST" "/api/log"
+2025-02-05 17:13:21.870 [Information] Request: "POST" "/api/log"
+2025-02-05 17:13:21.872 [Information] Request: "POST" "/api/log"
+2025-02-05 17:13:21.872 [Information] Request: "POST" "/api/log"
+2025-02-05 17:13:21.875 [Information] Request: "POST" "/api/log"
+2025-02-05 17:13:21.968 [Information] Request: "GET" "/api/topics"
+2025-02-05 17:13:21.968 [Information] Request: "GET" "/api/tags"
+2025-02-05 17:13:21.983 [Information] Fetching all tags
+2025-02-05 17:13:21.991 [Information] Request: "GET" "/api/topics"
+2025-02-05 17:13:22.009 [Information] Request: "GET" "/api/topics"
+2025-02-05 17:13:22.030 [Information] Request: "GET" "/api/topics"
+2025-02-05 17:13:22.075 [Information] Request: "POST" "/api/log"
+2025-02-05 17:13:22.076 [Information] Request: "POST" "/api/log"
+2025-02-05 17:13:22.193 [Information] Successfully retrieved 4 tags
+2025-02-05 17:13:22.267 [Information] Request: "GET" "/api/tags"
+2025-02-05 17:13:22.269 [Information] Fetching all tags
+2025-02-05 17:13:22.272 [Information] Successfully retrieved 4 tags
+2025-02-05 17:13:22.276 [Information] Request: "GET" "/api/tags"
+2025-02-05 17:13:22.278 [Information] Request: "POST" "/api/log"
+2025-02-05 17:13:22.279 [Information] Fetching all tags
+2025-02-05 17:13:22.282 [Information] Successfully retrieved 4 tags
+2025-02-05 17:13:22.285 [Information] Request: "GET" "/api/tags"
+2025-02-05 17:13:22.285 [Information] Fetching all tags
+2025-02-05 17:13:22.288 [Information] Successfully retrieved 4 tags
+2025-02-05 17:13:22.376 [Information] Request: "POST" "/api/log"
+2025-02-05 17:13:29.580 [Information] Request: "POST" "/api/log"
+2025-02-05 17:13:29.580 [Information] Request: "POST" "/api/log"
+2025-02-05 17:13:29.580 [Information] Request: "POST" "/api/log"
+2025-02-05 17:13:29.582 [Information] Request: "POST" "/api/log"
+2025-02-05 17:13:29.585 [Information] Request: "POST" "/api/log"
+2025-02-05 17:13:29.586 [Information] Request: "POST" "/api/log"
+2025-02-05 17:13:29.591 [Information] Request: "POST" "/api/log"
+2025-02-05 17:13:29.593 [Information] Request: "POST" "/api/log"
+2025-02-05 17:13:29.601 [Information] Request: "POST" "/api/log"
+2025-02-05 17:13:29.602 [Information] Request: "POST" "/api/log"
+2025-02-05 17:13:29.604 [Information] Request: "POST" "/api/log"
+2025-02-05 17:13:29.606 [Information] Request: "POST" "/api/log"
+2025-02-05 17:13:29.599 [Information] Request: "POST" "/api/log"
+2025-02-05 17:13:29.633 [Information] Request: "POST" "/api/log"
+2025-02-05 17:13:29.633 [Information] Request: "POST" "/api/log"
+2025-02-05 17:13:29.633 [Information] Request: "POST" "/api/log"
+2025-02-05 17:13:29.652 [Information] Request: "GET" "/api/topics"
+2025-02-05 17:13:29.652 [Information] Request: "GET" "/api/tags"
+2025-02-05 17:13:29.653 [Information] Fetching all tags
+2025-02-05 17:13:29.657 [Information] Successfully retrieved 4 tags
+2025-02-05 17:13:29.670 [Information] Request: "GET" "/api/tags"
+2025-02-05 17:13:29.671 [Information] Fetching all tags
+2025-02-05 17:13:29.679 [Information] Successfully retrieved 4 tags
+2025-02-05 17:13:29.720 [Information] Request: "GET" "/api/topics"
+2025-02-05 17:13:29.723 [Information] Request: "GET" "/api/tags"
+2025-02-05 17:13:29.759 [Information] Request: "POST" "/api/log"
+2025-02-05 17:13:29.762 [Information] Fetching all tags
+2025-02-05 17:13:29.773 [Information] Successfully retrieved 4 tags
+2025-02-05 17:13:29.789 [Information] Request: "GET" "/api/topics"
+2025-02-05 17:13:29.791 [Information] Request: "GET" "/api/tags"
+2025-02-05 17:13:29.792 [Information] Fetching all tags
+2025-02-05 17:13:29.803 [Information] Successfully retrieved 4 tags
+2025-02-05 17:13:29.812 [Information] Request: "POST" "/api/log"
+2025-02-05 17:13:29.818 [Information] Request: "POST" "/api/log"
+2025-02-05 17:13:29.822 [Information] Request: "GET" "/api/topics"
+2025-02-05 17:13:29.947 [Information] Request: "POST" "/api/log"
+2025-02-05 17:13:32.193 [Information] Request: "GET" "/api/topics"
+2025-02-05 17:13:32.255 [Information] Request: "GET" "/api/topics"
+2025-02-05 17:13:32.261 [Information] Request: "POST" "/api/log"
+2025-02-05 17:13:32.370 [Information] Request: "POST" "/api/log"
+2025-02-05 17:13:55.901 [Information] Request: "GET" "/api/topics"
+2025-02-05 17:15:02.310 [Information] Request: "GET" "/api/topics"
+2025-02-05 17:15:03.557 [Information] Request: "GET" "/api/topics"
+2025-02-05 17:15:15.382 [Information] Request: "GET" "/api/topics"
+2025-02-05 17:16:01.457 [Information] Logger configured successfully. → Path: "E:/ASafariM/Logs"
+2025-02-05 17:16:01.502 [Information] Starting up the application...
+2025-02-05 17:16:01.571 [Information] DbContext configured successfully.
+2025-02-05 17:16:01.758 [Information] Registering services...
+2025-02-05 17:16:01.758 [Information] Registered IUserRepository with UserRepository.
+2025-02-05 17:16:01.758 [Information] Registered IGenericRepository<Role> with GenericRepository<Role>.
+2025-02-05 17:16:01.758 [Information] Registered IGenericRepository<MarkdownFile> with GenericRepository<MarkdownFile>.
+2025-02-05 17:16:01.758 [Information] Registered IPostRepository with PostRepository.
+2025-02-05 17:16:01.758 [Information] Registered ITagRepository with TagRepository.
+2025-02-05 17:16:01.758 [Information] Registered ITopicRepository with TopicRepository.
+2025-02-05 17:16:01.758 [Information] Registered ISitemapItemRepository with SitemapItemRepository.
+2025-02-05 17:16:01.758 [Information] Registered RoleService.
+2025-02-05 17:16:01.758 [Information] Registered IUserService with UserService.
+2025-02-05 17:16:01.758 [Information] Registered IMarkdownFilesService with MarkdownFilesService.
+2025-02-05 17:16:01.758 [Information] Registered JwtTokenService.
+2025-02-05 17:16:01.762 [Information] Registered AutoMapper profiles.
+2025-02-05 17:16:01.762 [Information] CORS policy configured.
+2025-02-05 17:16:01.762 [Information] AutoMapper profiles registered.
+2025-02-05 17:16:01.805 [Information] JWT authentication configured.
+2025-02-05 17:16:01.863 [Information] Application started.
+2025-02-05 17:16:02.527 [Information] Request: "GET" "/api/topics"
+2025-02-05 17:16:04.986 [Information] Retrieved 8 topics
+2025-02-05 17:16:13.448 [Information] Request: "GET" "/api/topics"
+2025-02-05 17:16:13.544 [Information] Retrieved 8 topics
+2025-02-05 17:16:13.556 [Information] Request: "GET" "/api/topics"
+2025-02-05 17:16:13.593 [Information] Request: "POST" "/api/log"
+2025-02-05 17:16:13.728 [Information] Retrieved 8 topics
+2025-02-05 17:16:13.741 [Information] Request: "POST" "/api/log"
+2025-02-05 17:16:43.699 [Information] Request: "POST" "/api/log"
+2025-02-05 17:16:43.699 [Information] Request: "POST" "/api/log"
+2025-02-05 17:16:43.699 [Information] Request: "POST" "/api/log"
+2025-02-05 17:16:43.713 [Information] Request: "POST" "/api/log"
+2025-02-05 17:16:43.782 [Information] Request: "GET" "/api/topics"
+2025-02-05 17:16:43.794 [Information] Retrieved 8 topics
+2025-02-05 17:16:43.834 [Information] Request: "POST" "/api/log"
+2025-02-05 17:16:43.834 [Information] Request: "POST" "/api/log"
+2025-02-05 17:16:43.838 [Information] Request: "POST" "/api/log"
+2025-02-05 17:16:43.844 [Information] Request: "POST" "/api/topics"
+2025-02-05 17:16:44.119 [Information] Created topic with id 08dd4600-7b5e-4259-8934-423d73154a6c
+2025-02-05 17:16:44.120 [Information] Created topic with slug "fdh"
+2025-02-05 17:16:44.120 [Information] Created topic with name "tpc0001"
+2025-02-05 17:16:44.120 [Information] Created topic with description "ghkhgjh"
+2025-02-05 17:16:44.120 [Information] Created topic with parent topic id 3fa85f64-5717-4562-b3fc-2c963f66afa6
+2025-02-05 17:16:44.139 [Information] Request: "POST" "/api/log"
+2025-02-05 17:17:09.096 [Information] Request: "GET" "/api/topics"
+2025-02-05 17:17:09.100 [Information] Retrieved 9 topics
+2025-02-05 17:18:20.413 [Information] Request: "GET" "/api/topics"
+2025-02-05 17:18:20.418 [Information] Retrieved 9 topics
+2025-02-05 17:18:20.421 [Information] Request: "GET" "/api/topics"
+2025-02-05 17:18:20.423 [Information] Retrieved 9 topics
+2025-02-05 17:18:20.439 [Information] Request: "POST" "/api/log"
+2025-02-05 17:18:20.439 [Information] Request: "POST" "/api/log"
+2025-02-05 17:18:21.414 [Information] Request: "POST" "/api/log"
+2025-02-05 17:18:21.416 [Information] Request: "POST" "/api/log"
+2025-02-05 17:18:21.416 [Information] Request: "POST" "/api/log"
+2025-02-05 17:18:21.420 [Information] Request: "POST" "/api/log"
+2025-02-05 17:18:21.429 [Information] Request: "POST" "/api/log"
+2025-02-05 17:18:21.429 [Information] Request: "POST" "/api/log"
+2025-02-05 17:18:21.431 [Information] Request: "POST" "/api/log"
+2025-02-05 17:18:21.432 [Information] Request: "POST" "/api/log"
+2025-02-05 17:18:21.438 [Information] Request: "POST" "/api/log"
+2025-02-05 17:18:21.441 [Information] Request: "POST" "/api/log"
+2025-02-05 17:18:21.441 [Information] Request: "POST" "/api/log"
+2025-02-05 17:18:21.442 [Information] Request: "POST" "/api/log"
+2025-02-05 17:18:21.444 [Information] Request: "POST" "/api/log"
+2025-02-05 17:18:21.448 [Information] Request: "POST" "/api/log"
+2025-02-05 17:18:21.459 [Information] Request: "POST" "/api/log"
+2025-02-05 17:18:21.463 [Information] Request: "POST" "/api/log"
+2025-02-05 17:18:21.488 [Information] Request: "GET" "/api/tags"
+2025-02-05 17:18:21.506 [Information] Fetching all tags
+2025-02-05 17:18:21.507 [Information] Request: "GET" "/api/topics"
+2025-02-05 17:18:21.518 [Information] Retrieved 9 topics
+2025-02-05 17:18:21.525 [Information] Request: "GET" "/api/topics"
+2025-02-05 17:18:21.533 [Information] Retrieved 9 topics
+2025-02-05 17:18:21.541 [Information] Request: "GET" "/api/topics"
+2025-02-05 17:18:21.541 [Information] Request: "POST" "/api/log"
+2025-02-05 17:18:21.554 [Information] Retrieved 9 topics
+2025-02-05 17:18:21.559 [Information] Request: "GET" "/api/topics"
+2025-02-05 17:18:21.563 [Information] Retrieved 9 topics
+2025-02-05 17:18:21.662 [Information] Successfully retrieved 4 tags
+2025-02-05 17:18:21.675 [Information] Request: "GET" "/api/tags"
+2025-02-05 17:18:21.677 [Information] Fetching all tags
+2025-02-05 17:18:21.682 [Information] Request: "POST" "/api/log"
+2025-02-05 17:18:21.683 [Information] Successfully retrieved 4 tags
+2025-02-05 17:18:21.722 [Information] Request: "GET" "/api/tags"
+2025-02-05 17:18:21.724 [Information] Fetching all tags
+2025-02-05 17:18:21.739 [Information] Successfully retrieved 4 tags
+2025-02-05 17:18:21.757 [Information] Request: "GET" "/api/tags"
+2025-02-05 17:18:21.758 [Information] Fetching all tags
+2025-02-05 17:18:21.762 [Information] Successfully retrieved 4 tags
+2025-02-05 17:18:21.796 [Information] Request: "POST" "/api/log"
+2025-02-05 17:18:21.801 [Information] Request: "POST" "/api/log"
+2025-02-05 17:18:31.975 [Information] Request: "GET" "/api/topics"
+2025-02-05 17:18:31.975 [Information] Request: "GET" "/api/topics/08dd45ea-c995-4ff8-8187-0e80b404a3d5"
+2025-02-05 17:18:31.981 [Information] Retrieved 9 topics
+2025-02-05 17:18:31.986 [Information] Request: "GET" "/api/topics"
+2025-02-05 17:18:31.988 [Information] Retrieved 9 topics
+2025-02-05 17:18:32.047 [Information] Retrieved topic with id 08dd45ea-c995-4ff8-8187-0e80b404a3d5
+2025-02-05 17:18:32.049 [Information] Request: "GET" "/api/topics/08dd45ea-c995-4ff8-8187-0e80b404a3d5"
+2025-02-05 17:18:32.056 [Information] Retrieved topic with id 08dd45ea-c995-4ff8-8187-0e80b404a3d5
+2025-02-05 17:18:39.696 [Information] Request: "PUT" "/api/topics/08dd45ea-c995-4ff8-8187-0e80b404a3d5"
+2025-02-05 17:18:39.840 [Information] Updated topic with id 08dd45ea-c995-4ff8-8187-0e80b404a3d5
+2025-02-05 17:18:43.042 [Information] Request: "POST" "/api/log"
+2025-02-05 17:18:43.123 [Information] Request: "POST" "/api/log"
+2025-02-05 17:18:43.133 [Information] Request: "POST" "/api/log"
+2025-02-05 17:18:43.133 [Information] Request: "POST" "/api/log"
+2025-02-05 17:18:43.137 [Information] Request: "POST" "/api/log"
+2025-02-05 17:18:43.140 [Information] Request: "POST" "/api/log"
+2025-02-05 17:18:43.143 [Information] Request: "POST" "/api/log"
+2025-02-05 17:18:43.143 [Information] Request: "POST" "/api/log"
+2025-02-05 17:18:43.144 [Information] Request: "POST" "/api/log"
+2025-02-05 17:18:43.145 [Information] Request: "POST" "/api/log"
+2025-02-05 17:18:43.148 [Information] Request: "POST" "/api/log"
+2025-02-05 17:18:43.151 [Information] Request: "GET" "/api/tags"
+2025-02-05 17:18:43.151 [Information] Fetching all tags
+2025-02-05 17:18:43.154 [Information] Request: "POST" "/api/log"
+2025-02-05 17:18:43.154 [Information] Request: "POST" "/api/log"
+2025-02-05 17:18:43.155 [Information] Request: "POST" "/api/log"
+2025-02-05 17:18:43.156 [Information] Successfully retrieved 4 tags
+2025-02-05 17:18:43.157 [Information] Request: "POST" "/api/log"
+2025-02-05 17:18:43.158 [Information] Request: "POST" "/api/log"
+2025-02-05 17:18:43.211 [Information] Request: "GET" "/api/topics"
+2025-02-05 17:18:43.211 [Information] Request: "GET" "/api/tags"
+2025-02-05 17:18:43.212 [Information] Fetching all tags
+2025-02-05 17:18:43.214 [Information] Retrieved 9 topics
+2025-02-05 17:18:43.215 [Information] Successfully retrieved 4 tags
+2025-02-05 17:18:43.218 [Information] Request: "GET" "/api/tags"
+2025-02-05 17:18:43.218 [Information] Request: "GET" "/api/topics"
+2025-02-05 17:18:43.219 [Information] Fetching all tags
+2025-02-05 17:18:43.221 [Information] Request: "POST" "/api/log"
+2025-02-05 17:18:43.222 [Information] Successfully retrieved 4 tags
+2025-02-05 17:18:43.223 [Information] Retrieved 9 topics
+2025-02-05 17:18:43.228 [Information] Request: "GET" "/api/topics"
+2025-02-05 17:18:43.230 [Information] Request: "GET" "/api/tags"
+2025-02-05 17:18:43.230 [Information] Fetching all tags
+2025-02-05 17:18:43.232 [Information] Retrieved 9 topics
+2025-02-05 17:18:43.233 [Information] Successfully retrieved 4 tags
+2025-02-05 17:18:43.236 [Information] Request: "GET" "/api/topics"
+2025-02-05 17:18:43.239 [Information] Retrieved 9 topics
+2025-02-05 17:18:43.292 [Information] Request: "POST" "/api/log"
+2025-02-05 17:18:43.293 [Information] Request: "POST" "/api/log"
+2025-02-05 17:18:43.295 [Information] Request: "POST" "/api/log"
+2025-02-05 17:18:57.683 [Information] Request: "POST" "/api/log"
+2025-02-05 17:18:57.684 [Information] Request: "POST" "/api/log"
+2025-02-05 17:18:57.691 [Information] Request: "POST" "/api/log"
+2025-02-05 17:18:57.693 [Information] Request: "POST" "/api/log"
+2025-02-05 17:18:57.749 [Information] Request: "POST" "/api/log"
+2025-02-05 17:18:57.755 [Information] Request: "DELETE" "/api/topics/fe8c9573-5c2c-411d-bd6b-16c65733c4a3"
+2025-02-05 17:18:57.949 [Information] Request: "POST" "/api/log"
+2025-02-05 17:18:57.950 [Information] Request: "POST" "/api/log"
