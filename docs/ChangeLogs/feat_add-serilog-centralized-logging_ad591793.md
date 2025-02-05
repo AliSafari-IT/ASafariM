@@ -1,6 +1,6 @@
 # Feature: Add Serilog for Centralized Logging with File Sink
 
-**Date:** 05-02-2025
+Date 05-02-2025
 
 ## Description of Changes
 

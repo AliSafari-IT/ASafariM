@@ -233,3 +233,19 @@
 2025-02-05 11:19:34.150 [Information] Request: "GET" "/api/userroles/4d790c85-0b2d-4302-afb4-8d7b364072b4/roles"
 2025-02-05 11:19:34.151 [Information] Retrieving roles for user. User ID: "4d790c85-0b2d-4302-afb4-8d7b364072b4"
 2025-02-05 11:19:34.158 [Information] Successfully retrieved roles for user. User ID: "4d790c85-0b2d-4302-afb4-8d7b364072b4", Roles: "baf65ac9-b71b-4669-b3b3-39c3773dd6f1"
+2025-02-05 11:27:59.580 [Information] Request: "GET" "/api/users"
+2025-02-05 11:27:59.598 [Information] Fetching all users from repository
+2025-02-05 11:27:59.693 [Information] Retrieved 2 users from repository
+2025-02-05 11:27:59.694 [Information] Mapping users to UserInfoDto
+2025-02-05 11:27:59.695 [Information] Mapped 2 users to UserInfoDto
+2025-02-05 11:27:59.695 [Information] Mapping UserInfoDto to UserDto
+2025-02-05 11:27:59.695 [Information] Successfully mapped 2 users to UserDto
+2025-02-05 11:27:59.696 [Information] Total users successfully retrieved: 2
+2025-02-05 11:27:59.704 [Information] Request: "GET" "/api/users"
+2025-02-05 11:27:59.705 [Information] Fetching all users from repository
+2025-02-05 11:27:59.710 [Information] Retrieved 2 users from repository
+2025-02-05 11:27:59.710 [Information] Mapping users to UserInfoDto
+2025-02-05 11:27:59.710 [Information] Mapped 2 users to UserInfoDto
+2025-02-05 11:27:59.710 [Information] Mapping UserInfoDto to UserDto
+2025-02-05 11:27:59.710 [Information] Successfully mapped 2 users to UserDto
+2025-02-05 11:27:59.710 [Information] Total users successfully retrieved: 2

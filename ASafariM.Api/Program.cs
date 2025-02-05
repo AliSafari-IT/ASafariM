@@ -172,7 +172,11 @@ try
     app.Use(
         async (context, next) =>
         {
-            Log.Information("Request: {Method} {Path}", context.Request.Method, context.Request.Path);
+            Log.Information(
+                "Request: {Method} {Path}",
+                context.Request.Method,
+                context.Request.Path
+            );
             await next.Invoke();
         }
     );
