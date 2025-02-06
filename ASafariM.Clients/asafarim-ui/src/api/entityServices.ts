@@ -1,6 +1,13 @@
 // E:\asm\apps\dashboard-client\src\api\dashboardServices.ts
 import axios, { AxiosError } from "axios";
 import apiUrls from "./getApiUrls";
+import { logger } from '@/utils/logger';
+import { jwtDecode } from "jwt-decode";
+
+interface JwtPayload {
+    role?: string;
+    exp?: number;
+}
 
 const api = axios.create({
     baseURL: apiUrls(window.location.hostname)
@@ -8,12 +15,18 @@ const api = axios.create({
 
 // Add request interceptor to include auth token
 api.interceptors.request.use((config) => {
-    const { auth } = JSON.parse(localStorage.getItem('auth') || '{}');
-    if (auth?.token) {
-        config.headers.Authorization = `Bearer ${auth.token}`;
+    const authData = JSON.parse(localStorage.getItem('auth') || '{}');
+    const token = authData?.token;
+    
+    if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+        logger.info(`Added authorization header to request: ${config.headers.Authorization}`);
+    } else {
+        logger.warn('No auth token found in localStorage');        
     }
     return config;
 }, (error) => {
+    logger.error('Error making request: ' + JSON.stringify(error));
     return Promise.reject(error);
 });
 
@@ -23,10 +36,26 @@ api.defaults.headers.patch['Content-Type'] = 'application/json';
 api.defaults.headers.delete['Content-Type'] = 'application/json';
 api.defaults.headers.get['Content-Type'] = 'application/json';
 
+const hasAdminRole = (): boolean => {
+    try {
+        const authData = JSON.parse(localStorage.getItem('auth') || '{}');
+        const token = authData?.token;
+        
+        if (!token) {
+            logger.warn('No token found when checking admin role');
+            return false;
+        }
 
+        const decoded = jwtDecode(token) as JwtPayload;
+        return decoded.role === 'Admin';
+    } catch (error) {
+        logger.error('Error checking admin role: ' + JSON.stringify(error));
+        return false;
+    }
+};
 
 const tableExistsInDb = async (tableName: string): Promise<boolean> => {
-    console.info(`Checking table existence: ${tableName} in ${apiUrls(window.location.hostname)}`);
+    logger.info(`Checking table existence: ${tableName} in ${apiUrls(window.location.hostname)}`);
     try {
         const response = await api.get(`${tableName}`);
         return response.status === 200;
@@ -43,17 +72,17 @@ const fetchEntities = async (entityTableName: string) => {
     try {
         // Convert singular to plural for API endpoints
         const endpoint = entityTableName.endsWith('s') ? entityTableName : `${entityTableName}s`;
-        console.log(`Fetching entities from endpoint: /${endpoint}`);
+        logger.info(`Fetching entities from endpoint: /${endpoint}`);
 
         const response = await api.get(`/${endpoint}`);
-        console.log(`Response from ${endpoint}:`, response.data);
+        logger.info(`Response from ${endpoint}: ${JSON.stringify(response.data)}`);
 
         return {
             success: true,
             data: response.data
         };
     } catch (error) {
-        console.error(`Error fetching ${entityTableName}:`, error);
+        logger.error(`Error fetching ${entityTableName}: ${JSON.stringify(error)}`);
         throw error;
     }
 };
@@ -77,39 +106,39 @@ const fetchEntityById = async (entityTableName: string, id: string): Promise<unk
 
     const url = `/${entityTableName}/${id}`;
 
-    console.log(`Fetching entity by ID from ${entityTableName}`, id);
+    logger.info(`Fetching entity by ID from ${entityTableName} ${id}`);
     return api.get(url)
         .then(response => {
-            console.log(`Fetched entity by ID from ${entityTableName}`, response.data);
+            logger.info(`Fetched entity by ID from ${entityTableName}: ${JSON.stringify(response.data)}`);
             return response.data;
         })
         .catch(error => {
-            console.error(`Error fetching entity by ID from ${entityTableName}`, error);
+            logger.error(`Error fetching entity by ID from ${entityTableName}: ${JSON.stringify(error)}`);
             throw new Error('Failed to fetch entity: ' + entityTableName);
         });
 }
 
 const addEntity = async (entityTableName: string, data: Record<string, unknown>) => {
-    console.debug(`Initiating addEntity function for table: ${entityTableName} with data:`, data);
+    logger.info(`Initiating addEntity function for table: ${entityTableName} with data: ${JSON.stringify(data)}`);
 
     // Validate the entity table name
     if (!await tableExistsInDb(entityTableName)) {
-        console.error(`Entity table does not exist: ${entityTableName}`);
+        logger.error(`Entity table does not exist: ${entityTableName}`);
         throw new Error(`Entity does not exist: ${entityTableName}`);
     }
 
     const url = `/${entityTableName}`;
-    console.debug(`Constructed URL for adding entity: ${url}`);
+    logger.info(`Constructed URL for adding entity: ${url}`);
 
     const sanitizedData = { ...data, id: undefined };
-    console.debug(`Sanitized data for POST request:`, sanitizedData);
+    logger.info(`Sanitized data for POST request: ${JSON.stringify(sanitizedData)}`);
 
     try {
         const response = await api.post(url, sanitizedData);
-        console.info(`Successfully added entity to ${entityTableName}`, response.data);
+        logger.info(`Successfully added entity to ${entityTableName}: ${JSON.stringify(response.data)}`);
         return response.data;
     } catch (error) {
-        console.error(`Error adding entity to ${entityTableName}`, error);
+        logger.error(`Error adding entity to ${entityTableName}: ${JSON.stringify(error)}`);
         throw new Error(`Failed to add entity: ${entityTableName}`);
     }
 }
@@ -118,19 +147,19 @@ const addEntity = async (entityTableName: string, data: Record<string, unknown>)
 const updateEntity = async (entityTableName: string, id: string, data: Record<string, unknown>) => {
     try {
         const endpoint = entityTableName.endsWith('s') ? entityTableName : `${entityTableName}s`;
-        console.log(`Updating entity in ${endpoint}:`, { id, data });
+        logger.info(`Updating entity in ${endpoint}: ${JSON.stringify({ id, data })}`);
 
         const url = `/${endpoint}/${id}`;
-        console.debug(`Constructed URL for updating entity: ${url}`);
+        logger.info(`Constructed URL for updating entity: ${url}`);
 
         const sanitizedData = { ...data };
         delete sanitizedData.id;
 
-        console.debug(`Sanitized data for PUT request:`, sanitizedData);
+        logger.info(`Sanitized data for PUT request: ${JSON.stringify(sanitizedData)}`);
 
         // Send the PUT request to update the entity
         const response = await api.put(url, sanitizedData);
-        console.info(`Successfully updated entity in ${endpoint}:`, response.data);
+        logger.info(`Successfully updated entity in ${endpoint}: ${JSON.stringify(response.data)}`);
 
         return {
             success: true,
@@ -139,36 +168,50 @@ const updateEntity = async (entityTableName: string, id: string, data: Record<st
     } catch (error: unknown) {
         if (error instanceof AxiosError) {
             if (error.response?.status === 404) {
-                console.error(`Entity not found: ${entityTableName}`);
+                logger.error(`Entity not found: ${entityTableName}`);
                 throw new Error(`Entity not found: ${entityTableName}`);
             } else if (error.response?.status === 400) {
-                console.error(`Invalid data for update:`, error.response.data);
+                logger.error(`Invalid data for update: ${JSON.stringify(error.response.data)}`);
                 throw new Error(error.response.data || `Invalid data for update: ${entityTableName}`);
             } else {
-                console.error(`Error updating entity in ${entityTableName}:`, error.response?.data);
+                logger.error(`Error updating entity in ${entityTableName}: ${JSON.stringify(error.response?.data)}`);
                 throw error;
             }
         } else {
-            console.error(`Error updating entity in ${entityTableName}:`, error);
+            logger.error(`Error updating entity in ${entityTableName}: ${JSON.stringify(error)}`);
             throw error;
         }
     }
 }
 
 const deleteEntity = async (entityTableName: string, id: string) => {
+    if (entityTableName === 'topics' && !hasAdminRole()) {
+        logger.error('Unauthorized: Admin role required to delete topics');
+        throw new Error('You must be an administrator to delete topics.');
+    }
+
     const url = `/${entityTableName}/${id}`;
-    console.debug(`Deleting entity from ${entityTableName}:`, id);
-    console.debug(`Constructed URL for deleting entity: ${url}`);
-    console.debug(`Sending DELETE request to delete entity: ${url}`);
-    return api.delete(url)
-        .then(response => {
-            console.info(`Successfully deleted entity from ${entityTableName}:`, response.data);
-            return response.data;
-        })
-        .catch(error => {
-            console.error('Error deleting entity:', error);
+    logger.info(`Deleting entity from ${entityTableName}: ${id}`);
+    logger.info(`Constructed URL for deleting entity: ${url}`);
+    logger.info(`Sending DELETE request to delete entity: ${url}`);
+    
+    try {
+        const response = await api.delete(url);
+        logger.info(`Successfully deleted entity from ${entityTableName}: ${JSON.stringify(response.data)}`);
+        return response.data;
+    } catch (error) {
+        const err = error as AxiosError;
+        if (err.response?.status === 401) {
+            logger.error('Authentication error: User is not authorized');
+            throw new Error('You are not authorized to perform this action. Please log in again.');
+        } else if (err.response?.status === 403) {
+            logger.error('Authorization error: User does not have required permissions');
+            throw new Error('You do not have permission to perform this action. Admin access required.');
+        } else {
+            logger.error('Error deleting entity: ' + JSON.stringify(error));
             throw error;
-        });
+        }
+    }
 }
 
 const dashboardServices = {

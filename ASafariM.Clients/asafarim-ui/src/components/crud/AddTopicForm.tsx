@@ -5,6 +5,10 @@ import { apiUrls } from "@/api/getApiUrls";
 import { TextField, Dropdown, IDropdownOption, PrimaryButton, Stack, Label } from "@fluentui/react";
 import Wrapper from "@/layout/Wrapper/Wrapper";
 import { makeStyles } from "@fluentui/react-components";
+import { logger } from '@/utils/logger';
+import dashboardServices from "@/api/entityServices";
+import { useNavigate } from "react-router-dom";
+import Loading from "../Loading/Loading";
 
 const topicUrl = apiUrls(window.location.hostname) + '/topics';
 
@@ -54,25 +58,40 @@ export const AddTopicForm: FC = () => {
         description: '',
         parentTopicId: undefined,
     });
+    const [loading, setLoading] = useState<boolean>(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchTopics = async () => {
+            setLoading(true);
             try {
                 const response = await axios.get(topicUrl);
                 setParentTopics(response.data);
+                logger.info('Fetched parent topics successfully: ' + JSON.stringify(response.data));
             } catch (error) {
-                console.error('Error fetching topics:', error);
+                logger.error('Error fetching topics: '+ JSON.stringify(error));
             }
         };
         fetchTopics();
+        setLoading(false);
     }, []);
+
+    useEffect(() => {
+        if(parentTopics.length > 0) {
+            setParentTopicId(parentTopics[0].id);
+        } else {
+            setParentTopicId(undefined);
+        }
+    }, [parentTopics]);
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
-            await axios.post(topicUrl, { ...topic, parentTopicId });
+            dashboardServices.addEntity('topics', { ...topic, parentTopicId });
+            logger.info('Topic added successfully: ' + JSON.stringify(topic));
+            navigate('/dashboard');
         } catch (error) {
-            console.error('Error adding topic:', error);
+            logger.error('Error adding topic: '+ JSON.stringify(error));
         }
     };
 
@@ -88,6 +107,9 @@ export const AddTopicForm: FC = () => {
     return (
         <Wrapper header={<h1 className="text-3xl font-bold text-center mb-8">Add New Topic</h1>}>
             <Stack tokens={{ childrenGap: 20 }} className={classes.formContainer}>
+                {loading && (
+                    <Loading />
+                )}
                 <form onSubmit={handleSubmit}>
                     <Stack tokens={{ childrenGap: 10 }}>
                         <Label className={classes.label}>Name</Label>
@@ -96,17 +118,15 @@ export const AddTopicForm: FC = () => {
                         <TextField name="slug" onChange={handleChange} value={topic.slug} required className={classes.inputField} />
                         <Label className={classes.label}>Description</Label>
                         <TextField name="description" onChange={handleChange} multiline rows={3} value={topic.description} required className={classes.inputField} />
-                        {parentTopics.length > 0 && (
-                            <>
+                        <>
                                 <Label className={classes.label}>Parent Topic</Label>
                                 <Dropdown
                                     selectedKey={parentTopicId || ''}
                                     onChange={handleDropdownChange}
-                                    options={parentTopics.map(topic => ({ key: topic.id, text: topic.name }))}
+                                    options={parentTopics?.map(topic => ({ key: topic.id, text: topic.name }))}
                                     className={classes.dropdown}
                                 />
                             </>
-                        )}
                         <PrimaryButton type="submit" className={classes.submitButton}>Add Topic</PrimaryButton>
                     </Stack>
                 </form>

@@ -1,24 +1,45 @@
 // DeleteForm.tsx
 import React, { useEffect, useState } from 'react';
-import { Button, FluentProvider, makeStyles, webDarkTheme, webLightTheme } from '@fluentui/react-components';
+import { Button, FluentProvider, makeStyles, tokens, shorthands, mergeClasses, webDarkTheme, webLightTheme } from '@fluentui/react-components';
 import { useNavigate, useParams } from 'react-router-dom';
 import Wrapper from '../../layout/Wrapper/Wrapper';
 import dashboardServices from '../../api/entityServices';
 import { useTheme } from '@/contexts/ThemeContext';
-import { Text } from '@fluentui/react';
+import Alert from '../Containers/Alert/Alert';
+import { logger } from '@/utils/logger';
+import { isAxiosError } from 'axios';
+
 const useStyles = makeStyles({
     formContainer: {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        gap: '10px',
+        gap: '20px',
         padding: '20px',
+        maxWidth: '600px',
+        margin: '0 auto',
     },
     formField: {
-        width: '300px',
+        width: '100%',
+        maxWidth: '300px',
+    },
+    deleteButton: {
+        backgroundColor: tokens.colorPaletteRedBackground3,
+        color: tokens.colorNeutralForegroundOnBrand,
+        ...shorthands.border('none'),
+        ...shorthands.padding('10px', '20px'),
+        ...shorthands.borderRadius('4px'),
+        cursor: 'pointer',
+        transition: 'background-color 0.2s',
+        '&:hover': {
+            backgroundColor: tokens.colorPaletteRedBackground3,
+        },
+        '&:disabled': {
+            backgroundColor: tokens.colorNeutralBackgroundDisabled,
+            cursor: 'not-allowed',
+        },
     },
 });
-
 
 interface DeleteFormProps {
     entity: string;
@@ -27,10 +48,12 @@ interface DeleteFormProps {
 const DeleteForm: React.FC<DeleteFormProps> = ({ entity }) => {
     const classes = useStyles();
     const navigate = useNavigate();
-    const theme = useTheme().theme === 'dark' ? webDarkTheme : webLightTheme;
+    const theme = useTheme();
+    const currentTheme = theme.theme === 'dark' ? webDarkTheme : webLightTheme;
     const [id, setId] = useState<string>('');
     const [error, setError] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(false);
+    const [showConfirmation, setShowConfirmation] = useState<boolean>(true);
 
     const param = useParams<{ id: string }>();
     useEffect(() => {
@@ -44,35 +67,52 @@ const DeleteForm: React.FC<DeleteFormProps> = ({ entity }) => {
             setError('No ID provided');
             return;
         }
-        console.log(`Starting delete operation for ID: ${id} of entity: ${entity}`);
+        logger.info(`Starting delete operation for ID: ${id} of entity: ${entity}`);
         setLoading(true);
         try {
             await dashboardServices.deleteEntity(entity, id);
-            console.log(`Successfully deleted entity: ${entity} with ID: ${id}`);
-            //success message
-            setError('');
+            logger.info(`Successfully deleted entity: ${entity} with ID: ${id}`);
             navigate(`/dashboard`);
         } catch (error) {
-            console.error('Error deleting entity:', error);
-            //error message
-            setError('Failed to delete entity');
+            if (isAxiosError(error)) {
+                const serverMessage = error.response?.data || 'Internal server error';
+                logger.error('Error deleting entity: ' + serverMessage);
+                setError(`Axios ERR: ${serverMessage}`);
+            } else {
+                logger.error('Error deleting entity: ' + JSON.stringify(error));
+                setError('Failed to delete entity: ' + JSON.stringify(error));
+            }
         } finally {
             setLoading(false);
         }
     };
 
     return (
-        <Wrapper header={`Are you sure you want to delete this ${entity}?   `}>
-            <FluentProvider theme={theme}>
-                {error && <Text variant="medium" color="error">{error}</Text>}
+        <Wrapper>
+            <FluentProvider theme={currentTheme}>
                 <div className={classes.formContainer}>
-                    <Text variant="medium" color="primary">Are you sure you want to delete this {entity}?</Text>
+                    {showConfirmation && (
+                        <Alert
+                            variant="warning"
+                            onClose={() => setShowConfirmation(false)}
+                        >
+                            Are you sure you want to delete this {entity}? This action cannot be undone.
+                        </Alert>
+                    )}
+
+                    {error && (
+                        <Alert
+                            variant="error"
+                            onClose={() => setError('')}
+                        >
+                            {error}
+                        </Alert>
+                    )}
+
                     <Button
-                        aria-label="Delete"
-                        type="button"
+                        className={mergeClasses(classes.formField, classes.deleteButton)}
                         onClick={handleDelete}
-                        disabled={loading}
-                        className={classes.formField}
+                        disabled={loading || !showConfirmation}
                     >
                         {loading ? 'Deleting...' : 'Delete'}
                     </Button>

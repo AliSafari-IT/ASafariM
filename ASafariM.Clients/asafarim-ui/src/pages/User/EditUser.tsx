@@ -10,6 +10,7 @@ import axios from 'axios';
 import { Dropdown, IDropdownOption } from '@fluentui/react';
 import { IRole } from '@/interfaces';
 import useAuth from '@/hooks/useAuth';
+import { logger } from '@/utils/logger';
 
 const EditUser: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -27,7 +28,7 @@ const EditUser: React.FC = () => {
 
   useEffect(() => {
     setIsLoggedInUserAdmin(authenticatedUser?.isAdmin || false);
-}, [authenticatedUser]);
+  }, [authenticatedUser]);
 
   const roleOptions = roles.map((role) => ({
     key: role.id,
@@ -43,18 +44,17 @@ const EditUser: React.FC = () => {
       setUser((prev) => {
         // Initialize roles array if it doesn't exist
         const currentRoles = prev?.roles || [];
-        
+
         // Convert option.key to string to match IUser interface
         const roleId = String(option.key);
-        
+
         // Update roles based on selection
         const updatedRoles = option.selected
           ? [...currentRoles, roleId] // Add role
           : currentRoles.filter((id) => id !== roleId); // Remove role
-        
-        console.log('Updated roles:', updatedRoles);
-        if(index !== undefined) {
-          console.log('Index:', index);
+        logger.info(`Updated roles in user: ${JSON.stringify(updatedRoles)}`);
+        if (index !== undefined) {
+          logger.info(`Index: ${index}`);
         }
 
         return {
@@ -82,7 +82,7 @@ const EditUser: React.FC = () => {
         setEmailAvailable(isAvailable);
       }
     } catch (err) {
-      console.error('Availability check failed:', err);
+      logger.error(`Availability check failed: ${err}`);
     }
   }, 500);
 
@@ -96,14 +96,14 @@ const EditUser: React.FC = () => {
             .toISOString()
             .split('T')[0];
         }
-        
+
         // Get user's roles
         const userRoles = await getRolesByUserId(id);
         fetchedUser.roles = userRoles.map(role => role.roleId);
-        console.log('Fetched user with roles:', fetchedUser);
+        logger.info(`Fetched user with roles: ${JSON.stringify(fetchedUser)}`);
         setUser(fetchedUser);
       } catch (err) {
-        console.error('Failed to fetch user:', err);
+        logger.error(`Failed to fetch user: ${err}`);
         setError('Failed to load user data.');
       }
     };
@@ -111,10 +111,10 @@ const EditUser: React.FC = () => {
     const fetchRoles = async () => {
       try {
         const fetchedRoles = await getRoles();
-        console.log('Available roles:', fetchedRoles);
+        logger.info(`Available roles: ${JSON.stringify(fetchedRoles)}`);
         setRoles(fetchedRoles);
       } catch (err) {
-        console.error('Failed to fetch roles:', err);
+        logger.error(`Failed to fetch roles: ${err}`);
         setError('Failed to load roles.');
       }
     };
@@ -125,7 +125,7 @@ const EditUser: React.FC = () => {
 
   useEffect(() => {
     if (user?.roles) {
-      console.log('Initial user roles:', user.roles);
+      logger.info(`Initial user roles: ${JSON.stringify(user.roles)}`);
     }
   }, [user?.roles]);
 
@@ -165,8 +165,9 @@ const EditUser: React.FC = () => {
     try {
       if (!user) return;
 
-      console.log("pages/User/EditUser.tsx: handleSubmit - User data:", user);
-
+      logger.info(`User data: ${JSON.stringify(user)}`);
+      const newRole = user.roles?.[0] || ''; // Assuming the first role is the one to update
+      logger.info(`Role changed to: ${newRole}`);
       // First, update the user's basic information
       const { roles: currentRoles, ...userWithoutRoles } = user;
       const updatedUser = await updateUserByAdmin({
@@ -178,13 +179,13 @@ const EditUser: React.FC = () => {
       if (updatedUser) {
         // Get the current roles for comparison
         const existingRoles = (await getRolesByUserId(user.id)).map(role => role.roleId);
-        
+
         // Determine which roles to add and remove
         const rolesToAdd = currentRoles?.filter(role => !existingRoles.includes(role)) || [];
         const rolesToRemove = existingRoles.filter(role => !currentRoles?.includes(role));
 
-        console.log('Roles to add:', rolesToAdd);
-        console.log('Roles to remove:', rolesToRemove);
+        logger.info(`Roles to add: ${JSON.stringify(rolesToAdd)}`);
+        logger.info(`Roles to remove: ${JSON.stringify(rolesToRemove)}`);
 
         // Update roles if necessary
         if (rolesToAdd.length > 0) {
@@ -197,9 +198,9 @@ const EditUser: React.FC = () => {
         navigate('/users');
       }
     } catch (error) {
-      console.error('Error updating user:', error);
+      logger.error(`Error updating user: ${error}`);
       if (axios.isAxiosError(error)) {
-        console.error('Error response:', error.response?.data);
+        logger.error(`Error response: ${JSON.stringify(error.response?.data)}`);
         setError(error.response?.data?.message || 'Failed to update user. Please try again.');
       } else {
         setError('Failed to update user. Please try again.');

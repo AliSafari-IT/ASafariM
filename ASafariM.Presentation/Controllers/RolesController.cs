@@ -4,6 +4,7 @@ using ASafariM.Domain.Entities;
 using ASafariM.Domain.Enums;
 using ASafariM.Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 
 namespace ASafariM.Presentation.Controllers
 {
@@ -17,7 +18,7 @@ namespace ASafariM.Presentation.Controllers
     /// </remarks>
     public class RolesController : Controller
     {
-        private readonly RoleService? _roleService;
+        private readonly RoleService _roleService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RolesController"/> class.
@@ -32,12 +33,18 @@ namespace ASafariM.Presentation.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Role>>> GetRoles()
         {
-            if (_roleService == null)
+            try
             {
-                return NotFound();
+                Log.Information("Fetching all roles");
+                var roles = await _roleService.GetAllRolesAsync();
+                Log.Information("Successfully retrieved {RoleCount} roles", roles?.Count() ?? 0);
+                return Ok(roles);
             }
-            var roles = await _roleService.GetAllRolesAsync();
-            return Ok(roles);
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Error occurred while fetching all roles");
+                return StatusCode(500, "An error occurred while retrieving roles");
+            }
         }
 
         // GET ROLE NAMES
@@ -49,20 +56,31 @@ namespace ASafariM.Presentation.Controllers
         [HttpGet("{roleId}")]
         public async Task<ActionResult<string>> GetRoleName(Guid roleId)
         {
-            if (roleId == Guid.Empty)
+            try
             {
-                return BadRequest("Role ID cannot be empty.");
+                Log.Information("Fetching role name for ID: {RoleId}", roleId);
+
+                if (roleId == Guid.Empty)
+                {
+                    Log.Warning("Attempted to fetch role with empty ID");
+                    return BadRequest("Role ID cannot be empty.");
+                }
+
+                var role = await _roleService.GetRoleByIdAsync(roleId);
+                if (role == null)
+                {
+                    Log.Warning("Role not found with ID: {RoleId}", roleId);
+                    return NotFound();
+                }
+
+                Log.Information("Successfully retrieved role name for ID: {RoleId}", roleId);
+                return Ok(role.Name);
             }
-            if (_roleService == null)
+            catch (Exception ex)
             {
-                return NotFound();
+                Log.Error(ex, "Error occurred while fetching role name for ID: {RoleId}", roleId);
+                return StatusCode(500, "An error occurred while retrieving the role");
             }
-            var role = await _roleService.GetRoleByIdAsync(roleId);
-            if (role == null)
-            {
-                return NotFound();
-            }
-            return Ok(role.Name);
         }
     }
 }

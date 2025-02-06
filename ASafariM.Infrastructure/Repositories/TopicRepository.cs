@@ -6,6 +6,7 @@ using ASafariM.Domain.Entities;
 using ASafariM.Domain.Interfaces;
 using ASafariM.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 
 namespace ASafariM.Infrastructure.Repositories
 {
@@ -81,6 +82,22 @@ namespace ASafariM.Infrastructure.Repositories
         public async Task SaveChangesAsync()
         {
             await _context.SaveChangesAsync();
+        }
+        public async Task<bool> HasChildrenAsync(Guid id)
+        {
+            try
+            {
+                var topic = await _context.Topics
+                    .Include(t => t.ChildTopics)
+                    .FirstOrDefaultAsync(t => t.Id == id);
+
+                return topic?.ChildTopics?.Any() == true;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Error checking for child topics for id {id}", id);
+                throw;
+            }
         }
     }
 }
