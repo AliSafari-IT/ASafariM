@@ -108,3 +108,5 @@ backend/ASafariM.Application.dll
 backend/ASafariM.Domain.dll
 backend/ASafariM.Infrastructure.dll
 backend/ASafariM.Presentation.dll
+Logs/*.txt
+Logs/*.log
