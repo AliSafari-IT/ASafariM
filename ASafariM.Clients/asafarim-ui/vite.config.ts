@@ -6,6 +6,10 @@ import path from 'path';
 
 // https://vite.dev/config/
 export default defineConfig({
+  optimizeDeps: {
+    include: ['d3', 'react', 'react-dom'],
+    exclude: ['@fluentui/tokens'],
+  },
   plugins: [
     react(),
     vitePluginMd({
@@ -39,9 +43,27 @@ export default defineConfig({
   },
   assetsInclude: ['**/*.md'],
   build: {
-    outDir: 'dist', // Relative to the yarn workspace root directory: E:\ASafariM\dist
-    emptyOutDir: true, // Cleans the directory before build
+    outDir: 'dist',
+    emptyOutDir: true,
     sourcemap: true,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'd3': ['d3'],
+          'vendor': [
+            'react',
+            'react-dom',
+            '@fluentui/react-components',
+            '@fluentui/react'
+          ]
+        },
+      },
+    },
+    commonjsOptions: {
+      include: [/node_modules/],
+      transformMixedEsModules: true
+    },
+    chunkSizeWarningLimit: 2000,
   },
 });
 
