@@ -3,10 +3,24 @@ import NotAuthenticated from "../../components/NotAuthenticated";
 import HomePanels from "./HomePanels";
 import useAuth from "../../hooks/useAuth";
 import StacksPage from "../../components/Stacks/StacksPage";
+import DisplayMd from "@/components/MarkdownPage/DisplayMd";
+import { useLocation } from "react-router-dom";
+import readme from './readme.md?raw';
+import React, { useEffect } from "react";
 
 export const Home = () => {
   const user = useAuth(); 
-  
+  const location = useLocation();
+
+  const [mdFile, setMdFile] = React.useState<string>('');
+  useEffect(() => {
+    const loadMarkdownContent = async () => {
+      setMdFile(readme);
+    };
+
+    loadMarkdownContent();
+  }, [location.pathname]);
+
   if (!user) {
     return ( 
       <Layout header={<></>} pageTitle="NotAuthenticated Page">
@@ -19,6 +33,7 @@ export const Home = () => {
 
   return (
     <Layout  header={<></>} pageTitle="Home">
+      <DisplayMd markdownContent={mdFile}   id="readMe"  />
       <StacksPage docBranch="techDocs" stackTitle="Tech Stacks"/>
       <HomePanels />
     </Layout>
