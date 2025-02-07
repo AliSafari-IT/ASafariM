@@ -5,7 +5,7 @@ import useAuth from "../../hooks/useAuth";
 import StacksPage from "../../components/Stacks/StacksPage";
 import DisplayMd from "@/components/MarkdownPage/DisplayMd";
 import { useLocation } from "react-router-dom";
-import readme from './readme.md?raw';
+import readme from './README.md?raw';
 import React, { useEffect } from "react";
 
 export const Home = () => {

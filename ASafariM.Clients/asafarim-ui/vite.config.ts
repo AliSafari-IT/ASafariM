@@ -3,6 +3,8 @@ import { configDefaults, defineConfig as defineVitest } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 import vitePluginMd from 'vite-plugin-md';
 import path from 'path';
+import md from 'vite-plugin-md';
+
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -15,8 +17,9 @@ export default defineConfig({
     vitePluginMd({
       markdownItOptions: {
         html: true,
-      },
+      },      
     }),
+    md()
   ],
   resolve: {
     alias: {
