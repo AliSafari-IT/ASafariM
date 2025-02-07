@@ -1,207 +1,143 @@
-# ASafariM Backend
+# ASafariM - Full Stack Clean Architecture Solution
 
-Date: 2025-01-14
-Updated: 2025-01-14
+A modern, enterprise-grade full-stack application built with .NET 9 and React TypeScript, following Clean Architecture principles.
 
-ASafariM Backend is a robust and scalable application built with **ASP.NET Core 9**, designed to provide APIs and backend logic for a project management platform. This backend adheres to **Clean Architecture** principles, ensuring maintainability and extensibility.
+[![GitHub Repository](https://img.shields.io/badge/GitHub-Repository-brightgreen.svg)](https://github.com/AliSafari-IT/ASafariM)
 
-## Features
+## Architecture
 
-### General Features
-- **Scalable Architecture**: Modular and scalable design using Clean Architecture.
-- **Role-Based Access Control (RBAC)**: Supports multiple user roles like Admin, Manager, and User with specific permissions.
-- **Secure Authentication and Authorization**: Implements JWT for secure API access.
-- **Real-Time Updates**: Provides real-time notifications using SignalR.
-- **API Documentation**: Self-documented APIs using Swagger/OpenAPI.
-- **Health Monitoring**: Integrated health checks for system monitoring.
-- **Error Handling**: Middleware for global error handling and logging.
+This solution follows Clean Architecture principles, with a clear separation of concerns:
 
----
+- `ASafariM.Api`: REST API endpoints and API configuration
+- `ASafariM.Application`: Application business logic and use cases
+- `ASafariM.Domain`: Core business logic and entities
+- `ASafariM.Infrastructure`: External concerns and implementations
+- `ASafariM.Presentation`: API controllers and presentation logic
+- `ASafariM.Clients/asafarim-ui`: React TypeScript frontend application
+- `ASafariM.Test`: Unit and integration tests
 
-## Tech Stack
+## Technology Stack
 
-### Backend
-- **Framework**: ASP.NET Core 9
-- **Database**: MySQL (via Entity Framework Core)
-- **Authentication**: JSON Web Tokens (JWT)
-- **Real-Time Communication**: SignalR
-- **Testing**: xUnit for unit tests and TestCafe for End-to-End tests
+### Backend (.NET 9)
+- ASP.NET Core 9.0 Web API
+- Entity Framework Core with MySQL
+- AutoMapper for object mapping
+- JWT Authentication
+- Swagger/OpenAPI documentation
+- Serilog for structured logging
 
-### DevOps
-- **Workspace Management**: Nx Workspace
-- **CI/CD**: GitHub Actions
-- **Deployment**: NGINX on Ubuntu VPS
-
----
-
-## Workspace Structure
-
-### Applications
-- `ASafariM.Api`: ASP.NET Core backend project with API logic and controllers.
-
-### Libraries
-- `ASafariM.Domain`: Core domain models and business logic.
-- `ASafariM.Infrastructure`: Shared infrastructure services like database access, caching, and email services.
-- `ASafariM.Application`: Use cases and application-specific logic.
-
----
+### Frontend (React + TypeScript)
+- Vite.js as build tool
+- React with TypeScript
+- Fluent UI components
+- Yarn package manager
+- Modern development tools:
+  - ESLint
+  - PostCSS
+  - Vitest for testing
 
 ## Prerequisites
 
-Ensure the following tools are installed on your system:
-- **.NET SDK** (v9.0+)
-- **MySQL** (v8.0+)
-- **Node.js** (v16.14.0+)
-- **Yarn** (v4.5.1)
+- .NET 9.0 SDK
+- Node.js (LTS version)
+- Yarn package manager
+- MySQL Server
 
----
+## Installation
 
-## Setup
-
-### Clone the Repository
-
+1. Clone the repository:
 ```bash
-$ git clone https://asafarim-website@dev.azure.com/asafarim-website/asafarim/_git/asafarim
-$ cd asafarim
+git clone https://github.com/AliSafari-IT/ASafariM.git
+cd ASafariM
 ```
 
-### Install Dependencies
-
+2. Install backend dependencies:
 ```bash
-$ yarn install
+dotnet restore
 ```
 
-### Database Setup
-
-1. Configure your MySQL connection in `appsettings.json`:
-
-```json
-{
-  "ConnectionStrings": {
-    "DefaultConnection": "Server=localhost;Database=asmDB;User=ali;Password=Ali+123456/;"
-  }
-}
-```
-
-2. Apply database migrations:
-
+3. Install frontend dependencies:
 ```bash
-$ cd ASafariM.Api
-$ dotnet ef database update
+cd ASafariM.Clients/asafarim-ui
+yarn install
 ```
 
-### Start the Backend
+## Running the Application
 
+### Backend
 ```bash
-$ yarn dev:backend
+cd ASafariM.Api
+dotnet run
 ```
 
----
+### Frontend
+```bash
+cd ASafariM.Clients/asafarim-ui
+yarn start
+```
 
-## API Endpoints
-
-### Authentication
-- `POST /api/auth/login`: User login
-- `POST /api/auth/register`: User registration
-- `POST /api/auth/logout`: User logout
-
-### Projects
-- `GET /api/projects`: Get all projects
-- `POST /api/projects`: Create a new project
-- `PUT /api/projects/{id}`: Update an existing project
-- `DELETE /api/projects/{id}`: Delete a project
-
-### Tasks
-- `GET /api/tasks`: Get all tasks
-- `POST /api/tasks`: Create a new task
-- `PUT /api/tasks/{id}`: Update an existing task
-- `DELETE /api/tasks/{id}`: Delete a task
-
-### Health Check
-- `GET /health`: Health check endpoint
-
----
+For development with hot reload:
+```bash
+yarn dev
+```
 
 ## Testing
 
-### Run Unit Tests
-
+Run backend tests:
 ```bash
-$ cd apps/backends/ASafariM.Server
-$ dotnet test
+dotnet test
 ```
 
-### Run End-to-End Tests
-
+Run frontend tests:
 ```bash
-$ cd e2e/tests
-$ testcafe chrome tests/**/*.test.js
+cd ASafariM.Clients/asafarim-ui
+yarn test
 ```
 
----
+## Project Structure
 
-## Deployment
-
-### Build the Backend
-
-```bash
-$ yarn build:backend
+```
+ASafariM/
+├── ASafariM.Api/            # REST API endpoints
+├── ASafariM.Application/    # Application business logic
+├── ASafariM.Domain/         # Core business logic
+├── ASafariM.Infrastructure/ # External concerns
+├── ASafariM.Presentation/   # API Controllers
+├── ASafariM.Test/          # Test projects
+└── ASafariM.Clients/       # Frontend applications
+    └── asafarim-ui/        # React TypeScript client
 ```
 
-### Publish the Backend
+## Security
 
-```bash
-$ dotnet publish -c Release -o ./dist
-```
-
-### Deploy to Server
-
-1. Copy the `dist` folder to your server.
-2. Configure NGINX to proxy requests to your backend.
-
-Example NGINX configuration:
-
-```nginx
-server {
-    listen 80;
-    server_name asafarim.com;
-
-    location / {
-        proxy_pass http://localhost:5000;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    }
-}
-```
-
----
-
-## License
-
-This project is licensed under the [MIT License](LICENSE).
-
----
+- JWT-based authentication
+- HTTPS enforcement
+- Cross-Origin Resource Sharing (CORS) configuration
+- Secure password hashing
+- Input validation and sanitization
 
 ## Contributing
 
-Contributions are welcome! Follow these steps:
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-1. Fork the repository.
-2. Create a new branch:
+## License
 
-```bash
-$ git checkout -b feature-name
-```
+This project is licensed under the terms of the LICENSE.txt file included in the repository.
 
-3. Commit your changes and push them to your fork.
-4. Open a pull request.
+## Acknowledgments
+
+- Clean Architecture principles by Robert C. Martin
+- Microsoft's ASP.NET Core team
+- React development team
+- All contributors and maintainers
+
+## Issues and Support
+
+If you encounter any issues or need support, please [open an issue](https://github.com/AliSafari-IT/ASafariM/issues) on GitHub.
 
 ---
-
-## Contact
-
-For inquiries or support, contact:
-- **Email**: [asafarim@outlook.com](mailto:asafarim@outlook.com)
-- **Azure DevOps**: [asafarim](https://dev.azure.com/asafarim-website)
-
+Built with ❤️ using Clean Architecture principles
