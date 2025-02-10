@@ -9,7 +9,7 @@ app.get('/users/edit/:id', (req, res) => {
     res.send('Hello World!');
 });
 
-app.post('/api/log', (req, res) => {
+app.post('/api/logs', (req, res) => {
     const { message, level } = req.body;
 
     console.log('Received log message:', message, 'with level:', level); // Debugging log

@@ -1,6 +1,6 @@
 export const DeleteSvgIcon = <svg
     xmlns="http://www.w3.org/2000/svg"
-    className="h-6 w-6 inline-block"
+    className="h-6 w-6 inline-block text-[var(--text-primary)] hover:text-[var(--error)]"
     fill="none"
     viewBox="0 0 24 24"
     stroke="currentColor"

@@ -1,3 +1,4 @@
+using ASafariM.Application.Utils;
 using ASafariM.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using TimeZone = ASafariM.Domain.Entities.TimeZone;
@@ -56,7 +57,6 @@ public class AppDbContext : DbContext
     public DbSet<UserNotificationPreference> UserNotificationPreferences { get; set; }
     public DbSet<UserPrivacyPreference> UserPrivacyPreferences { get; set; }
     public DbSet<UserThemePreference> UserThemePreferences { get; set; }
-
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -139,14 +139,40 @@ public class AppDbContext : DbContext
                 .OnDelete(DeleteBehavior.Cascade);
         });
 
+        modelBuilder.Entity<Post>(entity =>
+        {
+            entity.HasKey(p => p.Id);
+
+            // Configure the relationship with User (Author)
+            entity
+                .HasOne(p => p.Author) // Assuming Post has a navigation property Author
+                .WithMany(u => u.Posts) // Assuming User has a collection of Posts
+                .HasForeignKey(p => p.AuthorId) // Assuming Post has a foreign key property AuthorId
+                .OnDelete(DeleteBehavior.Restrict); // Adjust delete behavior as needed
+        });
+
         // Configure User Preference entities
-        modelBuilder.Entity<UserAccessibilityPreference>().HasKey(ap => new { ap.UserId, ap.AccessibilityPreferenceId });
-        modelBuilder.Entity<UserGeographicalPreference>().HasKey(ugp => new { ugp.UserId, ugp.GeographicalPreferenceId });
-        modelBuilder.Entity<UserLanguagePreference>().HasKey(ulp => new { ulp.UserId, ulp.LanguagePreferenceId });
-        modelBuilder.Entity<UserMiscellaneousPreference>().HasKey(ump => new { ump.UserId, ump.MiscellaneousPreferenceId });
-        modelBuilder.Entity<UserNotificationPreference>().HasKey(unp => new { unp.UserId, unp.NotificationPreferenceId });
-        modelBuilder.Entity<UserPrivacyPreference>().HasKey(upp => new { upp.UserId, upp.PrivacyPreferenceId });
-        modelBuilder.Entity<UserThemePreference>().HasKey(utt => new { utt.UserId, utt.ThemePreferenceId });
+        modelBuilder
+            .Entity<UserAccessibilityPreference>()
+            .HasKey(ap => new { ap.UserId, ap.AccessibilityPreferenceId });
+        modelBuilder
+            .Entity<UserGeographicalPreference>()
+            .HasKey(ugp => new { ugp.UserId, ugp.GeographicalPreferenceId });
+        modelBuilder
+            .Entity<UserLanguagePreference>()
+            .HasKey(ulp => new { ulp.UserId, ulp.LanguagePreferenceId });
+        modelBuilder
+            .Entity<UserMiscellaneousPreference>()
+            .HasKey(ump => new { ump.UserId, ump.MiscellaneousPreferenceId });
+        modelBuilder
+            .Entity<UserNotificationPreference>()
+            .HasKey(unp => new { unp.UserId, unp.NotificationPreferenceId });
+        modelBuilder
+            .Entity<UserPrivacyPreference>()
+            .HasKey(upp => new { upp.UserId, upp.PrivacyPreferenceId });
+        modelBuilder
+            .Entity<UserThemePreference>()
+            .HasKey(utt => new { utt.UserId, utt.ThemePreferenceId });
 
         // Configure Project entity
         modelBuilder.Entity<Project>(entity =>
@@ -370,13 +396,16 @@ public class AppDbContext : DbContext
             entity.Property(ph => ph.MitigationPlan).HasMaxLength(1000);
         });
 
+        // Get the current user's ID
+        var userId = Guid.NewGuid();
+
         // Seed User
         modelBuilder
             .Entity<User>()
             .HasData(
                 new User
                 {
-                    Id = Guid.NewGuid(),
+                    Id = userId,
                     FirstName = "Ali R.",
                     LastName = "Safari",
                     Email = "ali@asafarim.com",
@@ -392,15 +421,42 @@ public class AppDbContext : DbContext
                     ConcurrencyStamp = "ali@asafarim.com",
                     IsActive = true,
                     ProfilePicture = "https://asafarim.com/logoT.svg",
-                    CreatedBy = Guid.NewGuid(),
+                    CreatedBy = userId,
                     CreatedAt = DateTime.UtcNow,
-                    UpdatedBy = Guid.NewGuid(),
+                    UpdatedBy = userId,
                     UpdatedAt = DateTime.UtcNow,
                     IsAdmin = true,
                     IsDeleted = false,
                     DeletedAt = null,
                     DeletedBy = null,
                     DateOfBirth = new DateTime(1975, 7, 15),
+                },
+                new User
+                {
+                    Id = Guid.NewGuid(),
+                    FirstName = "User",
+                    LastName = "Example",
+                    Email = "user@example.com",
+                    NormalizedEmail = "USER@EXAMPLE.COM",
+                    PasswordHash = PasswordHasher.HashPassword("User+123456/"),
+                    LastLogin = DateTime.UtcNow,
+                    PhoneNumber = "+123456789",
+                    PhoneNumberConfirmed = true,
+                    UserName = "example_user",
+                    NormalizedUserName = "EXAMPLE_USER",
+                    SecurityStamp = "user@example.com",
+                    ConcurrencyStamp = "user@example.com",
+                    IsActive = true,
+                    ProfilePicture = "https://asafarim.com/logoT.svg",
+                    CreatedBy = userId,
+                    CreatedAt = DateTime.UtcNow,
+                    UpdatedBy = userId,
+                    UpdatedAt = DateTime.UtcNow,
+                    IsAdmin = true,
+                    DateOfBirth = new DateTime(1975, 7, 15),
+                    IsDeleted = false,
+                    DeletedAt = null,
+                    DeletedBy = null,
                 }
             );
 

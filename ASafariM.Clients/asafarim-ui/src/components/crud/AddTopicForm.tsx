@@ -69,7 +69,7 @@ export const AddTopicForm: FC = () => {
                 setParentTopics(response.data);
                 logger.info('Fetched parent topics successfully: ' + JSON.stringify(response.data));
             } catch (error) {
-                logger.error('Error fetching topics: '+ JSON.stringify(error));
+                logger.error('Error fetching topics: ' + JSON.stringify(error));
             }
         };
         fetchTopics();
@@ -77,7 +77,7 @@ export const AddTopicForm: FC = () => {
     }, []);
 
     useEffect(() => {
-        if(parentTopics.length > 0) {
+        if (parentTopics.length > 0) {
             setParentTopicId(parentTopics[0].id);
         } else {
             setParentTopicId(undefined);
@@ -91,7 +91,7 @@ export const AddTopicForm: FC = () => {
             logger.info('Topic added successfully: ' + JSON.stringify(topic));
             navigate('/dashboard');
         } catch (error) {
-            logger.error('Error adding topic: '+ JSON.stringify(error));
+            logger.error('Error adding topic: ' + JSON.stringify(error));
         }
     };
 
@@ -119,14 +119,14 @@ export const AddTopicForm: FC = () => {
                         <Label className={classes.label}>Description</Label>
                         <TextField name="description" onChange={handleChange} multiline rows={3} value={topic.description} required className={classes.inputField} />
                         <>
-                                <Label className={classes.label}>Parent Topic</Label>
-                                <Dropdown
-                                    selectedKey={parentTopicId || ''}
-                                    onChange={handleDropdownChange}
-                                    options={parentTopics?.map(topic => ({ key: topic.id, text: topic.name }))}
-                                    className={classes.dropdown}
-                                />
-                            </>
+                            <Label className={classes.label}>Parent Topic</Label>
+                            <Dropdown
+                                selectedKey={parentTopicId || ''}
+                                onChange={handleDropdownChange}
+                                options={parentTopics?.map(topic => ({ key: topic.id, text: topic.name }))}
+                                className={classes.dropdown}
+                            />
+                        </>
                         <PrimaryButton type="submit" className={classes.submitButton}>Add Topic</PrimaryButton>
                     </Stack>
                 </form>

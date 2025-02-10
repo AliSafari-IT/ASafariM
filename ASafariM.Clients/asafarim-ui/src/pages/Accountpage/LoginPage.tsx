@@ -4,8 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import { login } from '../../api/authapi';
 import { isAxiosError } from 'axios';
 import DeletedAccountMessage from '../../components/DeletedAccountMessage';
+import { logger } from '@/utils/logger';
 
 const LoginPage = () => {
+  logger.info('LoginPage component mounted');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
@@ -13,8 +15,14 @@ const LoginPage = () => {
   const [showDeletedMessage, setShowDeletedMessage] = useState(false);
   const navigate = useNavigate();
 
+  const demoUser = {
+    email: "user@example.com",
+    password: "User+123456/"
+  };
+
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    logger.info('Login button clicked');
 
     if (!email || !password) {
       setError('Email and password are required');
@@ -23,9 +31,11 @@ const LoginPage = () => {
 
     setError(null);
     setLoading(true);
+    logger.info('Calling login API with email:' + email);
 
     try {
       const auth = await login({ email, password });
+      logger.info('Login API call successful');
       if (auth.token) {
         localStorage.setItem('auth', JSON.stringify(auth));
         const returnTo = localStorage.getItem('returnTo') || '/';
@@ -33,11 +43,9 @@ const LoginPage = () => {
         navigate(returnTo);
       }
     } catch (err: unknown) {
-      console.error('Login error:', err);
+      logger.error('Login error: ' + JSON.stringify(err, null, 2));
 
-      // Check if err is an AxiosError
       if (isAxiosError(err)) {
-        // Check for status codes and set appropriate error messages
         if (err.response) {
           const { status, data } = err.response;
           if (status === 401) {
@@ -55,6 +63,7 @@ const LoginPage = () => {
       }
     } finally {
       setLoading(false);
+      logger.info('Login process completed. Loading state: ' + loading);
     }
   };
 
@@ -68,11 +77,27 @@ const LoginPage = () => {
 
   return (
     <Wrapper header={<div className="w-full text-center py-8 text-2xl text-primary border-b border-primary z-10">Login</div>}>
-      <div className="flex items-center justify-center min-h-[calc(100vh-var(--navbar-height)-200px)]">
+      <div className="flex flex-col items-center justify-center min-h-[calc(100vh-var(--navbar-height)-200px)]">
         <form
           onSubmit={handleLogin}
           className="login-form flex flex-col items-center justify-center space-y-6 w-full max-w-md mx-auto px-4 py-8 bg-white dark:bg-gray-800 shadow-md rounded-lg"
         >
+          <div className="w-full flex flex-col items-center">
+            <div className="text-sm text-gray-600 dark:text-gray-300 mb-2">
+              Click to autofill demo credentials:
+            </div>
+            <div 
+              className="border border-red-500 p-3 rounded-md bg-gray-50 dark:bg-gray-700 cursor-pointer w-full text-center"
+              onClick={() => {
+                setEmail(demoUser.email);
+                setPassword(demoUser.password);
+              }}
+            >
+              <p className="text-gray-800 dark:text-gray-300"><strong>Email:</strong> {demoUser.email}</p>
+              <p className="text-gray-800 dark:text-gray-300"><strong>Password:</strong> {demoUser.password}</p>
+            </div>
+          </div>
+
           <div className="w-full">
             <label htmlFor="email" className="block mb-2 font-semibold text-gray-700 dark:text-gray-300">
               Email:

@@ -9,5 +9,7 @@ namespace ASafariM.Domain.Entities
         public Guid Id { get; set; }
         public string? Name { get; set; }
         public string? Description { get; set; }
+        // If you want bidirectional navigation:
+        public Post[]? Posts { get; set; } = new Post[] { };
     }
 }

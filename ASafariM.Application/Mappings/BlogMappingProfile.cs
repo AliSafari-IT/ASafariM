@@ -43,6 +43,15 @@ namespace ASafariM.Application.Mappings
             CreateMap<PrivacyPreference, PrivacyPreferenceDto>();
             CreateMap<AccessibilityPreference, AccessibilityPreferenceDto>();
             CreateMap<MiscellaneousPreference, MiscellaneousPreferenceDto>();
+
+            CreateMap<Post, PostDto>()
+                .ForMember(dest => dest.Tags, opt => opt.MapFrom(src => src.Tags))
+                .ForMember(dest => dest.Categories, opt => opt.MapFrom(src => src.Categories))
+                .ForMember(dest => dest.Collaborators, opt => opt.MapFrom(src => src.Collaborators))
+                .ForMember(dest => dest.Comments, opt => opt.MapFrom(src => src.Comments))
+                .ForMember(dest => dest.Attachments, opt => opt.MapFrom(src => src.Attachments))
+                .ForMember(dest => dest.Links, opt => opt.MapFrom(src => src.Links))
+                .ForMember(dest => dest.RelatedPosts, opt => opt.MapFrom(src => src.RelatedPosts));
         }
     }
 }

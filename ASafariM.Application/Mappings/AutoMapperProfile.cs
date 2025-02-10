@@ -14,8 +14,6 @@ namespace ASafariM.Application.Mappings
             CreateMap<MarkdownFileUser, ContributorDto>()
                 .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserId))
                 .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.User.Email))
-                .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.User.FirstName))
-                .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.User.LastName))
                 .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User.UserName))
                 .ForMember(dest => dest.PenName, opt => opt.MapFrom(src => src.User.PenName))
                 .ForMember(
@@ -36,6 +34,15 @@ namespace ASafariM.Application.Mappings
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
                 .ForMember(dest => dest.UpdatedAt, opt => opt.Ignore());
+
+            CreateMap<Post, PostDto>()
+                .ForMember(dest => dest.Tags, opt => opt.MapFrom(src => src.Tags))
+                .ForMember(dest => dest.Categories, opt => opt.MapFrom(src => src.Categories))
+                .ForMember(dest => dest.Collaborators, opt => opt.MapFrom(src => src.Collaborators))
+                .ForMember(dest => dest.Comments, opt => opt.MapFrom(src => src.Comments))
+                .ForMember(dest => dest.Attachments, opt => opt.MapFrom(src => src.Attachments))
+                .ForMember(dest => dest.Links, opt => opt.MapFrom(src => src.Links))
+                .ForMember(dest => dest.RelatedPosts, opt => opt.MapFrom(src => src.RelatedPosts));
         }
     }
 }

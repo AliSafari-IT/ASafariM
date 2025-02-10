@@ -195,7 +195,7 @@ const EditUser: React.FC = () => {
           await removeRolesFromUser(user.id, rolesToRemove);
         }
 
-        navigate('/users');
+        navigate('/users/view/' + updatedUser.id);
       }
     } catch (error) {
       logger.error(`Error updating user: ${error}`);

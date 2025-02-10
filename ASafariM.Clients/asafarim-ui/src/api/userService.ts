@@ -305,12 +305,17 @@ export const assignRolesToUser = async (userId: string, roleIds: string[]) => {
 export const removeRolesFromUser = async (userId: string, roleIds: string[]) => {
   console.log('Removing roles from user:', userId, 'with roles:', roleIds);
   try {
-    const response = await api.delete(`${USER_ROLES_URL}/${userId}/roles`, { data: roleIds });
+    const response = await api.delete(`${USER_ROLES_URL}/${userId}/roles`, {
+      data: roleIds
+    });
     console.log('Removed roles response:', response.data);
     return response.data;
-  } catch (error) {
-    console.error('Error removing roles:', error);
-    throw error;
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      console.error('Error removing roles:', error.response?.data || error.message);
+      throw new Error(`Failed to remove roles: ${error.response?.data?.message || error.message}`);
+    }
+    throw new Error('An unexpected error occurred while removing roles');
   }
 };
 

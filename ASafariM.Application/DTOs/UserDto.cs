@@ -1,32 +1,49 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ASafariM.Domain.Entities;
-using ASafariM.Domain.Enums;
+using System.ComponentModel.DataAnnotations;
 
-namespace ASafariM.Application.DTOs;
-
-public class UserDto
+namespace ASafariM.Application.DTOs
 {
-    public Guid Id { get; set; }
-    public string FirstName { get; set; } = string.Empty;
-    public string LastName { get; set; } = string.Empty;
-    public string? UserName { get; set; }
-    public string Email { get; set; } = string.Empty;
-    public bool IsAdmin { get; set; }
-    public bool IsActive { get; set; }
+    public class UserDto
+    {
+        public Guid Id { get; set; }
 
-    // createdAt, updatedAt, lastLogin, isdeleted
-    public DateTime? CreatedAt { get; set; } = DateTime.UtcNow;
-    public DateTime? UpdatedAt { get; set; } = DateTime.UtcNow;
-    public bool IsDeleted { get; set; } = false;
-    public DateTime? DeletedAt { get; set; } = null;
-    public DateTime? LastLogin { get; set; } = null; // Timestamp of the user's last login,
-    public string? Biography { get; set; }
-    public string? Remark { get; set; }
-    public string? ProfilePicture { get; set; }
-    public string? Address { get; set; }
-    public DateTime? DateOfBirth { get; set; }
+        [Required, MaxLength(50)]
+        public string FirstName { get; set; } = string.Empty;
+
+        [Required, MaxLength(50)]
+        public string LastName { get; set; } = string.Empty;
+
+        [Required, EmailAddress]
+        public string Email { get; set; } = string.Empty;
+
+        [MaxLength(50)]
+        public string? UserName { get; set; }
+
+        public bool IsAdmin { get; set; } = false;
+
+        public string? ProfilePicture { get; set; }
+
+        public bool? IsActive { get; set; }
+
+        public DateTime CreatedAt { get; set; }
+
+        public DateTime? UpdatedAt { get; set; }
+
+        public DateTime? DateOfBirth { get; set; }
+
+        public DateTime? LastLogin { get; set; }
+
+        public int FailedLoginAttempts { get; set; } = 0;
+
+        public bool IsLockedOut { get; set; } = false;
+
+        [MaxLength(50)]
+        public string? PenName { get; set; }
+
+        [Url]
+        public string? Website { get; set; }
+
+        [MaxLength(1000)]
+        public string? Biography { get; set; }
+    }
 }

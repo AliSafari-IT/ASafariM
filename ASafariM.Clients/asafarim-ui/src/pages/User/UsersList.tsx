@@ -2,18 +2,21 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { IUser } from '../../interfaces/IUser';
-import { deleteUserByAdmin, getUsers } from '../../api/userService';
+import { deleteUserByAdmin, getUsers, getRolesByUserId, getRoles } from '../../api/userService';
 import Wrapper from '../../layout/Wrapper/Wrapper';
 import Footer from '../../layout/Footer/Footer';
 import Header from '@/layout/Header/Header';
 import { EditSvgIcon } from '@/assets/SvgIcons/EditSvgIcon';
 import { DeleteSvgIcon } from '@/assets/SvgIcons/DeleteSvgIcon';
+import { ViewSvgIcon } from '@/assets/SvgIcons/ViewSvgIcon';
 import useAuth from '@/hooks/useAuth';
 import axios from 'axios'; // Import axios
 
 const UsersList: React.FC = () => {
   const [users, setUsers] = useState<IUser[]>([]);
   const [error, setError] = useState<string | null>(null); // Error state
+  const [userRoles, setUserRoles] = useState<Record<string, string[]>>({});
+  const [roleNamesMap, setRoleNamesMap] = useState<Record<string, string>>({});
   const { authenticatedUser } = useAuth();
 
   // Fetch users only once on mount
@@ -39,6 +42,39 @@ const UsersList: React.FC = () => {
   useEffect(() => {
     console.log("UsersList => users", users);
   }, [users]);
+
+  const fetchUserRoles = async (userId: string) => {
+    try {
+      const roles = await getRolesByUserId(userId);
+      const roleNames = roles.map(role => role.roleId);
+      setUserRoles(prev => ({...prev, [userId]: roleNames}));
+    } catch (err) {
+      console.error('Error fetching roles for user', userId, err);
+    }
+  };
+
+  useEffect(() => {
+    users.forEach(user => {
+      fetchUserRoles(user.id);
+    });
+  }, [users]);
+
+  const fetchRoleNames = async () => {
+    try {
+      const roles = await getRoles(); // Assuming getRoles returns all roles with id and name
+      const newRoleNames = roles.reduce((acc, role) => {
+        acc[role.id] = role.name;
+        return acc;
+      }, {} as Record<string, string>);
+      setRoleNamesMap(prev => ({...prev, ...newRoleNames}));
+    } catch (err) {
+      console.error('Error fetching role names:', err);
+    }
+  };
+
+  useEffect(() => {
+    fetchRoleNames();
+  }, [userRoles]);
 
   // Handle delete user
   const handleDelete = async (id: string) => {
@@ -119,14 +155,21 @@ const UsersList: React.FC = () => {
                 <td className="px-6 py-3">{user.lastName}</td>
                 <td className="px-6 py-3">{user.userName}</td>
                 <td className="px-6 py-3">
-                  {user.roles?.map((role, index) => (
-                    <span key={role} className="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded mr-1 mb-1">
-                      {role}
-                      {index < (user.roles?.length || 0) - 1 ? ', ' : ''}
+                  {userRoles[user.id]?.map((roleId, index) => (
+                    <span key={`${user.id}-${roleId}`} className="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded mr-1 mb-1">
+                      {roleNamesMap[roleId] || roleId}
+                      {index < (userRoles[user.id]?.length || 0) - 1 ? ', ' : ''}
                     </span>
-                  ))}
+                  )) || 'No roles assigned'}
                 </td>
                 <td className="px-6 py-3">
+                  <Link
+                    to={`/users/view/${user.id}`}
+                    className="cursor-pointer mr-2 inline-block"
+                    title='View User'
+                  >
+                    {ViewSvgIcon}
+                  </Link>
                   <Link
                     to={`/users/edit/${user.id}`}
                     className="cursor-pointer mr-2 inline-block"

@@ -15,6 +15,7 @@ interface LayoutProps {
   topbar?: React.ReactNode;
   children?: React.ReactNode;
   className?: string;
+  id?: string;
   error?: string;
 }
 
@@ -26,6 +27,7 @@ const Wrapper: React.FC<LayoutProps> = ({
   sidebar,
   children,
   className,
+  id,
   error,
 }) => {
   const { theme } = useTheme();
@@ -89,7 +91,7 @@ const Wrapper: React.FC<LayoutProps> = ({
   }, [isMobileMenuOpen]);
 
   return (
-    <div className={`flex flex-col min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] ${className}`}>
+    <div id={id || 'wrapper'} className={`flex flex-col min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] ${className}`}>
       <Navbar />
       {/* Mobile Sidebar Overlay */}
       {isMobileMenuOpen && (

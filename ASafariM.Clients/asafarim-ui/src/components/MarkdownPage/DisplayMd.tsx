@@ -115,8 +115,27 @@ const DisplayMd: React.FC<DisplayMdProps> = ({ markdownContent, id }) => {
         rehypePlugins={[
           rehypeRaw,
           [rehypeSanitize, {
+            tagNames: ['img', 'figure','p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'ul', 'ol', 'li', 'blockquote', 'strong', 'em', 'code', 'hr', 'br', 'table', 'thead', 'tbody', 'tr', 'th', 'td', 'div', 'span', 'iframe', 'figure', 'figcaption', 'details', 'summary', 'pre', 'code', 'kbd', 'samp', 'var', 'sub', 'sup', 'mark', 'del', 'ins', 'b', 'u', 'i', 'sup', 'sub', 'span', 'hr', 'br', 'a'],
+            voidElements: ['br', 'img', 'iframe', 'details', 'summary'],
             attributes: {
+              'img': ['src', 'alt', 'width', 'height'],
+              'figure': ['src', 'alt', 'width', 'height'],
+              'p': ['className', 'id', 'style'],
+              'h1': ['className', 'id', 'style'],
+              'h2': ['className', 'id', 'style'],
+              'h3': ['className', 'id', 'style'],
+              'h4': ['className', 'id', 'style'],
+              'h5': ['className', 'id', 'style'],
+              'h6': ['className', 'id', 'style'],
+              'ul': ['className', 'id', 'style'],
+              'ol': ['className', 'id', 'style'],
+              'li': ['className', 'id', 'style'],
+              'blockquote': ['className', 'id', 'style'],
+              'strong': ['className', 'id', 'style'],
+              'em': ['className', 'id', 'style'],
+              'hr': ['className', 'id', 'style'],
               '*': ['className', 'id', 'style'],
+              'a': ['href', 'target', 'rel'],
               'code': ['className', 'language'],
               'pre': ['className', 'language']
             }

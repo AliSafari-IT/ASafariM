@@ -11,6 +11,7 @@ namespace ASafariM.Domain.Entities
         public bool IsDarkTheme { get; set; } = false;
         public required string FontSize { get; set; } = "14px";
         public required LanguagePreference Language { get; set; } = new();
+        public Guid LanguageId { get; set; }
         public required string AccentColor { get; set; } = "#FF0000";
         public required string BackgroundColor { get; set; } = "#FFFFFF";
         public required string PrimaryColor { get; set; } = "#000000";
@@ -22,6 +23,7 @@ namespace ASafariM.Domain.Entities
         public required string LightModeBackgroundColor { get; set; } = "#FFFFFF";
         public required string DarkModePrimaryColor { get; set; } = "#000000";
         public required string LightModePrimaryColor { get; set; } = "#FFFFFF";
+
         // Audit fields
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime? UpdatedAt { get; set; }

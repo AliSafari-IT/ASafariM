@@ -5,10 +5,12 @@ namespace ASafariM.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class LogController : ControllerBase
+    public class LogsController : ControllerBase
     {
+        private static readonly object _lock = new object();
+
         [HttpPost]
-        public IActionResult Log([FromBody] LogMessage logMessage)
+        public IActionResult Log(LogMessage logMessage)
         {
             var logDirectory =
                 (Environment.GetEnvironmentVariable("ASAFARIM_ENV") == "production")
@@ -20,20 +22,24 @@ namespace ASafariM.Api.Controllers
                 Directory.CreateDirectory(logDirectory);
             }
 
-            var logFilePath = Path.Combine(logDirectory, $"ui-log-{DateTime.Now:yyyyMMdd}.txt");
+            var logFilePath = Path.Combine(logDirectory, $"log-ui_{DateTime.Now:yyyyMMdd}.log");
 
             // Format the log message with a timestamp and level
             var formattedMessage =
                 $"{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff} [{logMessage.Level}] {logMessage.Message}{Environment.NewLine}";
 
-            System.IO.File.AppendAllText(logFilePath, formattedMessage);
+            lock (_lock)
+            {
+                System.IO.File.AppendAllText(logFilePath, formattedMessage);
+            }
+
             return Ok();
         }
     }
 
     public class LogMessage
     {
-        public string Message { get; set; }
-        public string Level { get; set; }
+        public string? Message { get; set; }
+        public string? Level { get; set; }
     }
 }

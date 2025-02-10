@@ -57,14 +57,11 @@ namespace ASafariM.Infrastructure.Services
                 var user = new User
                 {
                     Id = Guid.NewGuid(),
-                    FirstName = command.FirstName,
-                    LastName = command.LastName,
                     UserName = command.UserName,
                     Email = command.Email,
                     NormalizedEmail = command.Email.ToUpperInvariant(),
                     NormalizedUserName = command.UserName?.ToUpperInvariant(),
                     Biography = command.Biography,
-                    Remark = command.Remark,
                     ProfilePicture = command.ProfilePicture,
                     IsAdmin = command.IsAdmin,
                     DateOfBirth = command.DateOfBirth,
@@ -204,8 +201,6 @@ namespace ASafariM.Infrastructure.Services
                 var user = new User
                 {
                     Id = Guid.NewGuid(),
-                    FirstName = command.FirstName,
-                    LastName = command.LastName,
                     Email = command.Email,
                     NormalizedEmail = normalizedEmail,
                     UserName = command.UserName,
@@ -247,13 +242,9 @@ namespace ASafariM.Infrastructure.Services
                     Log.Warning("User not found for update with ID: {UserId}", command.Id);
                     throw new InvalidOperationException("User not found.");
                 }
-
-                user.FirstName = command.FirstName ?? user.FirstName;
-                user.LastName = command.LastName ?? user.LastName;
                 user.Email = command.Email ?? user.Email;
                 user.UserName = command.UserName ?? user.UserName;
                 user.Biography = command.Biography ?? user.Biography;
-                user.Remark = command.Remark ?? user.Remark;
                 user.ProfilePicture = command.ProfilePicture ?? user.ProfilePicture;
                 user.DateOfBirth = command.DateOfBirth ?? user.DateOfBirth;
                 user.IsActive = command.IsActive ?? user.IsActive;
@@ -281,13 +272,9 @@ namespace ASafariM.Infrastructure.Services
                     Log.Warning("User not found for admin update with ID: {UserId}", command.Id);
                     throw new InvalidOperationException("User not found.");
                 }
-
-                user.FirstName = command.FirstName ?? user.FirstName;
-                user.LastName = command.LastName ?? user.LastName;
                 user.Email = command.Email ?? user.Email;
                 user.UserName = command.UserName ?? user.UserName;
                 user.Biography = command.Biography ?? user.Biography;
-                user.Remark = command.Remark ?? user.Remark;
                 user.ProfilePicture = command.ProfilePicture ?? user.ProfilePicture;
                 user.DateOfBirth = command.DateOfBirth ?? user.DateOfBirth;
                 user.IsActive = command.IsActive ?? user.IsActive;
@@ -456,8 +443,6 @@ namespace ASafariM.Infrastructure.Services
                     throw new InvalidOperationException("User not found");
                 }
 
-                user.FirstName = command.FirstName;
-                user.LastName = command.LastName;
                 user.PhoneNumber = command.PhoneNumber;
                 user.UpdatedAt = DateTime.UtcNow;
 
@@ -485,7 +470,7 @@ namespace ASafariM.Infrastructure.Services
                 Log.Information("Checking if username is taken: {Username}", username);
                 var normalizedUsername = username.ToUpperInvariant();
                 var exists = await _dbContext.Users.AnyAsync(u =>
-                    u.NormalizedUserName == normalizedUsername && !u.IsDeleted
+                    u.NormalizedUserName == normalizedUsername && u.IsDeleted == false
                 );
 
                 Log.Information(
@@ -513,7 +498,7 @@ namespace ASafariM.Infrastructure.Services
                 Log.Information("Checking if email is taken: {Email}", email);
                 var normalizedEmail = email.ToUpperInvariant();
                 var exists = await _dbContext.Users.AnyAsync(u =>
-                    u.NormalizedEmail == normalizedEmail && !u.IsDeleted
+                    u.NormalizedEmail == normalizedEmail && u.IsDeleted == false
                 );
 
                 Log.Information("Email {Email} is {Status}", email, exists ? "taken" : "available");
@@ -546,8 +531,6 @@ namespace ASafariM.Infrastructure.Services
                 var user = new User
                 {
                     Id = Guid.NewGuid(),
-                    FirstName = command.FirstName,
-                    LastName = command.LastName,
                     Email = command.Email,
                     NormalizedEmail = normalizedEmail,
                     UserName = command.UserName,

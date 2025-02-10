@@ -11,6 +11,7 @@ using ASafariM.Infrastructure.Repositories;
 using ASafariM.Infrastructure.Services;
 using ASafariM.Presentation;
 using AutoMapper;
+using Google.Protobuf.WellKnownTypes;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
@@ -23,20 +24,25 @@ var logDirectory =
     (Environment.GetEnvironmentVariable("ASAFARIM_ENV") == "production")
         ? "/var/www/asafarim/logs"
         : "E:/ASafariM/Logs";
+
 if (!Directory.Exists(logDirectory))
 {
     Directory.CreateDirectory(logDirectory);
 }
 
+Serilog.Debugging.SelfLog.Enable(Console.Error);
+
+var logFilePath = Path.Combine(logDirectory, $"log-api_.log");
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Information()
     .WriteTo.File(
-        Path.Combine(logDirectory, $"log-{DateTime.Now:yyyyMMdd}.txt"),
-        rollingInterval: RollingInterval.Hour,
-        outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff} [{Level}] {Message}{NewLine}{Exception}"
+        logFilePath,
+        rollingInterval: RollingInterval.Day,
+        retainedFileCountLimit: 2,
+        outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level}] {Message}{NewLine}{Exception}"
     )
     .CreateLogger();
-Log.Information("Logger configured successfully. → Path: {LogDirectory}", logDirectory);
+
 Log.Information("Starting up the application...");
 
 try
@@ -77,10 +83,10 @@ try
             {
                 builder
                     .WithOrigins(
-                        "http://localhost:5173",
                         "http://localhost:3000",
                         "asafarim.com",
-                        "https://www.asafarim.com"
+                        "https://www.asafarim.com",
+                        "www.asafarim.com"
                     ) // Frontend URL
                     .AllowAnyMethod()
                     .AllowAnyHeader()
@@ -95,7 +101,13 @@ try
     services.AddAutoMapper(cfg =>
     {
         cfg.AddMaps(
-            new[] { typeof(UserMappingProfile).Assembly, typeof(AutoMapperProfile).Assembly }
+            new[]
+            {
+                typeof(UserMappingProfile).Assembly,
+                typeof(AutoMapperProfile).Assembly,
+                typeof(BlogMappingProfile).Assembly,
+                typeof(PreferenceMappingProfile).Assembly,
+            }
         );
     });
 
@@ -176,9 +188,10 @@ try
         async (context, next) =>
         {
             Log.Information(
-                "Request: {Method} {Path}",
+                "Request: {Method} {Path} → {ContentType}",
                 context.Request.Method,
-                context.Request.Path
+                context.Request.Path,
+                context.Request.ContentType
             );
             await next.Invoke();
         }

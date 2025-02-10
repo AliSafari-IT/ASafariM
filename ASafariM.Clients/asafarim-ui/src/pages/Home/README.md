@@ -1,9 +1,13 @@
 # ASafariM - Full Stack Clean Architecture Solution
 Update: 2025-02-07
 
-A modern, enterprise-grade full-stack application built with .NET 9 and React TypeScript, following Clean Architecture principles.
+## Introduction
+
+This repository contains the source code for an enterprise-grade full-stack application built with .NET 9 and React TypeScript, following Clean Architecture principles.
 
 [![GitHub Repository](https://img.shields.io/badge/GitHub-Repository-brightgreen.svg)](https://github.com/AliSafari-IT/ASafariM)
+
+A modern, enterprise-grade full-stack application built with .NET 9 and React TypeScript, following Clean Architecture principles.
 
 ## Architecture
 

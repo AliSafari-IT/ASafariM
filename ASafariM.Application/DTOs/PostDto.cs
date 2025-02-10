@@ -23,6 +23,22 @@ namespace ASafariM.Application.DTOs
         public string? ImageUrl { get; set; }
         public string? MetaDescription { get; set; }
         public ICollection<Tag>? Tags { get; set; }
+        public ICollection<Category>? Categories { get; set; }
+        public ICollection<User>? Collaborators { get; set; }
+        public ICollection<Comment>? Comments { get; set; }
+        public ICollection<Attachment>? Attachments { get; set; }
+        public ICollection<Link>? Links { get; set; }
+        public ICollection<Post>? RelatedPosts { get; set; }
+        public ICollection<PostComment> PostComments { get; set; } = new List<PostComment>();
+        public ICollection<PostAttachment> PostAttachments { get; set; } =
+            new List<PostAttachment>();
+        public ICollection<PostLink> PostLinks { get; set; } = new List<PostLink>();
+        public ICollection<PostRelatedPost> PostRelatedPosts { get; set; } =
+            new List<PostRelatedPost>();
+        public ICollection<PostTag> PostTags { get; set; } = new List<PostTag>();
+        public ICollection<PostCategory> PostCategories { get; set; } = new List<PostCategory>();
+        public ICollection<PostCollaborator> PostCollaborators { get; set; } =
+            new List<PostCollaborator>();
         public DateTime CreatedAt { get; set; }
         public string? CreatedBy { get; set; }
         public bool IsDeleted { get; set; } = false;

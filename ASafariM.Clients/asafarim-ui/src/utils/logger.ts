@@ -4,7 +4,7 @@ const logToServer = async (message: string, level: string = 'info') => {
         const isDevelopment = import.meta.env.VITE_ENVIRONMENT === 'development';
         const BASE_API_URL = isDevelopment ? 'https://localhost:5001/api' : 'https://asafarim.com/api';
 
-        await fetch(BASE_API_URL + '/log', {
+        await fetch(BASE_API_URL + '/logs', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

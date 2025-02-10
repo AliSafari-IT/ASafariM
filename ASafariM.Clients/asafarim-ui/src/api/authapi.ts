@@ -51,7 +51,7 @@ export const register = async (model: IRegisterModel) => {
 };
 
 export const login = async (credentials: ILoginModel) => {
-  console.log("Login request payload:", credentials);
+  console.log("Login request payload:", credentials.email);
   const response = await api.post('/login', credentials, {
       headers: { 'Content-Type': 'application/json' },
   });

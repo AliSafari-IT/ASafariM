@@ -12,7 +12,7 @@ import AkkodisTargetedResume from "./pages/AboutMe/TailoredCV/Akkodis";
 import DelCard from "./components/Containers/Card/DelCard";
 import EditCard from "./components/Containers/Card/EditCard";
 import ProjectHome from "./pages/Project/Index";
-import PostDetail from "./pages/Post/PostDetail"; 
+import PostDetail from "./pages/Blog/PostDetail"; 
 import LogoutPage from "./pages/Accountpage/LogoutPage";
 import Register from "./pages/Accountpage/Register";
 import LoginPage from "./pages/Accountpage/LoginPage";
@@ -37,18 +37,19 @@ import AccessDenied from "./pages/AccessDenied";
 import CreateMarkdownFile from "./components/MarkdownPage/CreateMarkdownFile";
 import AddCategoryForm from "./components/crud/AddCategoryForm";
 import AddTopicForm from "./components/crud/AddTopicForm";
-import AddPostForm from "./components/crud/AddPostForm";
+import AddPostForm from "./pages/Blog/AddPostForm";
 import EditCategoryForm from "./components/crud/EditCategoryForm";
 import EditTopicForm from "./components/crud/EditTopicForm";
-import EditPostForm from "./components/crud/EditPostForm";
+import EditPostForm from "./pages/Blog/EditPostForm";
 import EditSitemapItemForm from "./components/crud/EditSitemapItemForm";
 import AddSitemapItemForm from "./components/crud/AddSitemapItemForm";
 import DeleteForm from "./components/crud/DeleteForm";
 import AddTagForm from "./components/crud/AddTagForm";
 import EditTagForm from "./components/crud/EditTagForm";
-import PostsList from "./pages/Post/PostsList";
-import CreatePost from "./pages/Post/CreatePost";
+import PostsList from "./pages/Blog/PostsList";
+import CreatePost from "./pages/Blog/CreatePost";
 import HealthCheck from "./pages/HealthCheck/HealthCheck";
+import ViewUser from "./pages/User/ViewUser";
 
 // const userUrl = API_URL + '/users';
 
@@ -271,6 +272,16 @@ function App() {
               <Suspense fallback={<div>Loading...</div>}>
                 <PrivateRoute requireAdmin>
                   <EditUser />
+                </PrivateRoute>
+              </Suspense>
+            }
+          />
+          <Route
+            path="/users/view/:id"
+            element={
+              <Suspense fallback={<div>Loading...</div>}>
+                <PrivateRoute requireAdmin>
+                  <ViewUser />
                 </PrivateRoute>
               </Suspense>
             }

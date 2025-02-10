@@ -18,5 +18,10 @@ namespace ASafariM.Domain.Entities
 
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
+
+        // If you want bidirectional navigation:
+        public Post[]? Posts { get; set; } = new Post[] { };
+        public ICollection<PostTag> PostTags { get; set; } = new List<PostTag>();
+
     }
 }

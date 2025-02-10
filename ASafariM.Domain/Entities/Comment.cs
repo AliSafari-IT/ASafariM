@@ -16,5 +16,12 @@ namespace ASafariM.Domain.Entities
         public bool IsDeleted { get; set; } = false;
         public DateTime? DeletedAt { get; set; }
         public string DeletedBy { get; set; }
+        public string? DeletedMessage { get; set; }
+
+        // If you want bidirectional navigation:
+        public Post[]? Posts { get; set; } = new Post[] { };
+
+        // Navigation properties for preferences
+        
     }
 }

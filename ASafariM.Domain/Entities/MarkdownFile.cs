@@ -24,7 +24,7 @@ namespace ASafariM.Domain.Entities
 
         // Foreign keys
         [MaxLength(100)]
-        public string? AuthorName { get; set; }  // Computed from User's FirstName + LastName
+        public string? AuthorName { get; set; } // Computed from User's FirstName + LastName
         public Guid CreatedBy { get; set; }
         public Guid UpdatedBy { get; set; }
 
@@ -37,6 +37,7 @@ namespace ASafariM.Domain.Entities
         public MarkdownFile? ParentMdFile { get; set; }
         public ICollection<MarkdownFileUser>? MarkdownFileUsers { get; set; } = [];
 
+        [NotMapped]
         public ICollection<User>? Collaborators { get; set; } = [];
 
         public ICollection<MarkdownFileHistory>? History { get; set; }
