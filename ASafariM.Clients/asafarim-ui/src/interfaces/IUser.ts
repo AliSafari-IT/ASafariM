@@ -11,6 +11,12 @@ export interface IUser {
     biography?: string;
     password?: string;
     isAdmin: boolean;
+    isSuperAdmin?: boolean;
+    isBannedByAdmin?: boolean;
+    isStandardUser?: boolean;
+    isPending?: boolean;
+    isBlocked?: boolean;
+    isModerator?: boolean;
     userId?: string;
     createdAt?: string;
     updatedAt?: string;
@@ -35,8 +41,7 @@ export interface IUser {
     remark?: string;
     markdownFiles?: IMarkdownFile[];
     dateJoined?: string;
-    isSuperAdmin?: boolean;
     lastPasswordChangeDate?: string;
     isOnline?: boolean;
-    
+
 }

@@ -24,6 +24,14 @@ namespace ASafariM.Domain.Entities
         [Required, EmailAddress]
         public override string Email { get; set; } = string.Empty;
         public bool IsAdmin { get; set; } = false;
+        public bool IsSuperAdmin { get; set; } = false;
+        public bool IsEditor { get; set; } = false;
+        public bool IsModerator { get; set; } = false;
+        public bool IsStandardUser { get; set; } = false;
+        public bool IsBannedByAdmin { get; set; } = false;
+        public bool IsBlocked { get; set; } = false;
+        public bool IsVerified { get; set; } = false;
+        public bool IsPending { get; set; } = false;
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public string? ProfilePicture { get; set; }
         public DateTime? DateOfBirth { get; set; }
