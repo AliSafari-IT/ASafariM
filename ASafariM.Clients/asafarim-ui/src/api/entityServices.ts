@@ -214,8 +214,27 @@ const deleteEntity = async (entityTableName: string, id: string) => {
     }
 }
 
+const createEntity = async (entityTableName: string, data: Record<string, unknown>) => {
+    const url = `/${entityTableName}/create`;
+    logger.info('Creating entity at ' + url + ' with data: ' + JSON.stringify(data));
+    try {
+        const response = await api.post(url, data);
+        logger.info('Successfully created entity at ' + url);
+        return {
+            success: true,
+            data: response.data
+        };
+    } catch (error) {
+        logger.error('Error creating entity: ' + JSON.stringify(error));
+        return {
+            success: false,
+            error: error
+        };
+    }
+};
+
 const dashboardServices = {
-    fetchEntities, fetchEntityById, addEntity, updateEntity, deleteEntity,
+    fetchEntities, fetchEntityById, addEntity, updateEntity, deleteEntity, createEntity,
 }
 
 export default dashboardServices;
