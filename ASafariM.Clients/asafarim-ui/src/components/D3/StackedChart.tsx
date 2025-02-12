@@ -190,9 +190,9 @@ const StackedChart: React.FC<StackedChartProps> = ({
             .attr("transform", "rotate(" + yLabelRotation + ")");
 
         // Apply dynamic label adjustments
-        adjustAxisLabels(xAxisGroup as unknown as d3.Selection<BaseType, unknown, SVGGElement, unknown>, type, width, height);
-        adjustAxisLabels(yAxisGroup as unknown as d3.Selection<BaseType, unknown, SVGGElement, unknown>, type, width, height);
-    }, [data, width, height, margin, type, xKey, yKeys, chartTitle, colors]);
+        adjustAxisLabels(xAxisGroup as unknown as d3.Selection<BaseType, unknown, SVGGElement, unknown>, type, width);
+        adjustAxisLabels(yAxisGroup as unknown as d3.Selection<BaseType, unknown, SVGGElement, unknown>, type, width);
+    }, [data, width, height, margin, type, xKey, yKeys, chartTitle, colors, xLabel, xLabelRotation, yLabel, yLabelRotation, dateFormat]);
 
     return <svg ref={svgRef} width={width} height={height} />;
 };
@@ -200,8 +200,7 @@ const StackedChart: React.FC<StackedChartProps> = ({
 function adjustAxisLabels(
     axisSelection: d3.Selection<BaseType, unknown, SVGGElement, unknown>,
     type: string,
-    width: number,
-    height: number
+    width: number
 ) {
     // Calculate rotation dynamically based on width
     let rotation = 0;

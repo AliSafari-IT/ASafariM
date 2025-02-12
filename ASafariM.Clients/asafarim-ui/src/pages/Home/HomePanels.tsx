@@ -10,8 +10,6 @@ import Toolbar from '@/components/Toolbars/Toolbar';
 import { Modal, ResponsiveMode } from '@fluentui/react';
 import { FaDownload, FaTimes } from 'react-icons/fa';
 import { TreemapChart, TreeMapData } from '@/components/D3/TreeMapChart';
-import treeMapData2, { Tree } from '@/components/D3/data/treeMapData2';
-import { Hierarchy } from '@/components/D3/Hierarchy';
 import { IAlign } from '@/interfaces/IAlign';
 import StacksPage from '../../components/Stacks/StacksPage';
 import StackedAreaChart from '@/components/D3/StackedAreaChart';
@@ -235,7 +233,6 @@ const HomePanels = () => {
       { id: '2', value: 80, category: 'Backend', name: 'Node.js' },
       { id: '3', value: 60, category: 'Database', name: 'MySQL' },
     ] as TreeMapData[]} width={dimensions.width} height={dimensions.height} />,
-    <Hierarchy width={dimensions.width} height={dimensions.height} data={treeMapData2} />,
     <StackedAreaChart data={[
       { "date": new Date("2020-01-01"), "apples": 10, "oranges": 20, "bananas": 30 },
       { "date": new Date("2020-01-02"), "apples": 15, "oranges": 25, "bananas": 17 },
