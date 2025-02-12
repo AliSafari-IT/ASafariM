@@ -14,20 +14,21 @@ const ChartContainer: React.FC<ChartContainerProps> = ({ children, containerRef,
     };
 
     const resizeObserver = new ResizeObserver(handleResize);
-    if (containerRef.current) {
-      resizeObserver.observe(containerRef.current);
+    const currentContainer = containerRef.current;
+    if (currentContainer) {
+      resizeObserver.observe(currentContainer);
     }
 
     return () => {
-      if (containerRef.current) {
-        resizeObserver.unobserve(containerRef.current);
+      if (currentContainer) {
+        resizeObserver.unobserve(currentContainer);
       }
       resizeObserver.disconnect();
     };
   }, []);
 
   return (
-    <div ref={containerRef} style={{ ...style, width: '100%', height: '100%' }}>
+    <div ref={containerRef} style={{ ...style, width: '100%', height: '100%', position: 'relative' }}>
       {children}
     </div>
   );

@@ -60,7 +60,13 @@ const Barchart = ({ data, width, height }: BarchartProps) => {
       .attr("fill", "#5f0f40");
   }, [data, height, width]);
 
-  return <svg ref={svgRef} />;
+  return (
+    <svg
+      ref={svgRef}
+      className="w-full h-full rounded-lg shadow-sm"
+      style={{ minHeight: '300px' }}
+    />
+  );
 };
 
 export default Barchart;

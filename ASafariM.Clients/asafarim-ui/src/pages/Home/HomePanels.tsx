@@ -10,7 +10,7 @@ import Toolbar from '@/components/Toolbars/Toolbar';
 import { Modal, ResponsiveMode } from '@fluentui/react';
 import { FaDownload, FaTimes } from 'react-icons/fa';
 import { TreemapChart, TreeMapData } from '@/components/D3/TreeMapChart';
-import treeMapData2 from '@/components/D3/data/treeMapData2';
+import treeMapData2, { Tree } from '@/components/D3/data/treeMapData2';
 import { Hierarchy } from '@/components/D3/Hierarchy';
 import { IAlign } from '@/interfaces/IAlign';
 import StacksPage from '../../components/Stacks/StacksPage';
@@ -85,6 +85,34 @@ const dataLineChart: Line[] = [
       };
     })
   }
+];
+
+// Monthly hydrograph data of Rhine river, Germany
+const monthlyHydrograph =
+  [
+    { DateTime: new Date("2022-01-01"), value: 1500 }, // Low flow in January
+    { DateTime: new Date("2022-02-01"), value: 1800 }, // Slightly increasing flow in February
+    { DateTime: new Date("2022-03-01"), value: 2200 }, // Increasing flow in March due to snowmelt
+    { DateTime: new Date("2022-04-01"), value: 2800 }, // High flow in April due to snowmelt and rainfall
+    { DateTime: new Date("2022-05-01"), value: 3200 }, // Peak flow in May due to heavy rainfall
+    { DateTime: new Date("2022-06-01"), value: 2800 }, // Decreasing flow in June as rainfall decreases
+    { DateTime: new Date("2022-07-01"), value: 2000 }, // Low flow in July due to dry weather
+    { DateTime: new Date("2022-08-01"), value: 1800 }, // Slightly increasing flow in August due to occasional rainfall
+    { DateTime: new Date("2022-09-01"), value: 1500 }, // Low flow in September due to dry weather
+    { DateTime: new Date("2022-10-01"), value: 1200 }, // Very low flow in October due to drought
+    { DateTime: new Date("2022-11-01"), value: 1000 }, // Extremely low flow in November due to drought
+    { DateTime: new Date("2022-12-01"), value: 800 }, // Very low flow in December due to drought
+  ];
+
+// Word cloud data
+const wordCloudData = [
+  { word: 'React TypeScript', count: 42 },
+  { word: 'MongoDb', count: 22 },
+  { word: 'MySQL', count: 30 },
+  { word: 'D3.js', count: 17 },
+  { word: 'DotNet', count: 65 },
+  { word: 'HTML', count: 37 },
+  { word: 'CSS', count: 21 },
 ];
 // get md file content from d3jsReactUiContent as raw string
 const d3jsReactUiContent = import.meta.glob('@mdfiles/TechDocs/**/*.md', {
@@ -189,7 +217,7 @@ const HomePanels = () => {
     height: 500
   };
   const d3Components = [
-    <Barchart data ={
+    <Barchart data={
       [
         { name: 'A', value: 30 },
         { name: 'B', value: 80 },
@@ -197,28 +225,29 @@ const HomePanels = () => {
         { name: 'D', value: 60 },
         { name: 'E', value: 20 },
         { name: 'F', value: 90 },
-        { name: 'G', value: 55 },
-        
-      ] as { name: string; value: number | undefined } []
+        { name: 'G', value: 55 }
+      ] as { name: string; value: number | undefined }[]
     } width={dimensions.width} height={dimensions.height} />,
-    <LineChart width={dimensions.width} height={dimensions.height} data ={dataLineChart} />,
+    <LineChart width={dimensions.width} height={dimensions.height} data={dataLineChart} />,
     <Scatterplot data={[{ x: 1, y: 7 }, { x: 3, y: 4 }, { x: 5, y: 26 }, { x: 7, y: 8 }, { x: 9, y: 100 }]} width={dimensions.width} height={dimensions.height} />,
     <TreemapChart data={[
       { id: '1', value: 100, category: 'Frontend', name: 'React' },
       { id: '2', value: 80, category: 'Backend', name: 'Node.js' },
       { id: '3', value: 60, category: 'Database', name: 'MySQL' },
-  ] as TreeMapData[]} width={dimensions.width} height={dimensions.height} />,
+    ] as TreeMapData[]} width={dimensions.width} height={dimensions.height} />,
     <Hierarchy width={dimensions.width} height={dimensions.height} data={treeMapData2} />,
     <StackedAreaChart data={[
-      { "date": new Date("2020-01-01"), "apples": 10, "oranges": 20 },
-      { "date": new Date("2020-01-02"), "apples": 15, "oranges": 25 },
-    ]}  />,
+      { "date": new Date("2020-01-01"), "apples": 10, "oranges": 20, "bananas": 30 },
+      { "date": new Date("2020-01-02"), "apples": 15, "oranges": 25, "bananas": 17 },
+      { "date": new Date("2020-01-03"), "apples": 30, "oranges": 30, "bananas": 40 },
+      { "date": new Date("2020-01-04"), "apples": 25, "oranges": 35, "bananas": 45 }
+    ]} width={dimensions.width} height={dimensions.height} />,
     <StackedBarChart data={[
       { "label": "A", "value": 10 },
       { "label": "B", "value": 20 },
       { "label": "C", "value": 30 },
       { "label": "D", "value": 40 }
-    ]}  />,
+    ]} width={dimensions.width} height={dimensions.height} />,
     <StackedColumnChart data={
       [
         { "label": "A", "value": 10 },
@@ -227,32 +256,16 @@ const HomePanels = () => {
         { "label": "D", "value": 40 }
       ]
     } width={dimensions.width} height={dimensions.height} />,
-<StackedLineChart data={
-  [
-    { label: 'Point 1', value: 10, x: 10, y: 20 },
-    { label: 'Point 2', value: 20, x: 20, y: 30 },
-    { label: 'Point 3', value: 30, x: 30, y: 40 },
-    { label: 'Point 4', value: 40, x: 40, y: 50 }
-  ]
-} width={dimensions.width} height={dimensions.height} />,
-<TimeSeriesChart data={
-  [
-    { DateTime: new Date("2020-01-01"), value: 10 },
-    { DateTime: new Date("2020-01-02"), value: 20 },
-    { DateTime: new Date("2020-01-03"), value: 30 },
-    { DateTime: new Date("2020-01-04"), value: 17 }
-  ]
-} width={dimensions.width+300} height={dimensions.height}  xKey={'DateTime'} yKey={'value'} />,
-    <WordCloudChart data={
+    <StackedLineChart data={
       [
-        { word: "Hello", count: 10 },
-        { word: "React", count: 5 },
-        { word: "D3", count: 15 },
-        { word: "Cloud", count: 20 },
-        { word: "Chart", count: 8 },
-        { word: "TypeScript", count: 12 }
+        { label: 'Point 1', value: 10, x: 10, y: 20 },
+        { label: 'Point 2', value: 20, x: 20, y: 30 },
+        { label: 'Point 3', value: 30, x: 30, y: 40 },
+        { label: 'Point 4', value: 40, x: 40, y: 50 }
       ]
-    } width={dimensions.width} height={dimensions.height} />
+    } width={dimensions.width} height={dimensions.height} />,
+    <TimeSeriesChart data={monthlyHydrograph} width={dimensions.width} height={dimensions.height} xKey={'DateTime'} yKey={'value'} />,
+    <WordCloudChart data={wordCloudData} width={dimensions.width} height={dimensions.height} />
   ];
 
   return (
@@ -267,7 +280,7 @@ const HomePanels = () => {
 
       {/* Left Panel (Sidebar) */}
       <div className={`
-        w-full md:w-64 
+        w-full md:w-64
         bg-white dark:bg-gray-800
         border-b md:border-r border-gray-200 dark:border-gray-700
         ${isMobileMenuOpen ? 'block' : 'hidden'} md:block
