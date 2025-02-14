@@ -25,12 +25,27 @@ namespace ASafariM.Infrastructure.Services
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
         private readonly AppDbContext _dbContext;
+        private readonly JwtTokenService _jwtTokenService;
+        private readonly ILogger _logger;
+        private readonly IAuthorizationService _authorizationService;
+        private readonly IConfiguration _configuration;
 
-        public UserService(IUserRepository userRepository, IMapper mapper, AppDbContext dbContext)
+        public UserService(
+            IUserRepository userRepository,
+            IMapper mapper,
+            AppDbContext dbContext,
+            ILogger logger,
+            IAuthorizationService authorizationService,
+            IConfiguration configuration
+        )
         {
             _userRepository = userRepository;
             _mapper = mapper;
             _dbContext = dbContext;
+            _jwtTokenService = new JwtTokenService(configuration);
+            _logger = logger;
+            _authorizationService = authorizationService;
+            _configuration = configuration;
         }
 
         public async Task<bool> RegisterUserAsync(RegisterUserCommand command)
@@ -186,6 +201,22 @@ namespace ASafariM.Infrastructure.Services
             try
             {
                 Log.Information("Creating new user with email: {Email}", command.Email);
+
+                // Check if email or username already exists
+                if (await _userRepository.UserExistsByEmailAsync(command.Email))
+                {
+                    Log.Warning("Email {Email} is already taken", command.Email);
+                    throw new InvalidOperationException($"Email {command.Email} is already taken.");
+                }
+
+                if (await _userRepository.UserExistsByUserNameAsync(command.UserName))
+                {
+                    Log.Warning("Username {UserName} is already taken", command.UserName);
+                    throw new InvalidOperationException(
+                        $"Username {command.UserName} is already taken."
+                    );
+                }
+
                 // Normalize Email and Username
                 var normalizedEmail = command.Email.ToUpperInvariant();
                 var normalizedUserName = command.UserName?.ToUpperInvariant();
@@ -206,12 +237,28 @@ namespace ASafariM.Infrastructure.Services
                     UserName = command.UserName,
                     NormalizedUserName = normalizedUserName,
                     PasswordHash = passwordHash,
-                    IsAdmin = command.IsAdmin,
                     SecurityStamp = securityStamp,
                     ConcurrencyStamp = concurrencyStamp,
-                    CreatedAt = DateTime.UtcNow,
-                    UpdatedAt = DateTime.UtcNow,
+                    CreatedAt = command.CreatedAt ?? DateTime.UtcNow,
+                    UpdatedAt = command.UpdatedAt ?? DateTime.UtcNow,
                     DateOfBirth = command.DateOfBirth,
+                    IsActive = command.IsActive,
+                    IsStandardUser = true,
+                    LastLogin = command.LastLogin,
+                    Biography = command.Biography ?? string.Empty,
+                    IsAdmin = command.IsAdmin,
+                    IsUser = true,
+                    FirstName = command.FirstName,
+                    LastName = command.LastName,
+                    Name = $"{command.FirstName} {command.LastName}",
+                    EmailConfirmed = false,
+                    PhoneNumberConfirmed = false,
+                    TwoFactorEnabled = false,
+                    LockoutEnabled = true,
+                    AccessFailedCount = 0,
+                    CreatedBy =
+                        Guid.Empty // System created
+                    ,
                 };
 
                 // Save to the database
@@ -542,6 +589,22 @@ namespace ASafariM.Infrastructure.Services
                     CreatedAt = DateTime.UtcNow,
                     UpdatedAt = DateTime.UtcNow,
                     DateOfBirth = command.DateOfBirth,
+                    IsActive = true,
+                    IsStandardUser = true,
+                    LastLogin = DateTime.UtcNow,
+                    Biography = "",
+                    IsUser = true,
+                    FirstName = command.FirstName,
+                    LastName = command.LastName,
+                    Name = $"{command.FirstName} {command.LastName}",
+                    EmailConfirmed = false,
+                    PhoneNumberConfirmed = false,
+                    TwoFactorEnabled = false,
+                    LockoutEnabled = true,
+                    AccessFailedCount = 0,
+                    CreatedBy =
+                        Guid.Empty // System created
+                    ,
                 };
 
                 await _userRepository.AddUserAsync(user);
@@ -611,14 +674,156 @@ namespace ASafariM.Infrastructure.Services
             }
         }
 
-        public Task<bool> ForgotPasswordAsync(ForgotPasswordCommand command)
+        public async Task<bool> ForgotPasswordAsync(ForgotPasswordCommand command)
         {
-            throw new NotImplementedException();
+            var user = await _userRepository.GetUserByEmailAsync(command.Email);
+            if (user == null)
+            {
+                return false;
+            }
+            var token = _jwtTokenService.GenerateJwtToken(user);
+            user.ForgotPasswordToken = token;
+            user.ForgotPasswordTokenExpiration = DateTime.UtcNow.AddDays(7);
+            await _userRepository.UpdateUserAsync(user);
+            return true;
         }
 
-        public Task<bool> ResetPasswordAsync(ResetPasswordCommand command)
+        public async Task<bool> ResetPasswordAsync(ResetPasswordCommand command)
         {
-            throw new NotImplementedException();
+            var user = await _userRepository.GetUserByEmailAsync(command.Email);
+            if (user == null)
+            {
+                return false;
+            }
+            user.PasswordHash = PasswordHasher.HashPassword(command.NewPassword);
+            user.UpdatedAt = DateTime.UtcNow;
+            user.ForgotPasswordToken = null;
+            await _userRepository.UpdateUserAsync(user);
+            return true;
+        }
+
+        public async Task<bool> IsUserAdminAsync(Guid userId)
+        {
+            var user = await _userRepository.GetUserByIdAsync(userId);
+            if (user == null)
+            {
+                return false;
+            }
+            return user.IsAdmin;
+        }
+
+        public async Task<bool> IsUserSuperAdminAsync(Guid userId)
+        {
+            var user = await _userRepository.GetUserByIdAsync(userId);
+            if (user == null)
+            {
+                return false;
+            }
+            return user.IsSuperAdmin;
+        }
+
+        public async Task<bool> IsUserEditorAsync(Guid userId)
+        {
+            var user = await _userRepository.GetUserByIdAsync(userId);
+            if (user == null)
+            {
+                return false;
+            }
+            return user.IsEditor;
+        }
+
+        public async Task<bool> IsUserModeratorAsync(Guid userId)
+        {
+            var user = await _userRepository.GetUserByIdAsync(userId);
+            if (user == null)
+            {
+                return false;
+            }
+            return user.IsModerator;
+        }
+
+        public async Task<bool> IsUserStandardUserAsync(Guid userId)
+        {
+            var user = await _userRepository.GetUserByIdAsync(userId);
+            if (user == null)
+            {
+                return false;
+            }
+            return !user.IsAdmin && !user.IsSuperAdmin && !user.IsEditor && !user.IsModerator;
+        }
+
+        public async Task<bool> IsUserBannedByAdminAsync(Guid userId)
+        {
+            var user = await _userRepository.GetUserByIdAsync(userId);
+            if (user == null)
+            {
+                return false;
+            }
+            return user.IsBannedByAdmin;
+        }
+
+        public async Task<bool> IsUserBlockedAsync(Guid userId)
+        {
+            var user = await _userRepository.GetUserByIdAsync(userId);
+            if (user == null)
+            {
+                return false;
+            }
+            return user.IsBlocked;
+        }
+
+        public async Task<bool> IsUserVerifiedAsync(Guid userId)
+        {
+            var user = await _userRepository.GetUserByIdAsync(userId);
+            if (user == null)
+            {
+                return false;
+            }
+            return user.IsVerified;
+        }
+
+        public async Task<bool> IsPendingAsync(Guid userId)
+        {
+            var user = await _userRepository.GetUserByIdAsync(userId);
+            if (user == null)
+            {
+                return false;
+            }
+            return user.IsPending;
+        }
+
+        public async Task<bool> IsGuestAsync(Guid userId)
+        {
+            var user = await _userRepository.GetUserByIdAsync(userId);
+            if (user == null)
+            {
+                return false;
+            }
+            return user.IsGuest;
+        }
+
+        public async Task<bool> IsUserLockedOutAsync(Guid userId)
+        {
+            var user = await _userRepository.GetUserByIdAsync(userId);
+            if (user == null)
+            {
+                return false;
+            }
+            return user.IsLockedOut;
+        }
+
+        public async Task<bool> IsUserActiveAsync(Guid userId)
+        {
+            var user = await _userRepository.GetUserByIdAsync(userId);
+            if (user == null)
+            {
+                return false;
+            }
+            if (user?.IsActive != true)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }

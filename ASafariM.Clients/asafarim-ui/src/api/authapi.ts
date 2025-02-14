@@ -3,71 +3,160 @@
 import axios, { AxiosError } from 'axios';
 import { ILoginModel } from '../interfaces/ILoginModel';
 import { IRegisterModel } from '../interfaces/IRegisterModel';
-import { IErrorData } from '@/interfaces/IErrorData';
-const isDevelopment = import.meta.env.VITE_ENVIRONMENT === 'development';
+import { logger } from '@/utils/logger';
+import apiUrls from './getApiUrls';
 
-const BASE_URL = isDevelopment ? 'https://localhost:5001' : 'https://asafarim.com';
-const API_Auth_URL = isDevelopment ? BASE_URL + '/api/Auth' : 'https://asafarim.com/api/auth';
-const API_URL = isDevelopment ? BASE_URL + '/api' : 'https://asafarim.com/api';
-console.log("API_URL is:", API_Auth_URL);
-console.log("BASE_URL is:", BASE_URL);
-console.log("API_URL is:", API_URL);
+const host = window.location.hostname;
+const baseURL = apiUrls(host);  // Get the base URL from getApiUrls
 
 const api = axios.create({
-  baseURL: API_Auth_URL,
-  headers: {
-    'Content-Type': 'application/json',
-  },
+  baseURL: baseURL,
+  timeout: 5000, // Timeout in milliseconds
+  withCredentials: true, // Send cookies with requests
 });
 
-export const register = async (model: IRegisterModel) => {
-  try {
-    console.log("authapi: register is:", model);
-    const response = await api.post('/register', model);
-    console.log("authapi: response is:", response);
-    return response.data;
-  } catch (error) {
-    const err = error as AxiosError;
-    if (!err.response) {
-      throw new Error('Network error occurred');
-    }
-
-    const errorData = err.response?.data as IErrorData | undefined;
-
-    if (!errorData) {
-      throw new Error('Unknown error occurred');
-    }
-
-    if (Array.isArray(errorData)) {
-      throw new Error(errorData[0]?.description || 'Registration failed');
-    }
-
-    if (errorData.errors && Array.isArray(errorData.errors)) {
-      throw new Error(errorData.errors[0]?.description || 'Registration failed');
-    }
-
-    throw new Error(errorData.error || errorData.message || 'Registration failed');
+api.interceptors.request.use(
+  (config) => {
+    return config;
+  },
+  (error) => {
+    console.error('Request error:', error);
+    return Promise.reject(error);
   }
-};
+);
 
-export const login = async (credentials: ILoginModel) => {
-  console.log("Login request payload:", credentials.email);
-  const response = await api.post('/login', credentials, {
-      headers: { 'Content-Type': 'application/json' },
-  });
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    console.error('Response error:', error);
+    return Promise.reject(error);
+  }
+);
+
+// Register a new user
+export const register = async (model: IRegisterModel) => {
+  logger.info(`Attempting to register user with model: ${JSON.stringify(model)}`);
+  const response = await api.post('auth/register', model);
+  logger.info(`Registration successful, response received: ${JSON.stringify(response.data)}`);
   return response.data;
 };
-
+// Login a user
+export const login = async (credentials: ILoginModel) => {
+  logger.info(`Attempting to login user with credentials: ${JSON.stringify(credentials)}`);
+  const response = await api.post('auth/login', credentials, {
+      headers: { 'Content-Type': 'application/json' },
+  });
+  logger.info(`Login successful, response received: ${JSON.stringify(response.data)}`);
+  return response.data;
+};
 export const requestAccountReactivation = async (email: string) => {
   try {
-    const response = await axios.post(`${API_URL}/Users/request-reactivation`, { email });
+    logger.info(`Attempting to request account reactivation for email: ${email}`);
+    const response = await axios.post(`${baseURL}/Users/request-reactivation`, { email });
+    logger.info(`Account reactivation request successful, response received: ${JSON.stringify(response.data)}`);
     return response.data;
   } catch (error) {
     const err = error as AxiosError;
     if (err.message) {
+      logger.error(`Error during account reactivation request: ${err.message}`);
       throw err.message;
     }
     const errorData = err.response?.data as { error?: string };
-    throw errorData.error || 'Failed to send reactivation request.';
+    if (errorData.error) {
+      logger.error(`Error during account reactivation request: ${errorData.error}`);
+      throw errorData.error;
+    }
+    logger.error(`Error during account reactivation request: ${JSON.stringify(errorData)}`);
+    throw 'Failed to send reactivation request.';
   }
+};
+export const requestPasswordReset = async (email: string) => {
+  try {
+    logger.info(`Attempting to request password reset for email: ${email}`);
+    const response = await axios.post(`${baseURL}/Users/request-password-reset`, { email });
+    logger.info(`Password reset request successful, response received: ${JSON.stringify(response.data)}`);
+    return response.data;
+  } catch (error) {
+    const err = error as AxiosError;
+    if (err.message) {
+      logger.error(`Error during password reset request: ${err.message}`);
+      throw err.message;
+    }
+    const errorData = err.response?.data as { error?: string };
+    if (errorData.error) {
+      logger.error(`Error during password reset request: ${errorData.error}`);
+      throw errorData.error;
+    }
+    logger.error(`Error during password reset request: ${JSON.stringify(errorData)}`);
+    throw 'Failed to send password reset request.';
+  }
+};
+
+// Reset password for a user
+export const resetPassword = async (email: string, newPassword: string) => {
+  try {
+    logger.info(`Attempting to reset password for email: ${email}`);
+    const response = await axios.post(`${baseURL}/Users/reset-password`, { email, newPassword });
+    logger.info(`Password reset successful, response received: ${JSON.stringify(response.data)}`);
+    return response.data;
+  } catch (error) {
+    const err = error as AxiosError;
+    if (err.message) {
+      logger.error(`Error during password reset: ${err.message}`);
+      throw err.message;
+    }
+    const errorData = err.response?.data as { error?: string };
+    if (errorData.error) {
+      logger.error(`Error during password reset: ${errorData.error}`);
+      throw errorData.error;
+    }
+    logger.error(`Error during password reset: ${JSON.stringify(errorData)}`);
+    throw 'Failed to send password reset request.';
+  }
+};
+
+// Get user profile by ID
+export const getUserProfile = async (userId: string) => {
+  try {
+    logger.info(`Attempting to get user profile for user ID: ${userId}`);
+    const response = await axios.get(`${baseURL}/Users/${userId}`);
+    logger.info(`User profile retrieved successfully, response received: ${JSON.stringify(response.data)}`);
+    return response.data;
+  } catch (error) {
+    const err = error as AxiosError;
+    if (err.message) {
+      logger.error(`Error during user profile retrieval: ${err.message}`);
+      throw err.message;
+    }
+    const errorData = err.response?.data as { error?: string };
+    if (errorData.error) {
+      logger.error(`Error during user profile retrieval: ${errorData.error}`);
+      throw errorData.error;
+    }
+    logger.error(`Error during user profile retrieval: ${JSON.stringify(errorData)}`);
+    throw 'Failed to retrieve user profile.';
+  }
+};
+
+// Update user profile by ID
+export const updateUserProfile = async (userId: string, model: IRegisterModel) => {
+  try {
+    logger.info(`Attempting to update user profile for user ID: ${userId}`);
+    const response = await axios.put(`${baseURL}/Users/${userId}`, model);
+    logger.info(`User profile updated successfully, response received: ${JSON.stringify(response.data)}`);
+    return response.data;
+  } catch (error) {
+    const err = error as AxiosError;
+    if (err.message) {
+      logger.error(`Error during user profile update: ${err.message}`);
+      throw err.message;
+    }
+    const errorData = err.response?.data as { error?: string };
+    if (errorData.error) {
+      logger.error(`Error during user profile update: ${errorData.error}`);
+      throw errorData.error;
+    }
+    logger.error(`Error during user profile update: ${JSON.stringify(errorData)}`);
+    throw 'Failed to update user profile.';
+  }  
 };

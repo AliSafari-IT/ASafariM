@@ -31,7 +31,17 @@ namespace ASafariM.Application.Services
                     {
                         new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                         new Claim(ClaimTypes.Email, user.Email),
-                        new Claim(ClaimTypes.Role, user.IsAdmin ? "Admin" : "User"),
+                        new Claim(
+                            ClaimTypes.Role,
+                            user.IsAdmin ? "Admin"
+                                : user.IsSuperAdmin ? "SuperAdmin"
+                                : user.IsModerator ? "Moderator"
+                                : user.IsEditor ? "Editor"
+                                : user.IsGuest ? "Pending"
+                                : user.IsBannedByAdmin ? "BannedByAdmin"
+                                : user.IsBlocked ? "Blocked"
+                                : "User"
+                        ),
                     }
                 ),
                 Expires = DateTime.UtcNow.AddMinutes(

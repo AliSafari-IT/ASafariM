@@ -27,5 +27,6 @@ namespace ASafariM.Application.CommandModels
         public string? ProfilePicture { get; set; }
 
         public bool IsAdmin { get; set; } = false;
+        public bool IsUser { get; set; } = true;
     }
 }

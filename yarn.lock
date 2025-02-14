@@ -6120,7 +6120,6 @@ __metadata:
     postcss: "npm:^8.4.47"
     postcss-cli: "npm:^11.0.0"
     react: "npm:^18.3.1"
-    react-d3: "npm:^0.4.0"
     react-d3-treemap: "npm:^2.0.6"
     react-dom: "npm:^18.3.1"
     react-markdown: "npm:^9.0.1"
@@ -7619,13 +7618,6 @@ __metadata:
     d3-selection: "npm:2 - 3"
     d3-transition: "npm:2 - 3"
   checksum: 10c0/ee2036479049e70d8c783d594c444fe00e398246048e3f11a59755cd0e21de62ece3126181b0d7a31bf37bcf32fd726f83ae7dea4495ff86ec7736ce5ad36fd3
-  languageName: node
-  linkType: hard
-
-"d3@npm:^3.5.0":
-  version: 3.5.17
-  resolution: "d3@npm:3.5.17"
-  checksum: 10c0/4b62f75a970a0678fc81c93fc4940708eaccc379dd419ea605c0d981caffa578028728a2e718079577de9690733f1f1a28baac5c008d49cef339fc120beb9c83
   languageName: node
   linkType: hard
 
@@ -13338,16 +13330,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-d3@npm:^0.4.0":
-  version: 0.4.0
-  resolution: "react-d3@npm:0.4.0"
-  dependencies:
-    d3: "npm:^3.5.0"
-    react: "npm:>0.12.0"
-  checksum: 10c0/dbfccfbdaece6d62fc0fba6b9807688879b2777bb7700d6e89d6141a8af27633aec28919a8f8ee3eea9120ba1d301c8a499690a83306ec24733da2043b54a62a
-  languageName: node
-  linkType: hard
-
 "react-dom@npm:18.2.0":
   version: 18.2.0
   resolution: "react-dom@npm:18.2.0"
@@ -13525,13 +13507,6 @@ __metadata:
   dependencies:
     loose-envify: "npm:^1.1.0"
   checksum: 10c0/b562d9b569b0cb315e44b48099f7712283d93df36b19a39a67c254c6686479d3980b7f013dc931f4a5a3ae7645eae6386b4aa5eea933baa54ecd0f9acb0902b8
-  languageName: node
-  linkType: hard
-
-"react@npm:>0.12.0":
-  version: 19.0.0
-  resolution: "react@npm:19.0.0"
-  checksum: 10c0/9cad8f103e8e3a16d15cb18a0d8115d8bd9f9e1ce3420310aea381eb42aa0a4f812cf047bb5441349257a05fba8a291515691e3cb51267279b2d2c3253f38471
   languageName: node
   linkType: hard
 

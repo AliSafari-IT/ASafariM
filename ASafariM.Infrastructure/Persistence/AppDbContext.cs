@@ -1,6 +1,9 @@
 using ASafariM.Application.Utils;
 using ASafariM.Domain.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
+using Normalize = ASafariM.Application.Utils;
 using TimeZone = ASafariM.Domain.Entities.TimeZone;
 
 namespace ASafariM.Infrastructure.Persistence;
@@ -91,6 +94,13 @@ public class AppDbContext : DbContext
             entity.Property(u => u.NormalizedUserName).HasMaxLength(50);
             entity.Property(u => u.SecurityStamp).IsRequired();
             entity.Property(u => u.ConcurrencyStamp).IsRequired();
+            entity.Property(u => u.UserName).HasMaxLength(50).IsRequired();
+
+            // Add unique indexes
+            entity.HasIndex(u => u.UserName).IsUnique();
+            entity.HasIndex(u => u.Email).IsUnique();
+            entity.HasIndex(u => u.NormalizedUserName).IsUnique();
+            entity.HasIndex(u => u.NormalizedEmail).IsUnique();
 
             // One-to-Many: User → Project (as Owner)
             entity
@@ -396,29 +406,30 @@ public class AppDbContext : DbContext
             entity.Property(ph => ph.MitigationPlan).HasMaxLength(1000);
         });
 
-        // Get the current user's ID
-        var userId = Guid.NewGuid();
+        modelBuilder.Entity<ProgressHistory>().HasIndex(ph => ph.StatusReason).IsUnique();
 
         // Seed User
+        var userId = Guid.Parse("8048da39-cdaf-47a9-9fb1-960d81dd704a");
         modelBuilder
             .Entity<User>()
             .HasData(
                 new User
                 {
                     Id = userId,
-                    FirstName = "Ali R.",
-                    LastName = "Safari",
-                    Email = "ali@asafarim.com",
-                    NormalizedEmail = "ALI@ASAFARIM.COM",
-                    PasswordHash =
-                        "m7ihFmnrEpIIJEgVEX+SM7YxcMXf0hbpciQjhE53ZplNJQw8CT/JufmeUV+AQk3G",
+                    FirstName = "Demo Admin",
+                    LastName = "Account",
+                    Email = "demo_admin@example.com",
+                    NormalizedEmail = "DEMO_ADMIN@EXAMPLE.COM",
+                    // PasswordHash =
+                    //     "m7ihFmnrEpIIJEgVEX+SM7YxcMXf0hbpciQjhE53ZplNJQw8CT/JufmeUV+AQk3G",
+                    PasswordHash = PasswordHasher.HashPassword("Demo+123456/"),
                     LastLogin = DateTime.UtcNow,
                     PhoneNumber = "+123456789",
                     PhoneNumberConfirmed = true,
-                    UserName = "alireza",
-                    NormalizedUserName = "ALIRZA",
-                    SecurityStamp = "ali@asafarim.com",
-                    ConcurrencyStamp = "ali@asafarim.com",
+                    UserName = "demo_admin",
+                    NormalizedUserName = "DEMO_ADMIN",
+                    SecurityStamp = "demo_admin@example.com",
+                    ConcurrencyStamp = "demo_admin@example.com",
                     IsActive = true,
                     ProfilePicture = "https://asafarim.com/logoT.svg",
                     CreatedBy = userId,
@@ -426,39 +437,118 @@ public class AppDbContext : DbContext
                     UpdatedBy = userId,
                     UpdatedAt = DateTime.UtcNow,
                     IsAdmin = true,
-                    IsDeleted = false,
-                    DeletedAt = null,
-                    DeletedBy = null,
-                    DateOfBirth = new DateTime(1975, 7, 15),
-                },
-                new User
-                {
-                    Id = Guid.NewGuid(),
-                    FirstName = "User",
-                    LastName = "Example",
-                    Email = "user@example.com",
-                    NormalizedEmail = "USER@EXAMPLE.COM",
-                    PasswordHash = PasswordHasher.HashPassword("User+123456/"),
-                    LastLogin = DateTime.UtcNow,
-                    PhoneNumber = "+123456789",
-                    PhoneNumberConfirmed = true,
-                    UserName = "example_user",
-                    NormalizedUserName = "EXAMPLE_USER",
-                    SecurityStamp = "user@example.com",
-                    ConcurrencyStamp = "user@example.com",
-                    IsActive = true,
-                    ProfilePicture = "https://asafarim.com/logoT.svg",
-                    CreatedBy = userId,
-                    CreatedAt = DateTime.UtcNow,
-                    UpdatedBy = userId,
-                    UpdatedAt = DateTime.UtcNow,
-                    IsAdmin = true,
+                    IsSuperAdmin = true,
+                    IsPending = false,
+                    IsBannedByAdmin = false,
+                    IsBlocked = false,
+                    IsModerator = false,
+                    IsStandardUser = true,
+                    IsGuest = false,
+                    IsEditor = false,
+                    IsLockedOut = false,
+                    IsVerified = true,
                     DateOfBirth = new DateTime(1975, 7, 15),
                     IsDeleted = false,
                     DeletedAt = null,
                     DeletedBy = null,
                 }
             );
+
+        // add a user seed for Email: 'user@example.com' and Password: 'User+123456/'
+        modelBuilder
+            .Entity<User>()
+            .HasData(
+                new User
+                {
+                    Id = Guid.Parse("1048da39-cdaf-47a9-9fb1-960d81dd704b"),
+                    FirstName = "Demo User",
+                    LastName = "Account",
+                    Email = "demo_user@example.com",
+                    NormalizedEmail = "DEMO_USER@EXAMPLE.COM",
+                    UserName = "demo_user",
+                    NormalizedUserName = "DEMO_USER",
+                    PasswordHash = PasswordHasher.HashPassword("Demo+123456/"),
+                    LastLogin = DateTime.UtcNow,
+                    PhoneNumber = "+1234567890",
+                    PhoneNumberConfirmed = true,
+                    SecurityStamp = "demo_user@example.com",
+                    ConcurrencyStamp = "demo_user@example.com",
+                    IsActive = true,
+                    ProfilePicture = "https://asafarim.com/logoT.svg",
+                    CreatedBy = userId,
+                    CreatedAt = DateTime.UtcNow,
+                    UpdatedBy = userId,
+                    UpdatedAt = DateTime.UtcNow,
+                    IsAdmin = true,
+                    IsSuperAdmin = false,
+                    IsPending = false,
+                    IsBannedByAdmin = false,
+                    IsBlocked = false,
+                    IsModerator = false,
+                    IsStandardUser = true,
+                    IsGuest = false,
+                    IsEditor = false,
+                    IsLockedOut = false,
+                    IsVerified = true,
+                    DateOfBirth = new DateTime(1975, 7, 15),
+                    IsDeleted = false,
+                    DeletedBy = null,
+                    DeletedAt = null,
+                });
+
+        var userIds = UserUtilities.GenerateUserIdsFromBaseGuid(userId, 10);
+        int i = 0;
+        foreach (var id in userIds)
+        {
+            i++;
+            var name = "User " + i;
+            var username = UserUtilities.TransformFirstNameToUsername(name);
+            var email = username + "@example.com";
+            var passwordHash = PasswordHasher.HashPassword("User+123456/");
+            var phoneNr = "+12345678" + i.ToString();
+            Log.Information($"User {i} created with ID: {id}");
+            modelBuilder
+                .Entity<User>()
+                .HasData(
+                    new User
+                    {
+                        Id = id,
+                        FirstName = name,
+                        LastName = "Example",
+                        Email = email,
+                        NormalizedEmail = email.ToUpperInvariant(),
+                        UserName = username,
+                        NormalizedUserName = username.ToUpperInvariant(),
+                        PasswordHash = passwordHash,
+                        LastLogin = DateTime.UtcNow,
+                        PhoneNumber = phoneNr,
+                        PhoneNumberConfirmed = true,
+                        SecurityStamp = email,
+                        ConcurrencyStamp = email,
+                        IsActive = true,
+                        ProfilePicture = "https://asafarim.com/logoT.svg",
+                        CreatedBy = userId,
+                        CreatedAt = DateTime.UtcNow,
+                        UpdatedBy = userId,
+                        UpdatedAt = DateTime.UtcNow,
+                        IsAdmin = false,
+                        IsSuperAdmin = false,
+                        IsPending = false,
+                        IsBannedByAdmin = false,
+                        IsBlocked = false,
+                        IsModerator = false,
+                        IsStandardUser = true,
+                        IsGuest = false,
+                        IsEditor = false,
+                        IsLockedOut = false,
+                        IsVerified = true,
+                        DateOfBirth = new DateTime(1975, 7, 1 + i),
+                        IsDeleted = false,
+                        DeletedBy = null,
+                        DeletedAt = null,
+                    }
+                );
+        }
 
         modelBuilder
             .Entity<Role>()

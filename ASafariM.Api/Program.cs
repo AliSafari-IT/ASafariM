@@ -35,6 +35,7 @@ Serilog.Debugging.SelfLog.Enable(Console.Error);
 var logFilePath = Path.Combine(logDirectory, $"log-api_.log");
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Information()
+    .WriteTo.Console()
     .WriteTo.File(
         logFilePath,
         rollingInterval: RollingInterval.Day,
@@ -42,23 +43,22 @@ Log.Logger = new LoggerConfiguration()
         outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level}] {Message}{NewLine}{Exception}"
     )
     .CreateLogger();
-
+Log.Information("Serilog configured successfully.");
 Log.Information("Starting up the application...");
 
 try
 {
     var builder = WebApplication.CreateBuilder(args);
 
-    // Add services to the container.
-    var services = builder.Services;
+    // Add Serilog to the container
+    builder.Host.UseSerilog();
+    builder.Services.AddSingleton(Log.Logger);
 
-    // Add HttpContextAccessor
-    services.AddHttpContextAccessor();
-
-    // Add DbContext
-    services.AddDbContext<AppDbContext>(options =>
+    // Configure DbContext
+    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+    builder.Services.AddDbContext<AppDbContext>(options =>
         options.UseMySql(
-            builder.Configuration.GetConnectionString("DefaultConnection"),
+            connectionString,
             new MySqlServerVersion(new Version(8, 0, 31)), // Adjust version as needed
             mySqlOptions =>
                 mySqlOptions.EnableRetryOnFailure(
@@ -98,7 +98,7 @@ try
     Log.Information("CORS policy configured.");
 
     // Register AutoMapper with all profiles
-    services.AddAutoMapper(cfg =>
+    builder.Services.AddAutoMapper(cfg =>
     {
         cfg.AddMaps(
             new[]
@@ -114,19 +114,19 @@ try
     Log.Information("AutoMapper profiles registered.");
 
     // Register MVC with controllers from all assemblies
-    services
-        .AddMvc()
+    builder
+        .Services.AddMvc()
         .AddApplicationPart(
             typeof(ASafariM.Presentation.Controllers.MarkdownFilesController).Assembly
         )
         .AddControllersAsServices();
 
     // Register controllers and API explorer
-    services.AddControllers();
-    services.AddEndpointsApiExplorer();
+    builder.Services.AddControllers();
+    builder.Services.AddEndpointsApiExplorer();
 
-    services
-        .AddAuthentication(options =>
+    builder
+        .Services.AddAuthentication(options =>
         {
             options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
             options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -145,8 +145,8 @@ try
 
     Log.Information("JWT authentication configured.");
 
-    services.AddSwaggerGen();
-    services.AddCors(options =>
+    builder.Services.AddSwaggerGen();
+    builder.Services.AddCors(options =>
     {
         options.AddPolicy(
             "AllowAll",

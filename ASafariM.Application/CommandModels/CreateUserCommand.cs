@@ -27,5 +27,11 @@ namespace ASafariM.Application.CommandModels
         public string? ProfilePicture { get; set; }
 
         public bool IsAdmin { get; set; } = false;
+        public bool IsUser { get; set; } = true;
+        public string? Biography { get; set; } = null;
+        public bool IsActive { get; set; } = true;
+        public DateTime? CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime? LastLogin { get; set; } = null;
+        public DateTime? UpdatedAt { get; set; } = DateTime.UtcNow;
     }
 }

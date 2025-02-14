@@ -73,6 +73,20 @@ public class AuthController : ControllerBase
             };
         }
 
+        // Check if account is deleted
+        if (user.IsDeleted == true)
+        {
+            Log.Warning("Login attempt for deleted account. User ID: {UserId}, Email: {Email}", 
+                user.Id, command.Email);
+            return new ObjectResult(new { 
+                message = "This account has been deleted.", 
+                isDeleted = true 
+            })
+            {
+                StatusCode = StatusCodes.Status403Forbidden,
+            };
+        }
+
         // Check if account is locked
         if (user.IsLockedOut && user.LockoutEnd.HasValue && user.LockoutEnd.Value > DateTime.UtcNow)
         {

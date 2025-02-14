@@ -14,6 +14,18 @@ namespace ASafariM.Application.Services
         Task<UserDto?> UpdateUserAsync(UpdateUserCommand command);
         Task<bool> DeleteUserAsync(Guid id, string password);
         Task<bool> ChangePasswordAsync(ChangePasswordCommand command);
+        Task<bool> IsUserAdminAsync(Guid userId);
+        Task<bool> IsUserSuperAdminAsync(Guid userId);
+        Task<bool> IsUserEditorAsync(Guid userId);
+        Task<bool> IsUserModeratorAsync(Guid userId);
+        Task<bool> IsUserStandardUserAsync(Guid userId);
+        Task<bool> IsUserBannedByAdminAsync(Guid userId);
+        Task<bool> IsUserBlockedAsync(Guid userId);
+        Task<bool> IsUserVerifiedAsync(Guid userId);
+        Task<bool> IsPendingAsync(Guid userId);
+        Task<bool> IsGuestAsync(Guid userId);
+        Task<bool> IsUserActiveAsync(Guid userId);
+        Task<bool> IsUserLockedOutAsync(Guid userId);
         Task<bool> ForgotPasswordAsync(ForgotPasswordCommand command);
         Task<bool> ResetPasswordAsync(ResetPasswordCommand command);
         Task UpdateProfileAsync(UpdateProfileCommand command);

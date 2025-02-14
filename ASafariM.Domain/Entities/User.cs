@@ -32,6 +32,8 @@ namespace ASafariM.Domain.Entities
         public bool IsBlocked { get; set; } = false;
         public bool IsVerified { get; set; } = false;
         public bool IsPending { get; set; } = false;
+        public bool IsGuest { get; set; } = true;
+        public bool IsUser { get; set; } = true;
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public string? ProfilePicture { get; set; }
         public DateTime? DateOfBirth { get; set; }
@@ -76,5 +78,8 @@ namespace ASafariM.Domain.Entities
         public bool? IsActive { get; set; }
         public DateTime? LockoutEnd { get; set; }
         public bool? PhoneNumberConfirmed { get; set; }
+        public string? ForgotPasswordToken { get; set; }
+        public DateTime? ForgotPasswordTokenExpiration { get; set; }
+        public DateTime? PasswordResetToken { get; set; }
     }
 }

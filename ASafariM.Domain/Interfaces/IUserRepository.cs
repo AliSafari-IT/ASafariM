@@ -26,5 +26,6 @@ namespace ASafariM.Domain.Interfaces
         Task<bool> UserHasRoleByUserAsync(Guid userId, Guid roleId);
         Task<bool> RoleExistsAsync(Guid roleId);
         Task<IEnumerable<Role>> GetAllRolesAsync();
+        Task AddRoleAsync(Role role);
     }
 }

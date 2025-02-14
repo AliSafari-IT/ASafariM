@@ -3,6 +3,7 @@ import { register } from '../../api/authapi';
 import Wrapper from '../../layout/Wrapper/Wrapper';
 import { useNavigate } from 'react-router-dom';
 import { IRegisterModel } from '../../interfaces/IRegisterModel';
+import { logger } from '@/utils/logger';
 
 const Register: React.FC = () => {
   const [model, setModel] = useState<IRegisterModel>({
@@ -10,6 +11,10 @@ const Register: React.FC = () => {
     password: '',
     firstName: '',
     lastName: '',
+    userName: '',
+    isAdmin: false,
+    dateOfBirth: undefined,
+    profilePicture: undefined
   });
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
@@ -19,16 +24,54 @@ const Register: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
+      logger.info('Registration started');
+      
+      // Validate all required fields
+      if (!model.email || !model.password || !model.firstName || !model.lastName || !model.userName) {
+        setError('All fields are required');
+        return;
+      }
+
+      // Validate email format
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(model.email)) {
+        setError('Please enter a valid email address');
+        return;
+      }
+
+      // Validate password strength
+      if (model.password.length < 6) {
+        setError('Password must be at least 6 characters long');
+        return;
+      }
+
+      // Validate username
+      if (model.userName.length < 3) {
+        setError('Username must be at least 3 characters long');
+        return;
+      }
+
+      // Convert dateOfBirth string to Date if present
+      const registrationData = {
+        ...model,
+        dateOfBirth: model.dateOfBirth ? new Date(model.dateOfBirth) : undefined,
+        isAdmin: false // Always set to false for security
+      };
+
       setLoading(true);
-      const data = await register(model);
+      logger.info(`Calling register API with model: ${JSON.stringify(registrationData)}`);
+      const data = await register(registrationData);
+      logger.info('Register API call completed');
       console.log('Registration successful:', data);
       setError(null);
       setSuccessMessage('Registration successful!');
+      logger.info('Registration successful. Navigating to /login');
       setTimeout(() => {
         navigate('/login');
       }, 2000);
     } catch (error) {
       console.error('Registration error:', error);
+      logger.error(`Registration failed: ${error}`);
       if (error instanceof Error) {
         const errorMessage = error.message;
         if (errorMessage.toLowerCase().includes('already')) {
@@ -43,6 +86,7 @@ const Register: React.FC = () => {
       }
     } finally {
       setLoading(false);
+      logger.info('Registration process completed');
     }
   };
 
@@ -93,10 +137,11 @@ const Register: React.FC = () => {
             <input
               type="text"
               id="userName"
-              value={model.userName || ''}
+              value={model.userName}
               onChange={(e) => setModel({ ...model, userName: e.target.value })}
               placeholder="Enter your username"
               className="w-full px-4 py-3 rounded-md border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-300 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-colors"
+              required
             />
           </div>
 
@@ -108,8 +153,8 @@ const Register: React.FC = () => {
             <input
               type="date"
               id="dateOfBirth"
-              value={model.dateOfBirth || ''}
-              onChange={(e) => setModel({ ...model, dateOfBirth: e.target.value })}
+              value={model.dateOfBirth ? model.dateOfBirth.toISOString().split('T')[0] : ''}
+              onChange={(e) => setModel({ ...model, dateOfBirth: e.target.value ? new Date(e.target.value) : undefined })}
               className="w-full px-4 py-3 rounded-md border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-300 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-colors"
             />
           </div>

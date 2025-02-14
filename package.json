@@ -9,6 +9,8 @@
     "ui": "yarn workspace asafarim-ui start",
     "ui:build": "yarn workspace asafarim-ui build",
     "api": "yarn workspace asafarim-api start",
+    "api:build": "dotnet build ./ASafariM.Api/ASafariM.Api.csproj",
+    "api:run": "dotnet run --project ./ASafariM.Api/ASafariM.Api.csproj",
     "backend": "yarn clean && yarn restore && yarn build && yarn api",
     "dev": "concurrently \"yarn workspace asafarim-api start\" \"yarn workspace asafarim-ui start\"",
     "app": "concurrently \"yarn backend\" \"yarn ui\"",

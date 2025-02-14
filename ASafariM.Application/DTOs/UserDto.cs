@@ -21,6 +21,8 @@ namespace ASafariM.Application.DTOs
 
         public bool IsAdmin { get; set; } = false;
 
+        public bool IsUser { get; set; } = true;
+
         public string? ProfilePicture { get; set; }
 
         public bool? IsActive { get; set; }

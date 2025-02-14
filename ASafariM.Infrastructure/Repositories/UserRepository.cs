@@ -240,5 +240,32 @@ namespace ASafariM.Infrastructure.Repositories
             Log.Information("Retrieving all roles.");
             return await _dbContext.Roles.ToListAsync();
         }
+
+        //AddRoleAsync
+        public async Task AddRoleAsync(Role role)
+        {
+            Log.Information("Adding role: {Role}", role);
+            await _dbContext.Roles.AddAsync(role);
+            await _dbContext.SaveChangesAsync();
+        }
+        //UpdateRoleAsync
+        public async Task UpdateRoleAsync(Role role)
+        {
+            Log.Information("Updating role: {Role}", role);
+            _dbContext.Roles.Update(role);
+            await _dbContext.SaveChangesAsync();
+        }
+        //DeleteRoleAsync
+        public async Task DeleteRoleAsync(Guid roleId)
+        {
+            Log.Information("Deleting role with ID: {RoleId}", roleId);
+            var role = await _dbContext.Roles.FindAsync(roleId);
+            if (role == null)
+            {
+                throw new InvalidOperationException($"Role with ID {roleId} not found.");
+            }
+            _dbContext.Roles.Remove(role);
+            await _dbContext.SaveChangesAsync();
+        }
     }
 }

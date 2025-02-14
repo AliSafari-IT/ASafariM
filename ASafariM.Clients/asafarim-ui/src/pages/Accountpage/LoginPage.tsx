@@ -15,10 +15,18 @@ const LoginPage = () => {
   const [showDeletedMessage, setShowDeletedMessage] = useState(false);
   const navigate = useNavigate();
 
-  const demoUser = {
-    email: "user@example.com",
-    password: "User+123456/"
-  };
+  const demoCredentials = [
+    {
+      email: "demo_admin@example.com",
+      password: "Demo+123456/",
+      label: "Demo Admin"
+    },
+    {
+      email: "demo_user@example.com",
+      password: "Demo+123456/",
+      label: "Demo User"
+    }
+  ];
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -36,6 +44,14 @@ const LoginPage = () => {
     try {
       const auth = await login({ email, password });
       logger.info('Login API call successful');
+      
+      // Check if the user account is deleted
+      if (auth.user?.isDeleted) {
+        logger.info('Attempted login to deleted account');
+        setShowDeletedMessage(true);
+        return;
+      }
+
       if (auth.token) {
         localStorage.setItem('auth', JSON.stringify(auth));
         const returnTo = localStorage.getItem('returnTo') || '/';
@@ -51,6 +67,10 @@ const LoginPage = () => {
           if (status === 401) {
             setError(data?.message || 'Invalid credentials.');
           } else if (status === 403) {
+            if (data?.isDeleted) {
+              setShowDeletedMessage(true);
+              return;
+            }
             setError(data?.message || 'Your account is locked. Try again later.');
           } else {
             setError('An unexpected error occurred.');
@@ -67,6 +87,27 @@ const LoginPage = () => {
     }
   };
 
+  const handleDemoLogin = async (credentials: { email: string; password: string }) => {
+    setEmail(credentials.email);
+    setPassword(credentials.password);
+    try {
+      setLoading(true);
+      logger.info('Attempting demo login with email: ' + credentials.email);
+      const auth = await login(credentials);
+      if (auth.token) {
+        localStorage.setItem('auth', JSON.stringify(auth));
+        const returnTo = localStorage.getItem('returnTo') || '/';
+        localStorage.removeItem('returnTo');
+        navigate(returnTo);
+      }
+    } catch (err) {
+      logger.error('Demo login error: ' + JSON.stringify(err, null, 2));
+      setError('Failed to login with demo account');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   if (showDeletedMessage) {
     return (
       <Wrapper header={<div className="w-full text-center py-8 text-2xl text-primary border-b border-primary z-10">Account Deleted</div>}>
@@ -76,73 +117,82 @@ const LoginPage = () => {
   }
 
   return (
-    <Wrapper header={<div className="w-full text-center py-8 text-2xl text-primary border-b border-primary z-10">Login</div>}>
-      <div className="flex flex-col items-center justify-center min-h-[calc(100vh-var(--navbar-height)-200px)]">
-        <form
-          onSubmit={handleLogin}
-          className="login-form flex flex-col items-center justify-center space-y-6 w-full max-w-md mx-auto px-4 py-8 bg-white dark:bg-gray-800 shadow-md rounded-lg"
-        >
-          <div className="w-full flex flex-col items-center">
-            <div className="text-sm text-gray-600 dark:text-gray-300 mb-2">
-              Click to autofill demo credentials:
-            </div>
-            <div 
-              className="border border-red-500 p-3 rounded-md bg-gray-50 dark:bg-gray-700 cursor-pointer w-full text-center"
-              onClick={() => {
-                setEmail(demoUser.email);
-                setPassword(demoUser.password);
-              }}
-            >
-              <p className="text-gray-800 dark:text-gray-300"><strong>Email:</strong> {demoUser.email}</p>
-              <p className="text-gray-800 dark:text-gray-300"><strong>Password:</strong> {demoUser.password}</p>
-            </div>
+    <Wrapper>
+      <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-md w-full space-y-8">
+          <div>
+            <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+              Sign in to your account
+            </h2>
           </div>
-
-          <div className="w-full">
-            <label htmlFor="email" className="block mb-2 font-semibold text-gray-700 dark:text-gray-300">
-              Email:
-            </label>
-            <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your email"
-              className="w-xs px-4 py-3 rounded-md border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-300 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-colors"
-              required
-            />
-          </div>
-
-          <div className="w-full">
-            <label htmlFor="password" className="block mb-2 font-semibold text-gray-700 dark:text-gray-300">
-              Password:
-            </label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter your password"
-              className="w-xs px-4 py-3 rounded-md border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-300 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-colors"
-              autoComplete="current-password"
-              required
-            />
-          </div>
-
-          {error && (
-            <div className="w-full p-4 bg-red-50 dark:bg-red-900 border border-red-300 dark:border-red-700 rounded-lg text-red-700 dark:text-red-300">
-              <p className="text-sm font-medium">{error}</p>
+          <form className="mt-8 space-y-6" onSubmit={handleLogin}>
+            <input type="hidden" name="remember" value="true" />
+            <div className="rounded-md shadow-sm -space-y-px">
+              <div>
+                <label htmlFor="email-address" className="sr-only">
+                  Email address
+                </label>
+                <input
+                  id="email-address"
+                  name="email"
+                  type="email"
+                  autoComplete="email"
+                  required
+                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  placeholder="Email address"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
+              <div>
+                <label htmlFor="password" className="sr-only">
+                  Password
+                </label>
+                <input
+                  id="password"
+                  name="password"
+                  type="password"
+                  autoComplete="current-password"
+                  required
+                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </div>
             </div>
-          )}
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors disabled:opacity-50"
-          >
-            {loading ? 'Logging in...' : 'Login'}
-          </button>
-        </form>
+            {error && (
+              <div className="text-red-500 text-sm text-center">{error}</div>
+            )}
+
+            <div>
+              <button
+                type="submit"
+                disabled={loading}
+                className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              >
+                {loading ? 'Signing in...' : 'Sign in'}
+              </button>
+            </div>
+
+            <div className="flex flex-col space-y-2">
+              {demoCredentials.map((demo, index) => (
+                <button
+                  key={index}
+                  type="button"
+                  onClick={() => handleDemoLogin(demo)}
+                  disabled={loading}
+                  className="group relative w-full flex justify-center py-2 px-4 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                >
+                  Login as {demo.label}
+                </button>
+              ))}
+            </div>
+          </form>
+
+          {showDeletedMessage && <DeletedAccountMessage email={email} onClose={() => setShowDeletedMessage(false)}/>}
+        </div>
       </div>
     </Wrapper>
   );
