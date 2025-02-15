@@ -1,21 +1,36 @@
 # Disclaimer
 
-## General Information
+_Last Updated: **2025-02-14**_
 
-The information provided on Asafarim's website is for general informational purposes only. All information on the site is provided in good faith; however, we make no representation or warranty of any kind, express or implied, regarding the accuracy, adequacy, validity, reliability, availability, or completeness of any information on the site.
+**ASafariM** (“we,” “us,” or “our”), located in Belgium, operates [https://www.asafarim.com](https://www.asafarim.com) (“the Site”). By using the Site, you acknowledge the disclaimers below.
 
-## Professional Disclaimer
+---
 
-The site cannot and does not contain professional advice. The information is provided for general informational and educational purposes only and is not a substitute for professional advice. Accordingly, before taking any actions based upon such information, we encourage you to consult with the appropriate professionals. We do not provide any kind of professional advice.
+## 1. Educational Content
+All tutorials, code snippets, or articles on the Site are for informational and educational purposes only. We do not guarantee their accuracy, completeness, or suitability for your specific needs.
 
-## External Links Disclaimer
+## 2. No Professional Services
+We currently do not offer commercial, professional, or consulting services. Any reliance you place on the Site’s content is strictly at your own risk.
 
-The site may contain (or you may be sent through the site) links to other websites or content belonging to or originating from third parties or links to websites and features in banners or other advertising. Such external links are not investigated, monitored, or checked for accuracy, adequacy, validity, reliability, availability, or completeness by us. We do not warrant, endorse, guarantee, or assume responsibility for the accuracy or reliability of any information offered by third-party websites linked through the site or any website or feature linked in any banner or other advertising.
+## 3. Data May Be Lost
+**The Site is a work in progress.** Because the database schema and codebase may change with updates, any data or content you store can be deleted or reset without notice. **Do not use this Site for permanent data storage.**
 
-## Limitation of Liability
+## 4. Results Not Guaranteed
+Implementing the techniques or code examples from the Site may not produce the desired outcomes. We assume no responsibility for any issues that arise from using or adapting our tutorials or code.
 
-To the fullest extent permitted by law, we disclaim all liability arising out of or in connection with your use of the site and its content. This includes, but is not limited to, any errors or omissions in content, loss or damage of any kind incurred as a result of the use of the site or any content posted, transmitted, or otherwise made available via the site.
+## 5. External Links
+We may include links to external resources or websites for your convenience. These links do not imply endorsement. We are not responsible for the content, accuracy, or policies of third-party sites.
 
-## Changes to the Disclaimer
+## 6. Liability Waiver
+To the fullest extent permitted by Belgian law, we disclaim liability for any direct or indirect damages resulting from your use of—or inability to use—the information provided on the Site.
 
-We may update our Disclaimer from time to time. We will notify you of any changes by posting the new Disclaimer on this page. You are advised to review this Disclaimer periodically for any changes. Changes to this Disclaimer are effective when they are posted on this page.
+## 7. No Warranties
+We provide the Site on an “as-is” basis, with no guarantees or warranties of any kind, whether express or implied, including, but not limited to, implied warranties of merchantability or fitness for a particular purpose.
+
+## 8. Updates
+We may revise this Disclaimer from time to time. The updated version will become effective immediately upon posting. Continued use of the Site indicates your acceptance of any changes.
+
+## 9. Contact Us
+For questions related to this Disclaimer, please reach out via:
+- **Email**: contact@asafarim.com
+- **Address**: Hasselt, Belgium

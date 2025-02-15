@@ -6,7 +6,7 @@ const getFirstHeading = (markdownContent: string): string => {
 
 
 function getCreationDate(content: string): Date | undefined {
-    const match: RegExpMatchArray | null = content?.match(/(?:\*\*Date:?\*\*|Date:|Created:|Created At:|Created On:|Created Date:|Created Time:|Created At|Created On|Created Date|Created Time|Date) (.+?)(?:\n|$)/m);
+    const match: RegExpMatchArray | null = content?.match(/(?:\*\*Date:?\*\*|Date:|Created:|Created At:|Created On:|Created Date:|Created Time:|Created At|Created On|Created Date|Created Time|Date | Date Created: | Date Created | Date Created On | Date Created At | Date Created On: | Date Created Time | ) (.+?)(?:\n|$)/m);
     if (!match) return undefined;
     const dateStr = match[1].trim();
     const parsedDate = new Date(dateStr);

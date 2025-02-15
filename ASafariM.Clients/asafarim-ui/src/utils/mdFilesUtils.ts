@@ -73,7 +73,7 @@ const projectsTree: IMenuItem = getTree(
       eager: true,
     }),
   },
-  projectsBranchInfo  
+  projectsBranchInfo
 );
 
 const changeLogs: IMenuItem = getTree(
@@ -144,9 +144,6 @@ function getTree(
       .replace(/\.md$/, ''); // Remove .md extension
 
     const parts = relativePath.split('/');
-    const createdAt = getCreationDate(content) || new Date(0); // Fallback to Unix epoch
-    const updatedAt = getUpdateDate(content) || createdAt;
-
     let current = tree;
 
     if (parts.length === 1) {
@@ -161,8 +158,9 @@ function getTree(
         content,
         type: 'file',
         filepath: filePath,
-        createdAt,
-        updatedAt,
+        createdAt: getCreationDate(content),
+        updatedAt: getUpdateDate(content),
+        color: branchInfo.color,
       });
     } else {
       // Nested file or folder
@@ -181,8 +179,8 @@ function getTree(
             content,
             type: 'file',
             filepath: filePath,
-            createdAt,
-            updatedAt,
+            createdAt: getCreationDate(content),
+            updatedAt: getUpdateDate(content),
           });
         } else {
           // Add folder if it doesn't exist
@@ -198,6 +196,8 @@ function getTree(
               subMenu: [],
               content: '',
               type: 'folder',
+              filepath: `${current.filepath}/${part}`,
+              color: branchInfo.color,
             };
             folders[part] = folder;
             current.subMenu!.push(folder);

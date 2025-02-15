@@ -22,6 +22,7 @@ const UsersList: React.FC = () => {
   // Fetch users only once on mount
   useEffect(() => {
     const fetchUsers = async () => {
+      console.log('Fetching users!');
       try {
         console.log('Starting to fetch users...');
         const users = await getUsers();

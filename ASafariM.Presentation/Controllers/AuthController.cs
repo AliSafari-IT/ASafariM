@@ -76,12 +76,14 @@ public class AuthController : ControllerBase
         // Check if account is deleted
         if (user.IsDeleted == true)
         {
-            Log.Warning("Login attempt for deleted account. User ID: {UserId}, Email: {Email}", 
-                user.Id, command.Email);
-            return new ObjectResult(new { 
-                message = "This account has been deleted.", 
-                isDeleted = true 
-            })
+            Log.Warning(
+                "Login attempt for deleted account. User ID: {UserId}, Email: {Email}",
+                user.Id,
+                command.Email
+            );
+            return new ObjectResult(
+                new { message = "This account has been deleted.", isDeleted = true }
+            )
             {
                 StatusCode = StatusCodes.Status403Forbidden,
             };
@@ -265,6 +267,71 @@ public class AuthController : ControllerBase
         {
             Log.Error(ex, "Error updating profile for user ID: {UserId}", userIdClaim);
             return StatusCode(500, "Internal server error");
+        }
+    }
+
+    // requestAccountReactivation
+    [HttpPost("request-account-reactivation")]
+    public async Task<IActionResult> RequestAccountReactivation(
+        RequestAccountReactivationCommand command
+    )
+    {
+        Log.Information("Account reactivation request received for email: {Email}", command.Email);
+
+        if (!ModelState.IsValid)
+        {
+            Log.Warning("Invalid model state for reactivation request");
+            return BadRequest(ModelState);
+        }
+
+        try
+        {
+            var user = await _userRepository.GetUserByEmailAsync(command.Email);
+            if (user == null)
+            {
+                Log.Warning(
+                    "Reactivation request failed - user not found for email: {Email}",
+                    command.Email
+                );
+                return NotFound(new { message = "User not found" });
+            }
+
+            if (user.IsDeleted != true)
+            {
+                Log.Warning(
+                    "Reactivation request failed - account is not deleted. User ID: {UserId}, Email: {Email}",
+                    user.Id,
+                    command.Email
+                );
+                return BadRequest(new { message = "Account is not deleted" });
+            }
+
+            await _userService.RequestAccountReactivationAsync(command);
+
+            Log.Information(
+                "Account reactivation request processed successfully for email: {Email}",
+                command.Email
+            );
+
+            return Ok(
+                new
+                {
+                    message = "Account reactivation request sent successfully",
+                    email = command.Email,
+                }
+            );
+        }
+        catch (Exception ex)
+        {
+            Log.Error(
+                ex,
+                "Error processing account reactivation request for email: {Email}",
+                command.Email
+            );
+            return StatusCode(
+                500,
+                new { message = "An error occurred while processing your request" }
+            );
         }
     }
 }

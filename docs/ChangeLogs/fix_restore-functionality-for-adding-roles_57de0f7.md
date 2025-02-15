@@ -1,10 +1,8 @@
-# Title
-Fix: Restore functionality for adding roles to users
+# Fix: Restore functionality for adding roles to users
 
-# Date
-26-01-2025
+Date 26-01-2025
 
-# Description of Changes
+## Description of Changes
 - Restored the functionality to add roles to users in the `UserRolesController`.
 - Updated `UserRoleDto` to ensure it contains the necessary properties for role management.
 
@@ -27,12 +25,12 @@ public class UserRoleDto
 }
 ```
 
-# Impact
+## Impact
 - Restored the role assignment functionality in the application.
 
-# Files affected
+## Files affected
 - `ASafariM.Presentation/Controllers/UserRolesController.cs`
 - `ASafariM.Application/DTOs/UserRoleDto.cs`
 
-# Testing
+## Testing
 - Integration tests were updated and executed to ensure that the role assignment functionality works as expected.

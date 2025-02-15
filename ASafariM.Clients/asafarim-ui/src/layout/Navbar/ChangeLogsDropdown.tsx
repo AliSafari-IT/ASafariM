@@ -15,7 +15,7 @@ const ChangeLogsDropdown: React.FC<{ mobileView: boolean }> = ({ mobileView }) =
   const sortedChangeLogs = {
     ...mdFiles.changelogs,
     subMenu: [...(mdFiles.changelogs.subMenu || [])].sort((a, b) => {
-      const dateA = new Date(a.updatedAt || a.createdAt || 0).getTime();
+      const dateA =  new Date(a.updatedAt || a.createdAt || 0).getTime();
       const dateB = new Date(b.updatedAt || b.createdAt || 0).getTime();
       return dateB - dateA; // Sort descending (newest first)
     }),

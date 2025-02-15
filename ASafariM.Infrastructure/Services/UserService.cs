@@ -29,6 +29,7 @@ namespace ASafariM.Infrastructure.Services
         private readonly ILogger _logger;
         private readonly IAuthorizationService _authorizationService;
         private readonly IConfiguration _configuration;
+        private readonly IEmailService _emailService;
 
         public UserService(
             IUserRepository userRepository,
@@ -36,7 +37,8 @@ namespace ASafariM.Infrastructure.Services
             AppDbContext dbContext,
             ILogger logger,
             IAuthorizationService authorizationService,
-            IConfiguration configuration
+            IConfiguration configuration,
+            IEmailService emailService
         )
         {
             _userRepository = userRepository;
@@ -46,6 +48,7 @@ namespace ASafariM.Infrastructure.Services
             _logger = logger;
             _authorizationService = authorizationService;
             _configuration = configuration;
+            _emailService = emailService;
         }
 
         public async Task<bool> RegisterUserAsync(RegisterUserCommand command)
@@ -823,6 +826,19 @@ namespace ASafariM.Infrastructure.Services
             {
                 return false;
             }
+            return true;
+        }
+
+        public async Task<bool> RequestAccountReactivationAsync(
+            RequestAccountReactivationCommand command
+        )
+        {
+            // TODO: Implement the logic for requesting account reactivation
+            var user = await _userRepository.GetUserByEmailAsync(command.Email);
+            // This method should send an email to the user with the reactivation link
+            // You can use the _emailService to send the email
+            _emailService.SendReactivationEmail(user.Email, command.ReactivationReason);
+            // Return Task.CompletedTask to indicate that the request was processed successfully
             return true;
         }
     }

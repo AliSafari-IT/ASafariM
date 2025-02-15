@@ -28,7 +28,9 @@ namespace ASafariM.Api
             Log.Information("Registered IGenericRepository<Role> with GenericRepository<Role>.");
 
             services.AddScoped<IGenericRepository<MarkdownFile>, GenericRepository<MarkdownFile>>();
-            Log.Information("Registered IGenericRepository<MarkdownFile> with GenericRepository<MarkdownFile>.");
+            Log.Information(
+                "Registered IGenericRepository<MarkdownFile> with GenericRepository<MarkdownFile>."
+            );
 
             // Register new blog-related repositories
             services.AddScoped<IPostRepository, PostRepository>();
@@ -42,6 +44,10 @@ namespace ASafariM.Api
 
             services.AddScoped<ISitemapItemRepository, SitemapItemRepository>();
             Log.Information("Registered ISitemapItemRepository with SitemapItemRepository.");
+
+            // email service
+            services.AddScoped<IEmailService, EmailService>();
+            Log.Information("Registered IEmailService with EmailService.");
 
             // Register services
             services.AddScoped<RoleService>();

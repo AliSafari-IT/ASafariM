@@ -64,10 +64,12 @@ namespace ASafariM.Presentation.Controllers
         }
 
         [HttpPost("admin")]
-        public async Task<IActionResult> CreateUserByAdmin([FromBody] CreateUserByAdminCommand command)
+        public async Task<IActionResult> CreateUserByAdmin(
+            [FromBody] CreateUserByAdminCommand command
+        )
         {
             Log.Information("Attempting to create user by admin: {@Command}", command);
-            
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -86,7 +88,10 @@ namespace ASafariM.Presentation.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateUser([FromRoute] Guid id, [FromBody] UpdateUserCommand command)
+        public async Task<IActionResult> UpdateUser(
+            [FromRoute] Guid id,
+            [FromBody] UpdateUserCommand command
+        )
         {
             Log.Information("Attempting to update user with ID: {UserId}", id);
 
@@ -126,7 +131,10 @@ namespace ASafariM.Presentation.Controllers
         }
 
         [HttpPut("admin/{id}")]
-        public async Task<IActionResult> UpdateUserByAdmin([FromRoute] Guid id, [FromBody] UpdateUserByAdminCommand command)
+        public async Task<IActionResult> UpdateUserByAdmin(
+            [FromRoute] Guid id,
+            [FromBody] UpdateUserByAdminCommand command
+        )
         {
             Log.Information("Attempting to update user by admin. User ID: {UserId}", id);
 
@@ -160,7 +168,10 @@ namespace ASafariM.Presentation.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser([FromRoute] Guid id, [FromBody] DeleteUserCommand command)
+        public async Task<IActionResult> DeleteUser(
+            [FromRoute] Guid id,
+            [FromBody] DeleteUserCommand command
+        )
         {
             Log.Information("Attempting to delete user with ID: {UserId}", id);
 
@@ -190,7 +201,10 @@ namespace ASafariM.Presentation.Controllers
         }
 
         [HttpDelete("admin/{id}")]
-        public async Task<IActionResult> DeleteUserByAdmin([FromRoute] Guid id, [FromBody] DeleteUserByAdminCommand command)
+        public async Task<IActionResult> DeleteUserByAdmin(
+            [FromRoute] Guid id,
+            [FromBody] DeleteUserByAdminCommand command
+        )
         {
             Log.Information("Attempting to delete user by admin with ID: {UserId}", id);
 
@@ -352,11 +366,7 @@ namespace ASafariM.Presentation.Controllers
 
                 Log.Information("Final availability result: {IsAvailable}", isAvailable);
                 return Ok(
-                    new CheckAvailabilityResponse
-                    {
-                        IsAvailable = isAvailable,
-                        Messages = messages,
-                    }
+                    new CheckAvailabilityResponse { IsAvailable = isAvailable, Messages = messages }
                 );
             }
             catch (Exception ex)
